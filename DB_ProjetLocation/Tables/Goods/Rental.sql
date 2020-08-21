@@ -1,10 +1,10 @@
 ﻿CREATE TABLE [dbo].[Rental]
 (
-	[CreationDate] DATE NOT NULL, 
+	[CreationDate] DATETIME NOT NULL, 
     [Good_Id] INT NOT NULL, 
     [User_Id] INT NOT NULL, 
-    [RentedFrom] DATE NOT NULL, 
-    [RentedTo] DATE NOT NULL, 
+    [RentedFrom] DATETIME NOT NULL, 
+    [RentedTo] DATETIME NOT NULL, 
     [AmountPerDay] MONEY NOT NULL, 
     [AmountPerWeek] MONEY NULL, 
     [AmoutPerMonth] MONEY NULL, 

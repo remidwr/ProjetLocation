@@ -10,7 +10,7 @@
     [Phone2] NVARCHAR(50) NULL, 
     [Picture] NVARCHAR(320) NULL, 
     [Active] BIT NOT NULL DEFAULT 1, 
-    [Group_Id] INT NOT NULL, 
+    [Group_Id] INT NULL, 
     CONSTRAINT [PK_Users] PRIMARY KEY ([User_Id]), 
     CONSTRAINT [UK_Users_Email] UNIQUE ([Email]),
     CONSTRAINT [FK_Users_Group] FOREIGN KEY ([Group_Id]) REFERENCES [Group]([Group_Id])

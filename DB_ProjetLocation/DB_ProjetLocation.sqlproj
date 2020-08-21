@@ -87,4 +87,7 @@
   <ItemGroup>
     <PostDeploy Include="Scripts\PostDeployment.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="DB_ProjetLocation.publish.xml" />
+  </ItemGroup>
 </Project>

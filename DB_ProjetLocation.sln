@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{E94CA195-551
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{45714EF8-2C3E-4087-99FC-217B1CEEA980}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{969141B3-E873-4599-8D75-415069C348C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetLocation_API", "ProjetLocation_API\ProjetLocation_API.csproj", "{38BC3799-5352-4FAE-B880-E0B2A1FFE72B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,10 @@ Global
 		{91C7C628-0514-4765-9512-761611CC67D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91C7C628-0514-4765-9512-761611CC67D3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{91C7C628-0514-4765-9512-761611CC67D3}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{38BC3799-5352-4FAE-B880-E0B2A1FFE72B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38BC3799-5352-4FAE-B880-E0B2A1FFE72B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38BC3799-5352-4FAE-B880-E0B2A1FFE72B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38BC3799-5352-4FAE-B880-E0B2A1FFE72B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -28,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{91C7C628-0514-4765-9512-761611CC67D3} = {45714EF8-2C3E-4087-99FC-217B1CEEA980}
 		{45714EF8-2C3E-4087-99FC-217B1CEEA980} = {E94CA195-5510-4512-8AE8-0EE8FD869D41}
+		{38BC3799-5352-4FAE-B880-E0B2A1FFE72B} = {969141B3-E873-4599-8D75-415069C348C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {979E6E43-1744-4F4E-864E-B88DF6F83591}
