@@ -5,6 +5,10 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DB_ProjetLocation", "DB_ProjetLocation\DB_ProjetLocation.sqlproj", "{91C7C628-0514-4765-9512-761611CC67D3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DAL", "DAL", "{E94CA195-5510-4512-8AE8-0EE8FD869D41}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{45714EF8-2C3E-4087-99FC-217B1CEEA980}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +24,10 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{91C7C628-0514-4765-9512-761611CC67D3} = {45714EF8-2C3E-4087-99FC-217B1CEEA980}
+		{45714EF8-2C3E-4087-99FC-217B1CEEA980} = {E94CA195-5510-4512-8AE8-0EE8FD869D41}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {979E6E43-1744-4F4E-864E-B88DF6F83591}
