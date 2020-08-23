@@ -140,4 +140,53 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CreationDate" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="5544330f-df08-40d2-ae0a-ca1558f0f257" ChangeDateTime="08/22/2020 11:29:00">
+    <Property Name="ElementName" Value="[dbo].[FK_Users_Group]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Users_ToGroup]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0ddfbffb-9ff0-430b-9782-8e64efd43307" ChangeDateTime="08/22/2020 11:30:02">
+    <Property Name="ElementName" Value="[dbo].[FK_Good_Users]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Good]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Good_ToUsers]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="13dcb11e-2bc8-4114-a2bd-c810b615ed83" ChangeDateTime="08/22/2020 11:30:08">
+    <Property Name="ElementName" Value="[dbo].[FK_Good_Address]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Good]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Good_ToAddress]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c3d3635e-4cf3-484f-92a8-b8e832dbf95f" ChangeDateTime="08/22/2020 11:30:13">
+    <Property Name="ElementName" Value="[dbo].[FK_Good_Section]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Good]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Good_ToSection]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="125f505f-9b73-4a0d-91a7-5c79c6beaefb" ChangeDateTime="08/22/2020 11:30:27">
+    <Property Name="ElementName" Value="[dbo].[FK_Rental_Users]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Rental]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Rental_ToUsers]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="97b96aed-73c0-4a40-b4f5-85242b34d161" ChangeDateTime="08/22/2020 11:30:32">
+    <Property Name="ElementName" Value="[dbo].[FK_Rental_Good]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Rental]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Rental_ToGood]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bf6af113-f527-4a81-822f-285fa9f55003" ChangeDateTime="08/22/2020 11:30:39">
+    <Property Name="ElementName" Value="[dbo].[FK_Category_Section]" />
+    <Property Name="ElementType" Value="SqlForeignKeyConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Category]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[FK_Category_ToSection]" />
+  </Operation>
 </Operations>

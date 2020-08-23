@@ -13,7 +13,7 @@
     [Group_Id] INT NULL, 
     CONSTRAINT [PK_Users] PRIMARY KEY ([User_Id]), 
     CONSTRAINT [UK_Users_Email] UNIQUE ([Email]),
-    CONSTRAINT [FK_Users_Group] FOREIGN KEY ([Group_Id]) REFERENCES [Group]([Group_Id])
+    CONSTRAINT [FK_Users_ToGroup] FOREIGN KEY ([Group_Id]) REFERENCES [Group]([Group_Id])
 )
 
 GO
