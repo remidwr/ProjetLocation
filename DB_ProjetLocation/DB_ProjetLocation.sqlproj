@@ -65,6 +65,10 @@
     <Folder Include="Programmability" />
     <Folder Include="Programmability\Stored Procedures" />
     <Folder Include="Programmability\Stored Procedures\Users" />
+    <Folder Include="Programmability\Stored Procedures\Goods" />
+    <Folder Include="Programmability\Stored Procedures\Goods\Section" />
+    <Folder Include="Programmability\Stored Procedures\Goods\Section\Category" />
+    <Folder Include="Programmability\Stored Procedures\Rental" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Functions\GetPreSalt.sql" />
@@ -79,6 +83,16 @@
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserInfo.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserPassword.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_DeleteUser.sql" />
+    <Build Include="Programmability\Stored Procedures\Goods\CSP_InsertGood.sql" />
+    <Build Include="Programmability\Stored Procedures\Goods\CSP_UpdateGood.sql" />
+    <Build Include="Programmability\Stored Procedures\Goods\CSP_DeleteGood.sql" />
+    <Build Include="Programmability\Stored Procedures\Goods\Section\CSP_DeleteSection.sql" />
+    <Build Include="Programmability\Stored Procedures\Goods\Section\CSP_InsertSection.sql" />
+    <Build Include="Programmability\Stored Procedures\Goods\Section\CSP_UpdateSection.sql" />
+    <Build Include="Programmability\Stored Procedures\Goods\Section\Category\CSP_DeleteCategory.sql" />
+    <Build Include="Programmability\Stored Procedures\Goods\Section\Category\CSP_InsertCategory.sql" />
+    <Build Include="Programmability\Stored Procedures\Goods\Section\Category\CSP_UpdateCategory.sql" />
+    <Build Include="Programmability\Stored Procedures\Rental\CSP_InsertRental.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DB_ProjetLocation.refactorlog" />

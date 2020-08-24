@@ -60,3 +60,58 @@ EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo
 	@Phone1 = '+32490123456',
 	@Phone2 = '+32490654321',
 	@Picture = NULL
+
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Construction';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Jardin & Nature';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Horeca';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Decoration';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Vêtements';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Vacances';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Outillage';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Auto & Moto';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Loisir';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Bébé';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Electroménager';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Evènement';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Immobilier';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Mode';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Multimédia';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Photographie';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Services';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Sport';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection
+	@SectionName = 'Divers';
+
+EXEC DB_ProjetLocation.dbo.CSP_InsertCategory
+	@CategoryName = 'Auto',
+	@SectionId = 8;	
+EXEC DB_ProjetLocation.dbo.CSP_InsertCategory
+	@CategoryName = 'Moto',
+	@SectionId = 8;	
+EXEC DB_ProjetLocation.dbo.CSP_InsertCategory
+	@CategoryName = 'Remorque',
+	@SectionId = 8;	
+EXEC DB_ProjetLocation.dbo.CSP_InsertCategory
+	@CategoryName = 'Accessoires',
+	@SectionId = 8;	
+EXEC DB_ProjetLocation.dbo.CSP_InsertCategory
+	@CategoryName = 'Camping Car',
+	@SectionId = 8;	
