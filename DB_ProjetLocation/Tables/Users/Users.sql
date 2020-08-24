@@ -5,26 +5,34 @@
     [FirstName] NVARCHAR(50) NOT NULL, 
     [Birthdate] DATE NOT NULL, 
     [Email] NVARCHAR(320) NOT NULL, 
-    [Passwd] BINARY(64) NOT NULL, 
+    [Passwd] BINARY(64) NOT NULL,
+    [Street] NVARCHAR(120) NULL, 
+    [Number] NVARCHAR(10) NULL, 
+    [Box] NVARCHAR(10) NULL, 
+    [PostCode] INT NULL, 
+    [City] NVARCHAR(120) NULL, 
     [Phone1] NVARCHAR(50) NULL, 
     [Phone2] NVARCHAR(50) NULL, 
     [Picture] NVARCHAR(320) NULL, 
-    [Active] BIT NOT NULL DEFAULT 1, 
-    [Group_Id] INT NULL, 
+    [IsActive] BIT NOT NULL DEFAULT 1, 
+    [IsAdmin] BIT NOT NULL DEFAULT 0, 
     CONSTRAINT [PK_Users] PRIMARY KEY ([User_Id]), 
-    CONSTRAINT [UK_Users_Email] UNIQUE ([Email]),
-    CONSTRAINT [FK_Users_ToGroup] FOREIGN KEY ([Group_Id]) REFERENCES [Group]([Group_Id])
+    CONSTRAINT [UK_Users_Email] UNIQUE ([Email])
 )
 
 GO
 
 CREATE TRIGGER [dbo].[Trigger_Users_Delete]
     ON [dbo].[Users]
-    FOR DELETE
+    INSTEAD OF DELETE
     AS
     BEGIN
-        SET NoCount ON
+        DECLARE @UserId INT;
+
+        SET @UserId = (SELECT [User_Id] FROM deleted);
+
         UPDATE Users
-        SET Active = 0
+        SET [IsActive] = 0
+        WHERE [User_Id] = @UserId AND IsActive = 1;
     END
 GO

@@ -189,4 +189,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[FK_Category_ToSection]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="ad33232e-038e-4dbc-b3e8-1a5d6405f822" ChangeDateTime="08/24/2020 11:46:35">
+    <Property Name="ElementName" Value="[dbo].[Users].[Group_Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IsAdmin" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bbb9ea1e-fc46-42b8-9428-a90f991d4914" ChangeDateTime="08/24/2020 11:46:51">
+    <Property Name="ElementName" Value="[dbo].[Users].[Active]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IsActive" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="31148ca2-b22c-4170-924b-009d6b72b8e0" ChangeDateTime="08/24/2020 12:28:42">
+    <Property Name="ElementName" Value="[dbo].[Users].[User_Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f731e4cc-b5aa-46e6-a56c-5a389c125e4a" ChangeDateTime="08/24/2020 12:29:29">
+    <Property Name="ElementName" Value="[dbo].[Users].[UserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="User_Id" />
+  </Operation>
 </Operations>

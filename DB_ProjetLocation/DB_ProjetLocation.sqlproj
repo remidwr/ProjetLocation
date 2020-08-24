@@ -70,17 +70,15 @@
     <Build Include="Functions\GetPreSalt.sql" />
     <Build Include="Functions\GetPostSalt.sql" />
     <Build Include="Tables\Users\Users.sql" />
-    <Build Include="Tables\Users\Group.sql" />
-    <Build Include="Tables\Users\Role.sql" />
-    <Build Include="Tables\Users\MTM_Group_Role.sql" />
     <Build Include="Tables\Goods\Good.sql" />
     <Build Include="Tables\Goods\Category.sql" />
     <Build Include="Tables\Goods\Section.sql" />
     <Build Include="Tables\Goods\Rental.sql" />
-    <Build Include="Tables\Users\Address.sql" />
-    <Build Include="Tables\Users\MTM_Users_Address.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_Login.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_Register.sql" />
+    <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserInfo.sql" />
+    <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserPassword.sql" />
+    <Build Include="Programmability\Stored Procedures\Users\CSP_DeleteUser.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DB_ProjetLocation.refactorlog" />
