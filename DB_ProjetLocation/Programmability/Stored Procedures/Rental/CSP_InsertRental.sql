@@ -7,6 +7,6 @@
 	@Deposit FLOAT
 AS
 BEGIN
-	INSERT INTO Rental ([CreationDate], [Good_Id], [User_Id], [RentedFrom], [RentedTo], [Amount], [Deposit])
-	VALUES (GETDATE(), @GoodId, @UserId, @RentedFrom, @RentedTo, @Amount, @Deposit);
+	INSERT INTO Rental ([Good_Id], [User_Id], [RentedFrom], [RentedTo], [Amount], [Deposit])
+	VALUES (@GoodId, @UserId, @RentedFrom, @RentedTo, @Amount, @Deposit);
 END

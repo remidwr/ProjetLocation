@@ -69,6 +69,7 @@
     <Folder Include="Programmability\Stored Procedures\Goods\Section" />
     <Folder Include="Programmability\Stored Procedures\Goods\Section\Category" />
     <Folder Include="Programmability\Stored Procedures\Rental" />
+    <Folder Include="Programmability\Stored Procedures\Rental\Rating" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Functions\GetPreSalt.sql" />
@@ -93,6 +94,13 @@
     <Build Include="Programmability\Stored Procedures\Goods\Section\Category\CSP_InsertCategory.sql" />
     <Build Include="Programmability\Stored Procedures\Goods\Section\Category\CSP_UpdateCategory.sql" />
     <Build Include="Programmability\Stored Procedures\Rental\CSP_InsertRental.sql" />
+    <Build Include="Programmability\Stored Procedures\Rental\CSP_UpdateRental.sql" />
+    <Build Include="Programmability\Stored Procedures\Rental\CSP_DeleteRental.sql" />
+    <Build Include="Programmability\Stored Procedures\Rental\Rating\CSP_UpdateRentalRating.sql" />
+    <Build Include="Views\V_ActiveUser.sql" />
+    <Build Include="Views\V_Section.sql" />
+    <Build Include="Views\V_Category.sql" />
+    <Build Include="Views\V_Good.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DB_ProjetLocation.refactorlog" />
