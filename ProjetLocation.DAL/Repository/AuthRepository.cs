@@ -1,19 +1,18 @@
 ﻿using ProjetLocation.DAL.IRepository;
 using ProjetLocation.DAL.Models;
 using ProjetLocation.DAL.Repository.Mappers;
-using System.Data.SqlClient;
 using System.Linq;
 using Tools.Database;
 
 namespace ProjetLocation.DAL.Repository
 {
-    public class UserRepository : IUserRepository<User>
+    public class AuthRepository : IAuthRepository<User>
     {
         public Connection _connection;
 
-        public UserRepository()
+        public AuthRepository(Connection connection)
         {
-            _connection = new Connection(SqlClientFactory.Instance, new ConnectionInfo(ConnectionStrings.ConnectionString));
+            _connection = connection;
         }
 
         public User Login(string email, string passwd)

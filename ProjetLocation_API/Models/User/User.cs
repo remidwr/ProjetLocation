@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProjetLocation.DAL.Models
+namespace ProjetLocation.API.Models.User
 {
     public class User
     {
