@@ -4,8 +4,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Tools\Toolbox_Generic\Tools.Database.csproj" />
-  </ItemGroup>
-
 </Project>

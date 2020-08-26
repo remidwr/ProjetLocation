@@ -1,8 +1,10 @@
-﻿namespace ProjetLocation.DAL.IRepository
+﻿using ProjetLocation.DAL.Models;
+
+namespace ProjetLocation.DAL.IRepository
 {
-    public interface IAuthRepository<TUser>
+    public interface IAuthRepository
     {
-        TUser Login(string email, string passwd);
-        int Register(TUser user);
+        User Login(string email, string passwd);
+        int Register(User user);
     }
 }

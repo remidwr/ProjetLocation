@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Register]
+﻿CREATE PROCEDURE [dbo].[CSP_Register]
 	@LastName NVARCHAR(50), 
     @FirstName NVARCHAR(50), 
     @Birthdate DATE, 

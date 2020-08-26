@@ -14,6 +14,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ProjetLocation.DAL.Repository;
 using Tools.Database;
+using ProjetLocation.API;
+using ProjetLocation.API.Utils.Security.Token;
+using ProjetLocation.API.Utils.Security.RSA;
 
 namespace ProjetLocation_API
 {
@@ -30,10 +33,11 @@ namespace ProjetLocation_API
         public void ConfigureServices(IServiceCollection services)
         {
             IConfigurationSection configurationSection = Configuration.GetSection("ConnectionStrings");
-            DbConnection connectionStrings = configurationSection.Get<DbConnection>();
-            string connectionString = configurationSection.Get<DbConnection>().ConnectionString;
+            DBConnectionStrings connectionStrings = configurationSection.Get<DBConnectionStrings>();
+            string connectionString = configurationSection.Get<DBConnectionStrings>().DB_ProjetLocation;
 
             services.AddControllers();
+            services.AddSingleton<KeyGenerator>();
             services.AddSingleton<DbProviderFactory>(sp => SqlClientFactory.Instance);
             services.AddSingleton(sp => new ConnectionInfo(connectionString));
             services.AddSingleton<Connection>();

@@ -10,7 +10,9 @@ namespace ProjetLocation.API.Utils.Mappers
             return new Api.UserLogin()
             {
                 Email = user.Email,
-                Passwd = user.Passwd
+                Passwd = user.Passwd,
+                IsAdmin = user.IsAdmin,
+                Token = user.Token
             };
         }
 
@@ -19,7 +21,9 @@ namespace ProjetLocation.API.Utils.Mappers
             return new Dal.User()
             {
                 Email = user.Email,
-                Passwd = user.Passwd
+                Passwd = user.Passwd,
+                IsAdmin = user.IsAdmin,
+                Token = user.Token
             };
         }
 

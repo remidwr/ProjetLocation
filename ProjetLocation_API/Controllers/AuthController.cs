@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Mappers;
-using ProjetLocation.API.Utils.Security.RSA;
 using ProjetLocation.DAL.IRepository;
 using ProjetLocation.DAL.Repository;
-using Dal = ProjetLocation.DAL.Models;
-using Api = ProjetLocation.API.Models.User;
+using ProjetLocation.API.Utils.Security.Token;
+using ProjetLocation.API.Utils.Security.RSA;
+using ProjetLocation.DAL.Models;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -12,32 +13,39 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IAuthRepository<Dal.User> _authRepository;
-        KeyGenerator _keyGenerator;
-        Decrypting decrypting = new Decrypting();
+        private IAuthRepository _authRepository;
+        private TokenService _tokenService;
+        //private KeyGenerator _keyGenerator;
+        //private Decrypting decrypting = new Decrypting();
 
-        public AuthController(AuthRepository authRepository, KeyGenerator keyGenerator)
+        public AuthController(AuthRepository authRepository, TokenService tokenService/*, KeyGenerator keyGenerator*/)
         {
             _authRepository = authRepository;
-            _keyGenerator = keyGenerator;
+            _tokenService = tokenService;
+            //_keyGenerator = keyGenerator;
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public IActionResult GetPublicKey()
         {
             _keyGenerator.GenerateKeys(RSAKeySize.Key2048);
             string publicKey = _keyGenerator.PublicKey;
             return Ok(publicKey);
-        }
+        }*/
 
         [HttpPost]
         [Route("login")]
-        public IActionResult Login([FromBody] Api.UserLogin user)
+        public IActionResult Login([FromBody] User user)
         {
-            string PrivateKey = _keyGenerator.PrivateKey;
-            user.Passwd = decrypting.Decrypt(user.Passwd, PrivateKey);
+            //string PrivateKey = _keyGenerator.PrivateKey;
+            //user.Passwd = decrypting.Decrypt(user.Passwd, PrivateKey);
 
-            Api.UserLogin userLogin = _authRepository.Login(user.Email, user.Passwd).DALUserLoginToAPI();
+            UserLogin userLogin = _authRepository.Login(user.Email, user.Passwd).DALUserLoginToAPI();
+
+            user.Token = _tokenService.EncodeToken(user);
+
+            if (user.Token == null || user.Token == string.Empty)
+                return BadRequest(new { message = "User name or password is incorrect" });
 
             if (!(userLogin is null))
                 return Ok(userLogin);
@@ -47,9 +55,10 @@ namespace ProjetLocation.API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public IActionResult Register([FromBody] Api.UserRegister user)
+        public IActionResult Register([FromBody] User user)
         {
-            int Success = _authRepository.Register(user.APIUserRegisterToDAL());
+            int Success = _authRepository.Register(user);
+
             if (Success > 0)
                 return Ok();
             else

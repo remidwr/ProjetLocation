@@ -6,7 +6,7 @@ using Tools.Database;
 
 namespace ProjetLocation.DAL.Repository
 {
-    public class AuthRepository : IAuthRepository<User>
+    public class AuthRepository : IAuthRepository
     {
         public Connection _connection;
 
@@ -17,7 +17,7 @@ namespace ProjetLocation.DAL.Repository
 
         public User Login(string email, string passwd)
         {
-            Command command = new Command("Login", true);
+            Command command = new Command("CSP_Login", true);
             command.AddParameter("Email", email);
             command.AddParameter("Passwd", passwd);
 
@@ -26,7 +26,7 @@ namespace ProjetLocation.DAL.Repository
 
         public int Register(User user)
         {
-            Command command = new Command("Register", true);
+            Command command = new Command("CSP_Register", true);
             command.AddParameter("LastName", user.LastName);
             command.AddParameter("FirstName", user.FirstName);
             command.AddParameter("Birthdate", user.Birthdate);

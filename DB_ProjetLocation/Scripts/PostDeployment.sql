@@ -1,7 +1,7 @@
 ﻿-- REGISTER Users
-EXEC DB_ProjetLocation.dbo.Register 'Dewinckeleer', 'Rémi', '1989-12-18', 'remidwr@gmail.com', 'Test1234=';
-EXEC DB_ProjetLocation.dbo.Register 'Nolan', 'Christopher', '1970-07-30', 'cnolan@interstellar.com', 'Test1234=';
-EXEC DB_ProjetLocation.dbo.Register 'Pacino', 'Al', '1940-04-25', 'al@godfather.com', 'Test1234=';
+EXEC DB_ProjetLocation.dbo.CSP_Register 'Dewinckeleer', 'Rémi', '1989-12-18', 'remidwr@gmail.com', 'Test1234=';
+EXEC DB_ProjetLocation.dbo.CSP_Register 'Nolan', 'Christopher', '1970-07-30', 'cnolan@interstellar.com', 'Test1234=';
+EXEC DB_ProjetLocation.dbo.CSP_Register 'Pacino', 'Al', '1940-04-25', 'al@godfather.com', 'Test1234=';
 
 -- UPDATE Users
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo 1, 'Dewinckeleer', 'Rémi', '1989-12-18', 'Singel', '80', NULL, 1853, 'Strombeek-Bever', '+32490123456', '+32490654321', NULL;

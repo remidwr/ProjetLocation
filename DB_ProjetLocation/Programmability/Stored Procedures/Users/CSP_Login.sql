@@ -1,4 +1,4 @@
-﻿CREATE PROCEDURE [dbo].[Login]
+﻿CREATE PROCEDURE [dbo].[CSP_Login]
 	@Email NVARCHAR(320),
 	@Passwd NVARCHAR(20)
 AS

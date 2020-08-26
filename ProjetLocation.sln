@@ -13,13 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{969141B3-E87
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjetLocation.API", "ProjetLocation_API\ProjetLocation.API.csproj", "{38BC3799-5352-4FAE-B880-E0B2A1FFE72B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjetLocation.DAL", "ProjetLocation.DAL\ProjetLocation.DAL.csproj", "{4919760F-B12A-49B6-AD90-BC9D9498E1E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjetLocation.DAL", "ProjetLocation.DAL\ProjetLocation.DAL.csproj", "{4919760F-B12A-49B6-AD90-BC9D9498E1E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Toolbox_Generic", "Tools\Toolbox_Generic\Toolbox_Generic.csproj", "{C448ECB6-1062-4B7A-8DEF-DBD21622DA25}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Tools.Database", "Tools\Toolbox_Generic\Tools.Database.csproj", "{C448ECB6-1062-4B7A-8DEF-DBD21622DA25}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{94B1B9BB-B4B2-491E-A023-1347194C9B1E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Toolbox_DB", "Toolbox_DB", "{06DE07E5-4AAB-4F5A-BE57-A77EDDC22D17}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{06DE07E5-4AAB-4F5A-BE57-A77EDDC22D17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
