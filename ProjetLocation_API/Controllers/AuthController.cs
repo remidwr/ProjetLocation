@@ -4,8 +4,6 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Infrastructure;
 using ProjetLocation.API.Models.User;
-using ProjetLocation.API.Utils.Mappers;
-using System.Net;
 using Tools.Security.Token;
 
 namespace ProjetLocation.API.Controllers

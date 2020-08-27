@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL.Model\DAL.Models.csproj" />
+    <ProjectReference Include="..\DAL.Models\DAL.Models.csproj" />
   </ItemGroup>
 
 </Project>
