@@ -16,8 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProjetLocation.DAL\ProjetLocation.DAL.csproj" />
-    <ProjectReference Include="..\Tools\Toolbox_Generic\Tools.Database.csproj" />
+    <ProjectReference Include="..\DAL.Repositories\DAL.Repositories.csproj" />
+    <ProjectReference Include="..\Tools\Tools.Database\Tools.Database.csproj" />
+    <ProjectReference Include="..\Tools\Tools.Security.RSA\Tools.Security.RSA.csproj" />
+    <ProjectReference Include="..\Tools\Tools.Security.Token\Tools.Security.Token.csproj" />
   </ItemGroup>
 
 

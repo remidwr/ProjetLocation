@@ -1,35 +1,31 @@
 ﻿using Api = ProjetLocation.API.Models.User;
-using Dal = ProjetLocation.DAL.Models;
+using Dal = DAL.Models;
 
 namespace ProjetLocation.API.Utils.Mappers
 {
     internal static class UserMapperAPI
     {
-        internal static Api.UserLogin DALUserLoginToAPI(this Dal.User user)
+        internal static Api.LoginForm DALUserLoginToAPI(this Dal.User user)
         {
-            return new Api.UserLogin()
+            return new Api.LoginForm()
             {
                 Email = user.Email,
-                Passwd = user.Passwd,
-                IsAdmin = user.IsAdmin,
-                Token = user.Token
+                Passwd = user.Passwd
             };
         }
 
-        internal static Dal.User APIUserLoginToDAL(this Api.UserLogin user)
+        internal static Dal.User APIUserLoginToDAL(this Api.LoginForm user)
         {
             return new Dal.User()
             {
                 Email = user.Email,
-                Passwd = user.Passwd,
-                IsAdmin = user.IsAdmin,
-                Token = user.Token
+                Passwd = user.Passwd
             };
         }
 
-        internal static Api.UserRegister DALUserRegisterToAPI(this Dal.User user)
+        internal static Api.RegisterForm DALUserRegisterToAPI(this Dal.User user)
         {
-            return new Api.UserRegister()
+            return new Api.RegisterForm()
             {
                 LastName = user.LastName,
                 FirstName = user.FirstName,
@@ -39,7 +35,7 @@ namespace ProjetLocation.API.Utils.Mappers
             };
         }
 
-        internal static Dal.User APIUserRegisterToDAL(this Api.UserRegister user)
+        internal static Dal.User APIUserRegisterToDAL(this Api.RegisterForm user)
         {
             return new Dal.User()
             {

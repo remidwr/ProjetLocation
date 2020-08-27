@@ -1,0 +1,34 @@
+﻿using DAL.IRepository;
+using System;
+using System.Collections.Generic;
+
+namespace DAL.Repository
+{
+    public class GoodRepository : IGoodRepository<Good>
+    {
+        public Good Get(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Good> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Insert(Good good)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(int id, Good good)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

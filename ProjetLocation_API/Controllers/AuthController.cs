@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using DAL.IRepositories;
+using DAL.Models;
+using DAL.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using ProjetLocation.API.Infrastructure;
 using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Mappers;
-using ProjetLocation.DAL.IRepository;
-using ProjetLocation.DAL.Repository;
-using ProjetLocation.API.Utils.Security.Token;
-using ProjetLocation.API.Utils.Security.RSA;
-using ProjetLocation.DAL.Models;
+using System.Net;
+using Tools.Security.Token;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -14,11 +15,11 @@ namespace ProjetLocation.API.Controllers
     public class AuthController : ControllerBase
     {
         private IAuthRepository _authRepository;
-        private TokenService _tokenService;
+        private ITokenService _tokenService;
         //private KeyGenerator _keyGenerator;
         //private Decrypting decrypting = new Decrypting();
 
-        public AuthController(AuthRepository authRepository, TokenService tokenService/*, KeyGenerator keyGenerator*/)
+        public AuthController(AuthRepository authRepository, ITokenService tokenService/*, KeyGenerator keyGenerator*/)
         {
             _authRepository = authRepository;
             _tokenService = tokenService;
@@ -34,26 +35,6 @@ namespace ProjetLocation.API.Controllers
         }*/
 
         [HttpPost]
-        [Route("login")]
-        public IActionResult Login([FromBody] User user)
-        {
-            //string PrivateKey = _keyGenerator.PrivateKey;
-            //user.Passwd = decrypting.Decrypt(user.Passwd, PrivateKey);
-
-            UserLogin userLogin = _authRepository.Login(user.Email, user.Passwd).DALUserLoginToAPI();
-
-            user.Token = _tokenService.EncodeToken(user);
-
-            if (user.Token == null || user.Token == string.Empty)
-                return BadRequest(new { message = "User name or password is incorrect" });
-
-            if (!(userLogin is null))
-                return Ok(userLogin);
-            else
-                return NotFound();
-        }
-
-        [HttpPost]
         [Route("register")]
         public IActionResult Register([FromBody] User user)
         {
@@ -61,6 +42,29 @@ namespace ProjetLocation.API.Controllers
 
             if (Success > 0)
                 return Ok();
+            else
+                return NotFound();
+        }
+
+        [HttpPost]
+        [Route("login")]
+        public IActionResult Login([FromBody] LoginForm loginForm)
+        {
+            //string PrivateKey = _keyGenerator.PrivateKey;
+            //user.Passwd = decrypting.Decrypt(user.Passwd, PrivateKey);
+
+            if (!ModelState.IsValid)
+                return BadRequest(new { message = "Model invalid" });
+
+            User user = _authRepository.Login(loginForm.Email, loginForm.Passwd);
+
+            user.Token = _tokenService.EncodeToken(user, (u) => u.ToCLaims());
+
+            if (user.Token == null || user.Token == string.Empty)
+                return BadRequest(new { message = "User name or password is incorrect" });
+
+            if (!(user is null))
+                return Ok(user);
             else
                 return NotFound();
         }
