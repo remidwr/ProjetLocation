@@ -2,7 +2,7 @@
 
 namespace ProjetLocation.API.Models.User
 {
-    public class RegisterForm
+    public class UserRegister
     {
         public string LastName { get; set; }
         public string FirstName { get; set; }

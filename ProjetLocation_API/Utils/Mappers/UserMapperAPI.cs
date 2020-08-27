@@ -5,16 +5,16 @@ namespace ProjetLocation.API.Utils.Mappers
 {
     internal static class UserMapperAPI
     {
-        internal static Api.LoginForm DALUserLoginToAPI(this Dal.User user)
+        internal static Api.UserLogin DALUserLoginToAPI(this Dal.User user)
         {
-            return new Api.LoginForm()
+            return new Api.UserLogin()
             {
                 Email = user.Email,
                 Passwd = user.Passwd
             };
         }
 
-        internal static Dal.User APIUserLoginToDAL(this Api.LoginForm user)
+        internal static Dal.User APIUserLoginToDAL(this Api.UserLogin user)
         {
             return new Dal.User()
             {
@@ -23,9 +23,9 @@ namespace ProjetLocation.API.Utils.Mappers
             };
         }
 
-        internal static Api.RegisterForm DALUserRegisterToAPI(this Dal.User user)
+        internal static Api.UserRegister DALUserRegisterToAPI(this Dal.User user)
         {
-            return new Api.RegisterForm()
+            return new Api.UserRegister()
             {
                 LastName = user.LastName,
                 FirstName = user.FirstName,
@@ -35,7 +35,7 @@ namespace ProjetLocation.API.Utils.Mappers
             };
         }
 
-        internal static Dal.User APIUserRegisterToDAL(this Api.RegisterForm user)
+        internal static Dal.User APIUserRegisterToDAL(this Api.UserRegister user)
         {
             return new Dal.User()
             {
