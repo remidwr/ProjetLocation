@@ -11,6 +11,7 @@ namespace ProjetLocation.API.Infrastructure
     public class AuthRequiredAttribute : AuthorizationFilterAttribute
     {
         private ITokenService _tokenSerivce;
+
         public AuthRequiredAttribute(TokenService tokenService)
         {
             _tokenSerivce = tokenService;

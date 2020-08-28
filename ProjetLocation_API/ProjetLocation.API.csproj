@@ -16,7 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DAL.Enumerations\DAL.Enumerations.csproj" />
     <ProjectReference Include="..\DAL.Repositories\DAL.Repositories.csproj" />
     <ProjectReference Include="..\Tools\Tools.Database\Tools.Database.csproj" />
     <ProjectReference Include="..\Tools\Tools.Security.RSA\Tools.Security.RSA.csproj" />

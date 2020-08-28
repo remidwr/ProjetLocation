@@ -36,6 +36,7 @@ namespace ProjetLocation_API
             services.AddSingleton(sp => new ConnectionInfo(connectionString));
             services.AddSingleton<Connection>();
             services.AddSingleton<AuthRepository>();
+            services.AddSingleton<GoodRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

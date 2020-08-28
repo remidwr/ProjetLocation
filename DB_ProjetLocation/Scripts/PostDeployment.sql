@@ -8,6 +8,12 @@ EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo 1, 'Dewinckeleer', 'Rémi', '1989-
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo 2, 'Nolan', 'Christopher', '1970-07-30', 'Wilshire Blvd.', '10880', 'Suite 2100', 90024, 'Los Angeles', '+32490123456', '+32490654321', NULL;
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo 3, 'Pacino', 'Al', '1940-04-25', 'Civic Center Drive', '9336', NULL, 90210, 'Beverly Hills', '+32490123456', '+32490654321', NULL;
 
+-- UPDATE Users Active
+EXEC DB_ProjetLocation.dbo.CSP_UpdateUserActive 2, 0;
+
+-- UPDATE Users Banned
+EXEC DB_ProjetLocation.dbo.CSP_UpdateUserBanned 3, 1;
+
 -- INSERT Section
 EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Auto & Moto';
 EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Bébé';

@@ -6,11 +6,15 @@
     @Passwd NVARCHAR(20)
 AS
 BEGIN
-    IF EXISTS(SELECT Email FROM Users WHERE Email = @Email)
+    IF EXISTS(SELECT Email FROM Users WHERE Email = @Email AND IsActive = 0 AND IsBanned = 0)
         BEGIN
             UPDATE Users
             SET IsActive = 1
             WHERE [User_Id] = (SELECT [User_Id] FROM Users WHERE Email = @Email);
+        END
+    ELSE IF EXISTS(SELECT Email FROM Users WHERE Email = @Email AND IsActive = 0 AND IsBanned = 1)
+        BEGIN
+            RAISERROR('User_Banned', 16, 1);
         END
     ELSE
         BEGIN

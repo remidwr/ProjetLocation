@@ -2,9 +2,9 @@
 
 namespace DAL.IRepositories
 {
-    public interface IAuthRepository
+    public interface IAuthRepository<TUser>
     {
-        User Login(string email, string passwd);
-        int Register(User user);
+        TUser Login(string email, string passwd);
+        int Register(TUser user);
     }
 }

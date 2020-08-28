@@ -2,6 +2,13 @@
 	@UserId INT
 AS
 BEGIN
-	DELETE FROM Users
-	WHERE [User_Id] = @UserId
+	IF EXISTS(SELECT [User_Id] FROM Users WHERE [User_Id] = @UserId)
+		BEGIN
+			DELETE FROM Users
+			WHERE [User_Id] = @UserId;
+		END
+	ELSE
+		BEGIN
+			RAISERROR('UserNotFound', 16, 1);
+		END
 END
