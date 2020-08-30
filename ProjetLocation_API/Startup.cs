@@ -36,6 +36,7 @@ namespace ProjetLocation_API
             services.AddSingleton(sp => new ConnectionInfo(connectionString));
             services.AddSingleton<Connection>();
             services.AddSingleton<AuthRepository>();
+            services.AddSingleton<UserRepository>();
             services.AddSingleton<GoodRepository>();
         }
 

@@ -5,24 +5,24 @@ using System.Collections.Generic;
 
 namespace DAL.Repositories
 {
-    public class GoodRepository : IGoodRepository<Good>
+    public class GoodRepository : IGenericRepository<Good>
     {
-        public Good Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Good> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Insert(Good good)
+        public Good Get(string id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(int id, Good good)
+        public int Insert(Good entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public int Update(string id, Good entity)
         {
             throw new NotImplementedException();
         }

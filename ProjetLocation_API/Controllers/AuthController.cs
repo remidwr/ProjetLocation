@@ -1,13 +1,14 @@
 ﻿using DAL.IRepositories;
-using DAL.Models;
+using Dal = DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Infrastructure;
-using ProjetLocation.API.Models.User;
+using Api = ProjetLocation.API.Models.User;
 using System;
 using System.Net;
 using Tools.Security.RSA;
 using Tools.Security.Token;
+using ProjetLocation.API.Utils.Mappers;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -15,7 +16,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IAuthRepository<User> _authRepository;
+        private IAuthRepository<Dal.User> _authRepository;
         private ITokenService _tokenService;
 
         public AuthController(AuthRepository authRepository, ITokenService tokenService)
@@ -26,13 +27,13 @@ namespace ProjetLocation.API.Controllers
 
         [HttpPost]
         [Route("register")]
-        public IActionResult Register([FromBody] User user)
+        public IActionResult Register([FromBody] Api.User user) // POSTMAN OK
         {
             int Successful = 0;
 
             try
             {
-                Successful = _authRepository.Register(user);
+                Successful = _authRepository.Register(user.APIUserToDAL());
             }
             catch (Exception ex)
             {
@@ -52,9 +53,9 @@ namespace ProjetLocation.API.Controllers
 
         [HttpPost]
         [Route("login")]
-        public IActionResult Login([FromBody] UserLogin userLogin)
+        public IActionResult Login([FromBody] Api.UserLogin userLogin) // POSTMAN OK
         {
-            User user = new User();
+            Dal.User user = new Dal.User();
 
             try
             {
