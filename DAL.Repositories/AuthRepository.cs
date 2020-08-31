@@ -69,36 +69,5 @@ namespace DAL.Repositories
 
             return Successful;
         }
-
-        public int UpdateInfo(int id, User user)
-        {
-            int Successful = 0;
-
-            Command command = new Command("CSP_UpdateUserInfo", true);
-            command.AddParameter("UserId", id);
-            command.AddParameter("LastName", user.LastName);
-            command.AddParameter("FirstName", user.FirstName);
-            command.AddParameter("Birthdate", user.Birthdate);
-            command.AddParameter("Street", user.Street);
-            command.AddParameter("Number", user.Number);
-            command.AddParameter("Box", user.Box);
-            command.AddParameter("PostCode", user.PostCode);
-            command.AddParameter("City", user.City);
-            command.AddParameter("Phone1", user.Phone1);
-            command.AddParameter("Phone2", user.Phone2);
-            command.AddParameter("Picture", user.Picture);
-
-            try
-            {
-                _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                if(ex.Message.Contains("UserNotFound"))
-                    throw new Exception(ex.Message);
-            }
-
-            return Successful;
-        }
     }
 }

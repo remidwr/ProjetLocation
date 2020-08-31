@@ -1,5 +1,5 @@
-﻿CREATE VIEW [dbo].[V_ActiveUser]
-	AS 
+﻿CREATE VIEW [dbo].[V_User]
+	AS
 	SELECT [User_Id],
 		   LastName,
 		   FirstName,
@@ -18,4 +18,3 @@
 		   IsAdmin,
 		   IsBanned
 	FROM Users
-	WHERE IsActive = 1;

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using DAL.IRepositories;
 using Dal = DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Api = ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Mappers;
+using Microsoft.AspNetCore.Authorization;
+using ProjetLocation.API.Infrastructure;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,7 +27,7 @@ namespace ProjetLocation.API.Controllers
 
         // GET: api/<UserController>
         [HttpGet]
-        public IActionResult GetAll() // Add Banned to User
+        public IActionResult GetAll() // POSTMAN OK
         {
             IEnumerable<Api.User> users = _userRepository.GetAll().Select(x => x.DALUserToAPI());
 
@@ -39,7 +39,7 @@ namespace ProjetLocation.API.Controllers
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id) // POSTMAN OK
         {
             Api.User user = _userRepository.Get(id).DALUserToAPI();
 
@@ -51,7 +51,7 @@ namespace ProjetLocation.API.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Api.UserInfo user)
+        public IActionResult Put(int id, [FromBody] Api.UserInfo user) // POSTMAN OK
         {
             int Successful = _userRepository.Update(id, user.APIUserInfoToDAL());
 
@@ -64,7 +64,7 @@ namespace ProjetLocation.API.Controllers
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id) // POSTMAN OK
         {
             int Successful = _userRepository.Delete(id);
 

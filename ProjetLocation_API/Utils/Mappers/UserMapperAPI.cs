@@ -1,4 +1,5 @@
-﻿using Api = ProjetLocation.API.Models.User;
+﻿using Microsoft.AspNetCore.Server.IIS.Core;
+using Api = ProjetLocation.API.Models.User;
 using Dal = DAL.Models;
 
 namespace ProjetLocation.API.Utils.Mappers
@@ -7,26 +8,32 @@ namespace ProjetLocation.API.Utils.Mappers
     {
         internal static Api.User DALUserToAPI(this Dal.User user)
         {
-            return new Api.User()
+            if (!(user is null))
             {
-                Id = user.Id,
-                LastName = user.LastName,
-                FirstName = user.FirstName,
-                Birthdate = user.Birthdate,
-                Email = user.Email,
-                Passwd = user.Passwd,
-                Street = user.Street,
-                Number = user.Number,
-                Box = user.Box,
-                PostCode = user.PostCode,
-                City = user.City,
-                Phone1 = user.Phone1,
-                Phone2 = user.Phone2,
-                Picture = user.Picture,
-                IsActive = user.IsActive,
-                IsAdmin = user.IsAdmin,
-                Token = user.Token
-            };
+                return new Api.User()
+                {
+                    Id = user.Id,
+                    LastName = user.LastName,
+                    FirstName = user.FirstName,
+                    Birthdate = user.Birthdate,
+                    Email = user.Email,
+                    Passwd = user.Passwd,
+                    Street = user.Street,
+                    Number = user.Number,
+                    Box = user.Box,
+                    PostCode = user.PostCode,
+                    City = user.City,
+                    Phone1 = user.Phone1,
+                    Phone2 = user.Phone2,
+                    Picture = user.Picture,
+                    IsActive = user.IsActive,
+                    IsAdmin = user.IsAdmin,
+                    IsBanned = user.IsBanned,
+                    Token = user.Token
+                };
+            }
+            else
+                return null;
         }
 
         internal static Dal.User APIUserToDAL(this Api.User user)
@@ -49,6 +56,7 @@ namespace ProjetLocation.API.Utils.Mappers
                 Picture = user.Picture,
                 IsActive = user.IsActive,
                 IsAdmin = user.IsAdmin,
+                IsBanned = user.IsBanned,
                 Token = user.Token
             };
         }

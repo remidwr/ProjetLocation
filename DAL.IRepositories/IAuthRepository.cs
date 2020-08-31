@@ -1,6 +1,4 @@
-﻿using DAL.Models;
-
-namespace DAL.IRepositories
+﻿namespace DAL.IRepositories
 {
     public interface IAuthRepository<TUser>
     {

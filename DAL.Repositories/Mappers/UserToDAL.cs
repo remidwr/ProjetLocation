@@ -24,7 +24,8 @@ namespace DAL.Repositories.Mappers
                 Phone2 = record["Phone2"] is DBNull ? null : (string)record["Phone2"],
                 Picture = record["Picture"] is DBNull ? null : (string)record["Picture"],
                 IsActive = (bool)record["IsActive"],
-                IsAdmin = (bool)record["IsAdmin"]
+                IsAdmin = (bool)record["IsAdmin"],
+                IsBanned = (bool)record["IsBanned"]
             };
         }
     }
