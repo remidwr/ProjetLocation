@@ -66,6 +66,27 @@ namespace DAL.Repositories
             return Successful;
         }
 
+        public int UpdatePassword(int id, User user)
+        {
+            int Successful = 0;
+
+            Command command = new Command("CSP_UpdateUserPassword", true);
+            command.AddParameter("UserId", id);
+            command.AddParameter("Passwd", user.Passwd);
+
+            try
+            {
+                Successful = _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                if(ex.Message.Contains("SamePasswordThanPrevious"))
+                    throw new Exception(ex.Message);
+            }
+
+            return Successful;
+        }
+
         public int Delete(int id)
         {
             int Successful = 0;

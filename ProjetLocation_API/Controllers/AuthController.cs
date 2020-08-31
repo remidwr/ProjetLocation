@@ -9,10 +9,12 @@ using System.Net;
 using Tools.Security.RSA;
 using Tools.Security.Token;
 using ProjetLocation.API.Utils.Mappers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProjetLocation.API.Controllers
 {
     [Route("api/[controller]")]
+    [AllowAnonymous]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -26,6 +28,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         [Route("register")]
         public IActionResult Register([FromBody] Api.User user) // POSTMAN OK
         {
@@ -55,11 +58,11 @@ namespace ProjetLocation.API.Controllers
         [Route("login")]
         public IActionResult Login([FromBody] Api.UserLogin userLogin) // POSTMAN OK
         {
-            Dal.User user = new Dal.User();
+            Api.User user = new Api.User();
 
             try
             {
-                user = _authRepository.Login(userLogin.Email, userLogin.Passwd);
+                user = _authRepository.Login(userLogin.Email, userLogin.Passwd).DALUserToAPI();
             }
             catch (Exception ex)
             {

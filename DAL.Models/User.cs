@@ -19,8 +19,8 @@ namespace DAL.Models
         public string Phone2 { get; set; }
         public string Picture { get; set; }
         public bool IsActive { get; set; }
-        public bool IsAdmin { get; set; }
         public bool IsBanned { get; set; }
+        public int RoleId { get; set; }
         public string Token { get; set; }
     }
 }

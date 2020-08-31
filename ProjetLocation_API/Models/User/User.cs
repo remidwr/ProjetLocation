@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ProjetLocation.API.Models.User
 {
@@ -22,8 +19,8 @@ namespace ProjetLocation.API.Models.User
         public string Phone2 { get; set; }
         public string Picture { get; set; }
         public bool IsActive { get; set; }
-        public bool IsAdmin { get; set; }
         public bool IsBanned { get; set; }
+        public int RoleId { get; set; }
         public string Token { get; set; }
     }
 }

@@ -27,8 +27,8 @@ namespace ProjetLocation.API.Utils.Mappers
                     Phone2 = user.Phone2,
                     Picture = user.Picture,
                     IsActive = user.IsActive,
-                    IsAdmin = user.IsAdmin,
                     IsBanned = user.IsBanned,
+                    RoleId = user.RoleId,
                     Token = user.Token
                 };
             }
@@ -55,8 +55,8 @@ namespace ProjetLocation.API.Utils.Mappers
                 Phone2 = user.Phone2,
                 Picture = user.Picture,
                 IsActive = user.IsActive,
-                IsAdmin = user.IsAdmin,
                 IsBanned = user.IsBanned,
+                RoleId = user.RoleId,
                 Token = user.Token
             };
         }
@@ -136,6 +136,22 @@ namespace ProjetLocation.API.Utils.Mappers
                 Phone1 = user.Phone1,
                 Phone2 = user.Phone2,
                 Picture = user.Picture
+            };
+        }
+
+        internal static Api.UserPassword DALUserPasswordToAPI(this Dal.User user)
+        {
+            return new Api.UserPassword()
+            {
+                Passwd = user.Passwd
+            };
+        }
+
+        internal static Dal.User APIUserPasswordToDAL(this Api.UserPassword user)
+        {
+            return new Dal.User()
+            {
+                Passwd = user.Passwd
             };
         }
     }

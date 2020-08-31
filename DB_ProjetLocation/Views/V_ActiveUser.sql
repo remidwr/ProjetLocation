@@ -15,7 +15,7 @@
 		   Phone2,
 		   Picture,
 		   IsActive,
-		   IsAdmin,
-		   IsBanned
+		   IsBanned,
+		   Role_Id
 	FROM Users
 	WHERE IsActive = 1;

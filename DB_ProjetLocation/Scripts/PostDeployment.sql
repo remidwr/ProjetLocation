@@ -1,17 +1,33 @@
-﻿-- REGISTER Users
-EXEC DB_ProjetLocation.dbo.CSP_Register 'Dewinckeleer', 'Rémi', '1989-12-18', 'remidwr@gmail.com', 'Test1234=';
-EXEC DB_ProjetLocation.dbo.CSP_Register 'Nolan', 'Christopher', '1970-07-30', 'cnolan@interstellar.com', 'Test1234=';
-EXEC DB_ProjetLocation.dbo.CSP_Register 'Pacino', 'Al', '1940-04-25', 'al@godfather.com', 'Test1234=';
+﻿-- INSERT Role
+EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Subscriber'; -- ID 1
+EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Contributor'; -- ID 2
+EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Author'; -- ID 3
+EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Editor'; -- ID 4
+EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Administrator'; -- ID 5
+EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Super Administrator'; -- ID 6
+
+-- REGISTER Users
+EXEC DB_ProjetLocation.dbo.CSP_Register 'Dewinckeleer', 'Rémi', '1989-12-18', 'remidwr@gmail.com', 'Test1234='; -- ID 1
+EXEC DB_ProjetLocation.dbo.CSP_Register 'Nolan', 'Christopher', '1970-07-30', 'cnolan@interstellar.com', 'Test1234='; -- ID 2
+EXEC DB_ProjetLocation.dbo.CSP_Register 'Pacino', 'Al', '1940-04-25', 'al@godfather.com', 'Test1234='; -- ID 3
+EXEC DB_ProjetLocation.dbo.CSP_Register 'Di Caprio', 'Leonardo', '1974-11-11', 'leo@dicaprio.com', 'Test1234='; -- ID 4
+EXEC DB_ProjetLocation.dbo.CSP_Register 'Scorsese', 'Martin', '1942-11-17', 'martin@scorsese.com', 'Test1234='; -- ID 5
+EXEC DB_ProjetLocation.dbo.CSP_Register 'Tarantino', 'Quentin', '1963-03-27', 'quentin@tarentino.com', 'Test1234='; -- ID 6
 
 -- UPDATE Users
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo 1, 'Dewinckeleer', 'Rémi', '1989-12-18', 'Singel', '80', NULL, 1853, 'Strombeek-Bever', '+32490123456', '+32490654321', NULL;
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo 2, 'Nolan', 'Christopher', '1970-07-30', 'Wilshire Blvd.', '10880', 'Suite 2100', 90024, 'Los Angeles', '+32490123456', '+32490654321', NULL;
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo 3, 'Pacino', 'Al', '1940-04-25', 'Civic Center Drive', '9336', NULL, 90210, 'Beverly Hills', '+32490123456', '+32490654321', NULL;
 
--- UPDATE Users Active
+-- UPDATE User Role
+EXEC DB_ProjetLocation.dbo.CSP_UpdateUserRole 1, 6;
+EXEC DB_ProjetLocation.dbo.CSP_UpdateUserRole 4, 2;
+EXEC DB_ProjetLocation.dbo.CSP_UpdateUserRole 5, 3;
+
+-- UPDATE User Active
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserActive 2, 0;
 
--- UPDATE Users Banned
+-- UPDATE User Banned
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserBanned 3, 1;
 
 -- INSERT Section

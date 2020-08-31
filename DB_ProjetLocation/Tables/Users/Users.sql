@@ -15,10 +15,11 @@
     [Phone2] NVARCHAR(50) NULL, 
     [Picture] NVARCHAR(320) NULL, 
     [IsActive] BIT NOT NULL DEFAULT 1, 
-    [IsAdmin] BIT NOT NULL DEFAULT 0, 
     [IsBanned] BIT NOT NULL DEFAULT 0, 
+    [Role_Id] INT NOT NULL DEFAULT 1,
     CONSTRAINT [PK_Users] PRIMARY KEY ([User_Id]), 
-    CONSTRAINT [UK_Users_Email] UNIQUE ([Email])
+    CONSTRAINT [UK_Users_Email] UNIQUE ([Email]), 
+    CONSTRAINT [FK_Users_ToRoles] FOREIGN KEY ([Role_Id]) REFERENCES [Roles]([Role_Id])
 )
 
 GO

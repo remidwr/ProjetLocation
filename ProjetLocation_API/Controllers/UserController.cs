@@ -7,8 +7,6 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Api = ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Mappers;
-using Microsoft.AspNetCore.Authorization;
-using ProjetLocation.API.Infrastructure;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -59,6 +57,19 @@ namespace ProjetLocation.API.Controllers
                 return Ok();
             else
                 return Problem(detail: "Unable to update user informations !",
+                               statusCode: (int)HttpStatusCode.Unauthorized);
+        }
+
+        // PUT api/<UserController>/5
+        [HttpPut("{id}/pwd")]
+        public IActionResult PutPassword(int id, [FromBody] Api.UserPassword user)
+        {
+            int Successful = _userRepository.UpdatePassword(id, user.APIUserPasswordToDAL());
+
+            if (Successful > 0)
+                return Ok();
+            else
+                return Problem(detail: "Same password as the previous one !",
                                statusCode: (int)HttpStatusCode.Unauthorized);
         }
 

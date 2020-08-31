@@ -1,4 +1,4 @@
-﻿using DAL.Models;
+﻿using ProjetLocation.API.Models.User;
 using System.Collections.Generic;
 using System.Security.Claims;
 
@@ -14,7 +14,7 @@ namespace ProjetLocation.API.Infrastructure
             yield return new Claim("Birthdate", user.Birthdate.ToString());
             yield return new Claim("Email", user.Email);
             yield return new Claim("IsActive", user.IsActive.ToString());
-            yield return new Claim("IsAdmin", user.IsAdmin.ToString());
+            yield return new Claim("RoleId", user.RoleId.ToString());
         }
     }
 }
