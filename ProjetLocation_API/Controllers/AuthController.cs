@@ -13,8 +13,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ProjetLocation.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    [AllowAnonymous]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -27,8 +27,8 @@ namespace ProjetLocation.API.Controllers
             _tokenService = tokenService;
         }
 
-        [HttpPost]
         [AllowAnonymous]
+        [HttpPost]
         [Route("register")]
         public IActionResult Register([FromBody] Api.User user) // POSTMAN OK
         {
@@ -54,6 +54,7 @@ namespace ProjetLocation.API.Controllers
                 return Problem(detail: "Unable to register this new user !");
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [Route("login")]
         public IActionResult Login([FromBody] Api.UserLogin userLogin) // POSTMAN OK
@@ -85,13 +86,12 @@ namespace ProjetLocation.API.Controllers
                 user.Token = _tokenService.EncodeToken(user, (u) => u.ToCLaims());
 
                 if (user.Token == null || user.Token == string.Empty)
-                    return BadRequest(new { message = "Invalid token !" });
+                    return BadRequest(new { message = "Username or password is incorrect !" });
 
                 return Ok(user);
             }
             else
-                return Problem(detail: "User not found !",
-                               statusCode: (int)HttpStatusCode.NotFound);
+                return NotFound();
         }
     }
 }

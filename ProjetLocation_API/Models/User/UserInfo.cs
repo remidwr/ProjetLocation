@@ -1,11 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace ProjetLocation.API.Models.User
 {
     public class UserInfo
     {
+        [Required]
         public string LastName { get; set; }
+        [Required]
         public string FirstName { get; set; }
+        [Required]
         public DateTime Birthdate { get; set; }
         public string Street { get; set; }
         public string Number { get; set; }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Server.IIS.Core;
-using Api = ProjetLocation.API.Models.User;
+﻿using Api = ProjetLocation.API.Models.User;
 using Dal = DAL.Models;
 
 namespace ProjetLocation.API.Utils.Mappers
