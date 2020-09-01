@@ -1,10 +1,7 @@
 ﻿-- INSERT Role
-EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Subscriber'; -- ID 1
-EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Contributor'; -- ID 2
-EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Author'; -- ID 3
-EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Editor'; -- ID 4
-EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Administrator'; -- ID 5
-EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Super Administrator'; -- ID 6
+EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'User'; -- ID 1
+EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Administrator'; -- ID 2
+EXEC DB_ProjetLocation.dbo.CSP_InsertRole 'Super Administrator'; -- ID 3
 
 -- REGISTER Users
 EXEC DB_ProjetLocation.dbo.CSP_Register 'Dewinckeleer', 'Rémi', '1989-12-18', 'remidwr@gmail.com', 'Test1234='; -- ID 1
@@ -20,9 +17,9 @@ EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo 2, 'Nolan', 'Christopher', '1970-0
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserInfo 3, 'Pacino', 'Al', '1940-04-25', 'Civic Center Drive', '9336', NULL, 90210, 'Beverly Hills', '+32490123456', '+32490654321', NULL;
 
 -- UPDATE User Role
-EXEC DB_ProjetLocation.dbo.CSP_UpdateUserRole 1, 6;
+EXEC DB_ProjetLocation.dbo.CSP_UpdateUserRole 1, 3;
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserRole 4, 2;
-EXEC DB_ProjetLocation.dbo.CSP_UpdateUserRole 5, 3;
+EXEC DB_ProjetLocation.dbo.CSP_UpdateUserRole 5, 1;
 
 -- UPDATE User Active
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserActive 2, 0;

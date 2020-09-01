@@ -7,9 +7,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Tools.Database;
 using Tools.Security.RSA;
-using Tools.Security.Token;
 using DAL.Repositories;
 using ProjetLocation.API.Helpers;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ProjetLocation_API
 {
@@ -30,11 +32,29 @@ namespace ProjetLocation_API
             string connectionString = dbConnectionStringsSection.Get<DBConnectionStrings>().ConnectionStrings;
 
             IConfigurationSection appSettingsSection = Configuration.GetSection("AppSettings");
+            services.Configure<AppSettings>(appSettingsSection);
+
             AppSettings appSettings = appSettingsSection.Get<AppSettings>();
-            string secret = appSettingsSection.Get<AppSettings>().Secret;
+            byte[] key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
 
             services.AddControllers();
-            services.AddSingleton<ITokenService, TokenService>(sp => new TokenService(secret));
             services.AddSingleton<KeyGenerator>();
             services.AddSingleton<DbProviderFactory>(sp => SqlClientFactory.Instance);
             services.AddSingleton(sp => new ConnectionInfo(connectionString));
@@ -56,6 +76,7 @@ namespace ProjetLocation_API
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -2,14 +2,19 @@
 using Dal = DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using ProjetLocation.API.Infrastructure;
 using Api = ProjetLocation.API.Models.User;
 using System;
 using System.Net;
 using Tools.Security.RSA;
-using Tools.Security.Token;
 using ProjetLocation.API.Utils.Mappers;
 using Microsoft.AspNetCore.Authorization;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
+using ProjetLocation.API.Helpers;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using Microsoft.Extensions.Options;
+using ProjetLocation.API.Models.User.RoleName;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -19,12 +24,12 @@ namespace ProjetLocation.API.Controllers
     public class AuthController : ControllerBase
     {
         private IAuthRepository<Dal.User> _authRepository;
-        private ITokenService _tokenService;
+        private readonly AppSettings _appSettings;
 
-        public AuthController(AuthRepository authRepository, ITokenService tokenService)
+        public AuthController(AuthRepository authRepository, IOptions<AppSettings> appSettings)
         {
             _authRepository = authRepository;
-            _tokenService = tokenService;
+            _appSettings = appSettings.Value;
         }
 
         [AllowAnonymous]
@@ -83,10 +88,35 @@ namespace ProjetLocation.API.Controllers
 
             if (!(user is null))
             {
-                user.Token = _tokenService.EncodeToken(user, (u) => u.ToCLaims());
+                switch (user.RoleId)
+                {
+                    case 1:
+                        user.RoleName = Roles.User;
+                        break;
+                    case 2:
+                        user.RoleName = Roles.Admin;
+                        break;
+                    case 3:
+                        user.RoleName = Roles.SuperAdmin;
+                        break;
+                    default:
+                        break;
+                }
 
-                if (user.Token == null || user.Token == string.Empty)
-                    return BadRequest(new { message = "Username or password is incorrect !" });
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
+                var tokenDescriptor = new SecurityTokenDescriptor
+                {
+                    Subject = new ClaimsIdentity(new Claim[]
+                    {
+                        new Claim("Id", user.Id.ToString()),
+                        new Claim("Role", user.RoleName)
+                    }),
+                    Expires = DateTime.UtcNow.AddDays(1),
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                };
+                var token = tokenHandler.CreateToken(tokenDescriptor);
+                user.Token = tokenHandler.WriteToken(token);
 
                 return Ok(user);
             }

@@ -7,11 +7,16 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Api = ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Mappers;
+using Microsoft.AspNetCore.Authorization;
+using ProjetLocation.API.Models.User.RoleName;
+using ProjetLocation.API.Infrastructure;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProjetLocation.API.Controllers
 {
+    //[Authorize]
+    //[Roles(Roles.Admin, Roles.SuperAdmin)]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -36,6 +41,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // GET api/<UserController>/5
+        //[Roles(Roles.User)]
         [HttpGet("{id}")]
         public IActionResult Get(int id) // POSTMAN OK
         {
@@ -48,6 +54,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // PUT api/<UserController>/5
+        //[Roles(Roles.User)]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Api.UserInfo user) // POSTMAN OK
         {
@@ -61,6 +68,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // PUT api/<UserController>/5
+        //[Roles(Roles.User)]
         [HttpPut("{id}/pwd")]
         public IActionResult PutPassword(int id, [FromBody] Api.UserPassword user)
         {
@@ -74,6 +82,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // DELETE api/<UserController>/5
+        //[Roles(Roles.User)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) // POSTMAN OK
         {
