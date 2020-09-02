@@ -68,5 +68,15 @@ namespace DAL.Repositories.Extensions
                 Name = (string)record["Section_Name"]
             };
         }
+
+        internal static Category ToDAL_Category(this IDataRecord record)
+        {
+            return new Category()
+            {
+                Id = (int)record["Category_Id"],
+                Name = (string)record["Category_Name"],
+                SectionId = (int)record["Section_Id"]
+            };
+        }
     }
 }
