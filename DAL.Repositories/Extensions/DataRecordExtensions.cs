@@ -59,5 +59,14 @@ namespace DAL.Repositories.Extensions
                 SectionId = (int)record["Section_Id"]
             };
         }
+
+        internal static Section ToDAL_Section(this IDataRecord record)
+        {
+            return new Section()
+            {
+                Id = (int)record["Section_Id"],
+                Name = (string)record["Section_Name"]
+            };
+        }
     }
 }

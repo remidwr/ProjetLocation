@@ -1,0 +1,83 @@
+﻿using DAL.IRepositories;
+using DAL.Models;
+using DAL.Repositories.Extensions;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using Tools.Database;
+
+namespace DAL.Repositories
+{
+    public class SectionRepository : ISectionRepository<Section>
+    {
+        Connection _connection;
+
+        public SectionRepository(Connection connection)
+        {
+            _connection = connection;
+        }
+
+        public IEnumerable<Section> GetAll()
+        {
+            Command command = new Command("SELECT * FROM V_Section");
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_Section());
+        }
+
+        public Section Get(int id)
+        {
+            Command command = new Command("SELECT * FROM V_Section WHERE Section_Id = @SectionId");
+            command.AddParameter("SectionId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
+        }
+
+        public int Insert(Section section)
+        {
+            int Successful = 0;
+
+            Command command = new Command("CSP_InsertSection", true);
+            command.AddParameter("SectionName", section.Name);
+
+            try
+            {
+                Successful = _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("UK_Section_Name"))
+                    throw new Exception(ex.Message);
+            }
+
+            return Successful;
+        }
+
+        public int Update(int id, Section section)
+        {
+            int Successful = 0;
+            Command command = new Command("CSP_UpdateSection", true);
+            command.AddParameter("SectionId", id);
+            command.AddParameter("SectionName", section.Name);
+
+            try
+            {
+                Successful = _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("UK_Section_Name"))
+                    throw new Exception(ex.Message);
+            }
+            return Successful;
+        }
+
+        public int Delete(int id)
+        {
+            Command command = new Command("CSP_DeleteSection", true);
+            command.AddParameter("SectionId", id);
+
+            return _connection.ExecuteNonQuery(command);
+        }
+    }
+}

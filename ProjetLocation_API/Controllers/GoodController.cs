@@ -24,7 +24,7 @@ namespace ProjetLocation.API.Controllers
 
         // GET: api/<GoodController>
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll() // POSTMAN OK
         {
             IEnumerable<Api.Good> goods = _goodRepository.GetAll().Select(x => x.DALGoodToAPI());
 
@@ -36,7 +36,7 @@ namespace ProjetLocation.API.Controllers
 
         // GET api/<GoodController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult Get(int id) // POSTMAN OK
         {
             Api.Good good = _goodRepository.Get(id).DALGoodToAPI();
 
@@ -48,7 +48,7 @@ namespace ProjetLocation.API.Controllers
 
         // POST api/<GoodController>
         [HttpPost]
-        public IActionResult Post([FromBody] Api.Good good)
+        public IActionResult Post([FromBody] Api.Good good) // POSTMAN OK
         {
             int Successful =  _goodRepository.Insert(good.APIGoodToDAL());
 
@@ -60,7 +60,7 @@ namespace ProjetLocation.API.Controllers
 
         // PUT api/<GoodController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Api.Good good)
+        public IActionResult Put(int id, [FromBody] Api.Good good) // POSTMAN OK
         {
             int Successful = _goodRepository.Update(id, good.APIGoodToDAL());
 
@@ -72,7 +72,7 @@ namespace ProjetLocation.API.Controllers
 
         // DELETE api/<GoodController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(int id) // POSTMAN OK
         {
             int Successful = _goodRepository.Delete(id);
 
