@@ -6,7 +6,6 @@ using Api = ProjetLocation.API.Models.User;
 using System;
 using System.Net;
 using Tools.Security.RSA;
-using ProjetLocation.API.Utils.Mappers;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -15,6 +14,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using ProjetLocation.API.Models.User.RoleName;
+using ProjetLocation.API.Utils.Extensions;
 
 namespace ProjetLocation.API.Controllers
 {

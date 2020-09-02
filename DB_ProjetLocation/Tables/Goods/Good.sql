@@ -6,7 +6,7 @@
     [State] NVARCHAR(50) NOT NULL, 
     [AmountPerDay] FLOAT NOT NULL, 
     [AmountPerWeek] FLOAT NULL, 
-    [AmoutPerMonth] FLOAT NULL, 
+    [AmountPerMonth] FLOAT NULL, 
     [Street] NVARCHAR(120) NOT NULL, 
     [Number] NVARCHAR(10) NOT NULL, 
     [Box] NVARCHAR(10) NULL, 

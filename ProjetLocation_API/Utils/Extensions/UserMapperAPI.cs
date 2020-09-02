@@ -1,7 +1,7 @@
 ﻿using Api = ProjetLocation.API.Models.User;
 using Dal = DAL.Models;
 
-namespace ProjetLocation.API.Utils.Mappers
+namespace ProjetLocation.API.Utils.Extensions
 {
     internal static class UserMapperAPI
     {

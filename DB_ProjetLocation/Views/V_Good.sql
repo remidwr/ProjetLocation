@@ -6,7 +6,7 @@
 		   [State],
 		   AmountPerDay,
 		   AmountPerWeek,
-		   AmoutPerMonth,
+		   AmountPerMonth,
 		   Street,
 		   Number,
 		   Box,

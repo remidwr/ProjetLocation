@@ -1,4 +1,4 @@
-﻿namespace DAL.Models
+﻿namespace ProjetLocation.API.Models.Good
 {
     public class Good
     {

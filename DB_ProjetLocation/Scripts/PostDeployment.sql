@@ -28,25 +28,25 @@ EXEC DB_ProjetLocation.dbo.CSP_UpdateUserActive 2, 0;
 EXEC DB_ProjetLocation.dbo.CSP_UpdateUserBanned 3, 1;
 
 -- INSERT Section
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Auto & Moto';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Bébé';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Construction';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Décoration';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Divers';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Electroménager';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Evènement';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Horeca';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Immobilier';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Jardin & Nature';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Loisir';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Mode';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Multimédia';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Outillage';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Photographie';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Services';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Sport';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Vacances';
-EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Vêtements';
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Auto & Moto'; -- ID 1
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Bébé'; -- ID 2
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Construction'; -- ID 3
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Décoration'; -- ID 4
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Divers'; -- ID 5
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Electroménager'; -- ID 6
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Evènement'; -- ID 7
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Horeca'; -- ID 8
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Immobilier'; -- ID 9
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Jardin & Nature'; -- ID 10
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Loisir'; -- ID 11
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Mode'; -- ID 12
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Multimédia'; -- ID 13
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Outillage'; -- ID 14
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Photographie'; -- ID 15
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Services'; -- ID 16
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Sport'; -- ID 17
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Vacances'; -- ID 18
+EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Vêtements'; -- ID 19
 
 -- INSERT Category (Auto & Moto)
 EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Auto', 1;	
@@ -180,8 +180,8 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Tronçonneuse Thermique Timberwolf 58
 										  90210,
 										  'Beverly Hills',
 										  'Http://tronconneuse.png',
-										  3,
+										  1,
 										  10;
 
 -- INSERT Rental
-EXEC DB_ProjetLocation.dbo.CSP_InsertRental 1, 3, '25-08-2020', '27-08-2020', 40, 50;
+--EXEC DB_ProjetLocation.dbo.CSP_InsertRental 1, 3, '25-08-2020', '27-08-2020', 40, 50;

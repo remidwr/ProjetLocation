@@ -1,8 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[CSP_DeleteGood]
-	@GoodId INT,
-	@UserId INT
+	@GoodId INT
 AS
 BEGIN
 	DELETE FROM Good
-	WHERE Good_Id = @GoodId AND [User_Id] = @UserId;
+	WHERE Good_Id = @GoodId;
 END

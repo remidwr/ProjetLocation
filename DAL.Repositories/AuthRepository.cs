@@ -1,6 +1,6 @@
 ﻿using DAL.IRepositories;
 using DAL.Models;
-using DAL.Repositories.Mappers;
+using DAL.Repositories.Extensions;
 using System;
 using System.Data.SqlClient;
 using System.Linq;

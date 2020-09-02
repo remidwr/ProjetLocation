@@ -6,7 +6,7 @@ using Dal = DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Api = ProjetLocation.API.Models.User;
-using ProjetLocation.API.Utils.Mappers;
+using ProjetLocation.API.Utils.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Infrastructure;
