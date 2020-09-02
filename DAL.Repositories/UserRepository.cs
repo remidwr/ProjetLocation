@@ -1,9 +1,7 @@
 ﻿using DAL.IRepositories;
 using DAL.Models;
 using DAL.Repositories.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using Tools.Database;
 
@@ -37,8 +35,6 @@ namespace DAL.Repositories
 
         public int Update(int id, User user)
         {
-            int Successful = 0;
-
             Command command = new Command("CSP_UpdateUserInfo", true);
             command.AddParameter("UserId", id);
             command.AddParameter("LastName", user.LastName);
@@ -53,57 +49,24 @@ namespace DAL.Repositories
             command.AddParameter("Phone2", user.Phone2);
             command.AddParameter("Picture", user.Picture);
 
-            try
-            {
-                Successful = _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                if (ex.Message.Contains("UserNotFound"))
-                    throw new Exception(ex.Message);
-            }
-
-            return Successful;
+            return _connection.ExecuteNonQuery(command);
         }
 
         public int UpdatePassword(int id, User user)
         {
-            int Successful = 0;
-
             Command command = new Command("CSP_UpdateUserPassword", true);
             command.AddParameter("UserId", id);
             command.AddParameter("Passwd", user.Passwd);
 
-            try
-            {
-                Successful = _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                if(ex.Message.Contains("SamePasswordThanPrevious"))
-                    throw new Exception(ex.Message);
-            }
-
-            return Successful;
+            return _connection.ExecuteNonQuery(command);
         }
 
         public int Delete(int id)
         {
-            int Successful = 0;
             Command command = new Command("CSP_DeleteUser", true);
             command.AddParameter("UserId", id);
 
-            try
-            {
-                Successful = _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                if (ex.Message.Contains("UserNotFound"))
-                    throw new Exception(ex.Message);
-            }
-
-            return Successful;
+            return _connection.ExecuteNonQuery(command);
         }
     }
 }

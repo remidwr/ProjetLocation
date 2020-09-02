@@ -9,6 +9,6 @@ BEGIN
 		END
 	ELSE
 		BEGIN
-			RAISERROR('RoleAlreadyExists', 16, 1);
+			RAISERROR('UK_Roles_RoleName', 16, 1);
 		END
 END

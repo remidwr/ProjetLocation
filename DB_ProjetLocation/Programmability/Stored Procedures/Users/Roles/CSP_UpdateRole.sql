@@ -3,7 +3,7 @@
 	@RoleName NVARCHAR(50)
 AS
 BEGIN
-	IF EXISTS(SELECT Role_Id FROM Roles WHERE Role_Id = @RoleId)
+	IF NOT EXISTS(SELECT Role_Id FROM Roles WHERE RoleName = @RoleName)
 		BEGIN
 			UPDATE Roles
 			SET RoleName = @RoleName
@@ -11,6 +11,6 @@ BEGIN
 		END
 	ELSE
 		BEGIN
-			RAISERROR('RoleNotFound', 16, 1);
+			RAISERROR('UK_Roles_RoleName', 16, 1);
 		END
 END

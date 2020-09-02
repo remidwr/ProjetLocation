@@ -57,11 +57,7 @@ namespace DAL.Repositories
             }
             catch (SqlException ex)
             {
-                if (ex.Message.Contains("Incorrect_Email"))
-                    throw new Exception(ex.Message);
-                else if (ex.Message.Contains("Incorrect_Password"))
-                    throw new Exception(ex.Message);
-                else if (ex.Message.Contains("User_Inactive"))
+                if (ex.Message.Contains("User_Inactive"))
                     throw new Exception(ex.Message);
                 else if (ex.Message.Contains("User_Banned"))
                     throw new Exception(ex.Message);

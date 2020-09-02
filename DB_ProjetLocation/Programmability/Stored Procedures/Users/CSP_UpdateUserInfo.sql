@@ -13,24 +13,17 @@
 	@Picture NVARCHAR(320)
 AS
 BEGIN
-	IF EXISTS(SELECT [User_Id] FROM Users WHERE [User_Id] = @UserId)
-		BEGIN
-			UPDATE Users
-			SET LastName = @LastName,
-				FirstName = @FirstName,
-				Birthdate = @Birthdate,
-				Street = @Street,
-				Number = @Number,
-				Box = @Box,
-				PostCode = @PostCode,
-				City = @City,
-				Phone1 = @Phone1,
-				Phone2 = @Phone2,
-				Picture = @Picture
-			WHERE [User_Id] = @UserId;
-		END
-	ELSE
-		BEGIN
-			RAISERROR('UserNotFound', 16, 1);
-		END
+	UPDATE Users
+	SET LastName = @LastName,
+		FirstName = @FirstName,
+		Birthdate = @Birthdate,
+		Street = @Street,
+		Number = @Number,
+		Box = @Box,
+		PostCode = @PostCode,
+		City = @City,
+		Phone1 = @Phone1,
+		Phone2 = @Phone2,
+		Picture = @Picture
+	WHERE [User_Id] = @UserId;
 END

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using DAL.IRepositories;
 using Dal = DAL.Models;
 using DAL.Repositories;
@@ -63,8 +62,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to update user informations !",
-                               statusCode: (int)HttpStatusCode.Unauthorized);
+                return NotFound();
         }
 
         // PUT api/<UserController>/5
@@ -77,8 +75,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Same password as the previous one !",
-                               statusCode: (int)HttpStatusCode.Unauthorized);
+                return NotFound();
         }
 
         // DELETE api/<UserController>/5

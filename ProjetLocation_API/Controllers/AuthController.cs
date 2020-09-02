@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api = ProjetLocation.API.Models.User;
 using System;
 using System.Net;
-using Tools.Security.RSA;
+using Tools.Security.RSA; // TODO Cryptage RSA
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -49,14 +49,14 @@ namespace ProjetLocation.API.Controllers
                     return Problem(detail: "Email already used !",
                                    statusCode: (int)HttpStatusCode.Unauthorized);
                 else if (ex.Message.Contains("User_Banned"))
-                    return Problem(detail: "User_Banned",
+                    return Problem(detail: "User account is BANNED !!!",
                                    statusCode: (int)HttpStatusCode.Unauthorized);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to register this new user !");
+                return NotFound();
         }
 
         [AllowAnonymous]
@@ -72,13 +72,7 @@ namespace ProjetLocation.API.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("Incorrect_Email"))
-                    return Problem(detail: "Email is incorrect !",
-                                   statusCode: (int)HttpStatusCode.NotFound);
-                else if (ex.Message.Contains("Incorrect_Password"))
-                    return Problem(detail: "Password is incorrect !",
-                                   statusCode: (int)HttpStatusCode.NotFound);
-                else if (ex.Message.Contains("User_Inactive"))
+                if (ex.Message.Contains("User_Inactive"))
                     return Problem(detail: "User account is inactive !",
                                    statusCode: (int)HttpStatusCode.Unauthorized);
                 else if (ex.Message.Contains("User_Banned"))
