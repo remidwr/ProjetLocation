@@ -1,11 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DAL.IRepositories;
-using Dal = DAL.Models;
-using Api = ProjetLocation.API.Models.Good;
+using DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using ProjetLocation.API.Utils.Extensions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,7 +13,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class GoodController : ControllerBase
     {
-        private IGoodRepository<Dal.Good> _goodRepository;
+        private IGenericRepository<Good> _goodRepository;
 
         public GoodController(GoodRepository goodRepository)
         {
@@ -26,7 +24,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<Api.Good> goods = _goodRepository.GetAll().Select(x => x.DALGoodToAPI());
+            IEnumerable<Good> goods = _goodRepository.GetAll().Select(x => x);
 
             if (!(goods is null))
                 return Ok(goods);
@@ -38,7 +36,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id) // POSTMAN OK
         {
-            Api.Good good = _goodRepository.Get(id).DALGoodToAPI();
+            Good good = _goodRepository.Get(id);
 
             if (!(good is null))
                 return Ok(good);
@@ -48,9 +46,9 @@ namespace ProjetLocation.API.Controllers
 
         // POST api/<GoodController>
         [HttpPost]
-        public IActionResult Post([FromBody] Api.Good good) // POSTMAN OK
+        public IActionResult Post([FromBody] Good good) // POSTMAN OK
         {
-            int Successful =  _goodRepository.Insert(good.APIGoodToDAL());
+            int Successful =  _goodRepository.Insert(good);
 
             if (Successful > 0)
                 return Ok();
@@ -60,9 +58,9 @@ namespace ProjetLocation.API.Controllers
 
         // PUT api/<GoodController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Api.Good good) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] Good good) // POSTMAN OK
         {
-            int Successful = _goodRepository.Update(id, good.APIGoodToDAL());
+            int Successful = _goodRepository.Update(id, good);
 
             if (Successful > 0)
                 return Ok();

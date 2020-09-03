@@ -1,6 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[CSP_InsertRental]
 	@GoodId INT,
-	@UserId INT,
+	@OwnerId INT,
+	@TenantId INT,
 	@RentedFrom DATETIME,
 	@RentedTo DATETIME,
 	@Deposit FLOAT
@@ -27,6 +28,6 @@ BEGIN
 			SET @Amount = @Month * (SELECT AmountPerMonth FROM Good WHERE Good_Id = @GoodId);
 		END
 
-	INSERT INTO Rental ([Good_Id], [User_Id], [CreationDate], [RentedFrom], [RentedTo], [Amount], [Deposit])
-	VALUES (@GoodId, @UserId, GETDATE(), @RentedFrom, @RentedTo, @Amount, @Deposit);
+	INSERT INTO Rental ([Good_Id], [Owner_Id], [Tenant_Id], [CreationDate], [RentedFrom], [RentedTo], [Amount], [Deposit])
+	VALUES (@GoodId, @OwnerId, @TenantId, GETDATE(), @RentedFrom, @RentedTo, @Amount, @Deposit);
 END

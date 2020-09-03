@@ -7,7 +7,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class CategoryRepository : ICategoryRepository<Category>
+    public class CategoryRepository : IGenericRepository<Category>
     {
         Connection _connection;
 

@@ -9,7 +9,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class SectionRepository : ISectionRepository<Section>
+    public class SectionRepository : IGenericRepository<Section>
     {
         Connection _connection;
 

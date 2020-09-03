@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Dal = DAL.Models;
+using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using Api = ProjetLocation.API.Models.Rental;
 using DAL.IRepositories;
 using DAL.Repositories;
-using ProjetLocation.API.Utils.Extensions;
 using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -17,7 +15,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class RentalController : ControllerBase
     {
-        private IRentalRepository<Dal.Rental> _rentalRepository;
+        private IGenericRepository<Rental> _rentalRepository;
 
         public RentalController(RentalRepository rentalRepository)
         {
@@ -28,7 +26,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<Api.Rental> rentals = _rentalRepository.GetAll().Select(x => x.DALRentalToAPI());
+            IEnumerable<Rental> rentals = _rentalRepository.GetAll().Select(x => x);
 
             if (!(rentals is null))
                 return Ok(rentals);
@@ -40,7 +38,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id) // POSTMAN OK
         {
-            Api.Rental rental = _rentalRepository.Get(id).DALRentalToAPI();
+            Rental rental = _rentalRepository.Get(id);
 
             if (!(rental is null))
                 return Ok(rental);
@@ -50,9 +48,9 @@ namespace ProjetLocation.API.Controllers
 
         // POST api/<RentalController>
         [HttpPost]
-        public IActionResult Post([FromBody] Api.Rental rental) // POSTMAN OK
+        public IActionResult Post([FromBody] Rental rental) // POSTMAN OK
         {
-            int Successful = _rentalRepository.Insert(rental.DALRentalToAPI());
+            int Successful = _rentalRepository.Insert(rental);
 
             if (Successful > 0)
                 return Ok();
@@ -62,9 +60,9 @@ namespace ProjetLocation.API.Controllers
 
         // PUT api/<RentalController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Api.Rental rental) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] Rental rental) // POSTMAN OK
         {
-            int Successful = _rentalRepository.Update(id, rental.DALRentalToAPI());
+            int Successful = _rentalRepository.Update(id, rental);
 
             if (Successful > 0)
                 return Ok();

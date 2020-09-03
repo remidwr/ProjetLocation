@@ -214,9 +214,9 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Visseuse Bosch',
 										  14;
 
 -- INSERT Rental
-EXEC DB_ProjetLocation.dbo.CSP_InsertRental 1, 1, '03-09-2020', '10-09-2020', 50;
-EXEC DB_ProjetLocation.dbo.CSP_InsertRental 2, 4, '15-09-2020', '30-09-2020', 100;
-EXEC DB_ProjetLocation.dbo.CSP_InsertRental 2, 4, '01-09-2020', '02-09-2020', 100;
+EXEC DB_ProjetLocation.dbo.CSP_InsertRental 1, 1, 4, '03-09-2020', '10-09-2020', 50;
+EXEC DB_ProjetLocation.dbo.CSP_InsertRental 2, 4, 5, '15-09-2020', '30-09-2020', 100;
+EXEC DB_ProjetLocation.dbo.CSP_InsertRental 2, 4, 6, '01-09-2020', '02-09-2020', 100;
 
 -- UPDATE Rental Rating
 EXEC DB_ProjetLocation.dbo.CSP_UpdateRentalRating 3, 4, 'Qualité correcte vu le prix de la location.';

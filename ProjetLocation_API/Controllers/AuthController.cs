@@ -2,7 +2,6 @@
 using Dal = DAL.Models;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Api = ProjetLocation.API.Models.User;
 using System;
 using System.Net;
 using Tools.Security.RSA; // TODO Cryptage RSA
@@ -15,6 +14,7 @@ using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Utils.Extensions;
+using ProjetLocation.API.Models.User;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -35,13 +35,13 @@ namespace ProjetLocation.API.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("register")]
-        public IActionResult Register([FromBody] Api.User user) // POSTMAN OK
+        public IActionResult Register([FromBody] UserRegister user) // POSTMAN OK
         {
             int Successful = 0;
 
             try
             {
-                Successful = _authRepository.Register(user.APIUserToDAL());
+                Successful = _authRepository.Register(user.APIUserRegisterToDAL());
             }
             catch (Exception ex)
             {
@@ -62,9 +62,9 @@ namespace ProjetLocation.API.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        public IActionResult Login([FromBody] Api.UserLogin userLogin) // POSTMAN OK
+        public IActionResult Login([FromBody] UserLogin userLogin) // POSTMAN OK
         {
-            Api.User user = new Api.User();
+            User user = new User();
 
             try
             {

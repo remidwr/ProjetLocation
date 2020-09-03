@@ -9,7 +9,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class RentalRepository : IRentalRepository<Rental>
+    public class RentalRepository : IGenericRepository<Rental>
     {
         Connection _connection;
 
@@ -37,7 +37,8 @@ namespace DAL.Repositories
         {
             Command command = new Command("CSP_InsertRental", true);
             command.AddParameter("GoodId", rental.GoodId);
-            command.AddParameter("UserId", rental.UserId);
+            command.AddParameter("OwnerId", rental.OwnerId);
+            command.AddParameter("TenantId", rental.TenantId);
             command.AddParameter("RentedFrom", rental.RentedFrom);
             command.AddParameter("RentedTo", rental.RentedTo);
             command.AddParameter("Deposit", rental.Deposit);

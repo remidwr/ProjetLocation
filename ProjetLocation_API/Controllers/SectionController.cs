@@ -1,13 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Dal = DAL.Models;
-using Api = ProjetLocation.API.Models.Good;
 using Microsoft.AspNetCore.Mvc;
 using DAL.IRepositories;
 using DAL.Repositories;
-using ProjetLocation.API.Utils.Extensions;
 using System;
 using System.Net;
+using DAL.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -17,7 +15,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class SectionController : ControllerBase
     {
-        private ISectionRepository<Dal.Section> _sectionRepository;
+        private IGenericRepository<Section> _sectionRepository;
 
         public SectionController(SectionRepository sectionRepository)
         {
@@ -28,7 +26,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<Api.Section> sections = _sectionRepository.GetAll().Select(x => x.DALSectionToAPI());
+            IEnumerable<Section> sections = _sectionRepository.GetAll().Select(x => x);
 
             if (!(sections is null))
                 return Ok(sections);
@@ -40,7 +38,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id) // POSTMAN OK
         {
-            Api.Section section = _sectionRepository.Get(id).DALSectionToAPI();
+            Section section = _sectionRepository.Get(id);
 
             if (!(section is null))
                 return Ok(section);
@@ -50,13 +48,13 @@ namespace ProjetLocation.API.Controllers
 
         // POST api/<SectionController>
         [HttpPost]
-        public IActionResult Post([FromBody] Api.Section section) // POSTMAN OK
+        public IActionResult Post([FromBody] Section section) // POSTMAN OK
         {
             int Successful = 0;
 
             try
             {
-                Successful = _sectionRepository.Insert(section.APISectionToDAL());
+                Successful = _sectionRepository.Insert(section);
             }
             catch (Exception ex)
             {
@@ -73,13 +71,13 @@ namespace ProjetLocation.API.Controllers
 
         // PUT api/<SectionController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Api.Section section) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] Section section) // POSTMAN OK
         {
             int Successful = 0;
 
             try
             {
-                Successful = _sectionRepository.Update(id, section.APISectionToDAL());
+                Successful = _sectionRepository.Update(id, section);
             }
             catch (Exception ex)
             {

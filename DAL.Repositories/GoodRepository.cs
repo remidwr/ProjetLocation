@@ -7,7 +7,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class GoodRepository : IGoodRepository<Good>
+    public class GoodRepository : IGenericRepository<Good>
     {
         Connection _connection;
 

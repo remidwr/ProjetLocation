@@ -2,9 +2,9 @@
 using System.Linq;
 using DAL.IRepositories;
 using Dal = DAL.Models;
+using Api = ProjetLocation.API.Models.User;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Api = ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using ProjetLocation.API.Models.User.RoleName;
@@ -55,9 +55,9 @@ namespace ProjetLocation.API.Controllers
         // PUT api/<UserController>/5
         //[Roles(Roles.User)]
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Api.UserInfo user) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] Api.UserLogin user) // POSTMAN OK
         {
-            int Successful = _userRepository.Update(id, user.APIUserInfoToDAL());
+            int Successful = _userRepository.Update(id, user.APIUserLoginToDAL());
 
             if (Successful > 0)
                 return Ok();
