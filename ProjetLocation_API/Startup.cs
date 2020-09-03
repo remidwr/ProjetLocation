@@ -64,6 +64,7 @@ namespace ProjetLocation_API
             services.AddSingleton<GoodRepository>();
             services.AddSingleton<SectionRepository>();
             services.AddSingleton<CategoryRepository>();
+            services.AddSingleton<RentalRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

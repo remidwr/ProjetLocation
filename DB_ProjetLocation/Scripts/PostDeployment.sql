@@ -171,7 +171,7 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Autre', 18;
 EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Tronçonneuse Thermique Timberwolf 58 cm3',
 										  'Tronçonneuse Thermique Timberwolf 58 cm3.',
 										  'Utilisé',
-										  '20',
+										  20,
 										  NULL,
 										  NULL,
 										  'Civic Center Drive',
@@ -183,5 +183,40 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Tronçonneuse Thermique Timberwolf 58
 										  1,
 										  10;
 
+EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Location de tonnelle',
+										  'Convient pour tout type d''évènements extérieurs.',
+										  'Utilisé',
+										  100,
+										  NULL,
+										  NULL,
+										  'Avenue de la Tonnelle',
+										  '20',
+										  NULL,
+										  1300,
+										  'Wavre',
+										  'Http://tonnelle.png',
+										  4,
+										  7;
+
+EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Visseuse Bosch',
+										  'Pour faire des trous partout.',
+										  'Utilisé',
+										  10,
+										  NULL,
+										  NULL,
+										  'Avenue des vis',
+										  '50',
+										  NULL,
+										  4650,
+										  'Herve',
+										  'Http://visseuse.png',
+										  5,
+										  14;
+
 -- INSERT Rental
---EXEC DB_ProjetLocation.dbo.CSP_InsertRental 1, 3, '25-08-2020', '27-08-2020', 40, 50;
+EXEC DB_ProjetLocation.dbo.CSP_InsertRental 1, 1, '03-09-2020', '10-09-2020', 50;
+EXEC DB_ProjetLocation.dbo.CSP_InsertRental 2, 4, '15-09-2020', '30-09-2020', 100;
+EXEC DB_ProjetLocation.dbo.CSP_InsertRental 2, 4, '01-09-2020', '02-09-2020', 100;
+
+-- UPDATE Rental Rating
+EXEC DB_ProjetLocation.dbo.CSP_UpdateRentalRating 3, 4, 'Qualité correcte vu le prix de la location.';

@@ -4,7 +4,7 @@
     [Good_Name] NVARCHAR(50) NOT NULL, 
     [Description] NVARCHAR(MAX) NOT NULL, 
     [State] NVARCHAR(50) NOT NULL, 
-    [AmountPerDay] FLOAT NOT NULL, 
+    [AmountPerDay] FLOAT NULL, 
     [AmountPerWeek] FLOAT NULL, 
     [AmountPerMonth] FLOAT NULL, 
     [Street] NVARCHAR(120) NOT NULL, 

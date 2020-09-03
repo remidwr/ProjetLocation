@@ -46,7 +46,7 @@ namespace DAL.Repositories.Extensions
                 Name = (string)record["Good_Name"],
                 Description = (string)record["Description"],
                 State = (string)record["State"],
-                AmountPerDay = (double)record["AmountPerDay"],
+                AmountPerDay = record["AmountPerDay"] is DBNull ? null : (double?)record["AmountPerDay"],
                 AmountPerWeek = record["AmountPerWeek"] is DBNull ? null : (double?)record["AmountPerWeek"],
                 AmountPerMonth = record["AmountPerMonth"] is DBNull ? null : (double?)record["AmountPerMonth"],
                 Street = (string)record["Street"],
@@ -76,6 +76,22 @@ namespace DAL.Repositories.Extensions
                 Id = (int)record["Category_Id"],
                 Name = (string)record["Category_Name"],
                 SectionId = (int)record["Section_Id"]
+            };
+        }
+
+        internal static Rental ToDAL_Rental(this IDataRecord record)
+        {
+            return new Rental()
+            {
+                Id = (int)record["Rental_Id"],
+                GoodId = (int)record["Good_Id"],
+                UserId = (int)record["User_Id"],
+                RentedFrom = (DateTime)record["RentedFrom"],
+                RentedTo = (DateTime)record["RentedTo"],
+                Amount = (double)record["Amount"],
+                Deposit = record["Deposit"] is DBNull ? null : (double?)record["Deposit"],
+                Rating = record["Rating"] is DBNull ? null : (int?)record["Rating"],
+                Review = record["Review"] is DBNull ? null : (string)record["Review"]
             };
         }
     }

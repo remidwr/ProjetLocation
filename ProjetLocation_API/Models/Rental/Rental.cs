@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DAL.Models
+namespace ProjetLocation.API.Models.Rental
 {
     public class Rental
     {

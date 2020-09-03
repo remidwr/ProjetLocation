@@ -2,6 +2,13 @@
 	@RentalId INT
 AS
 BEGIN
-	DELETE FROM Rental
-	WHERE Rental_Id = @RentalId;
+	IF ((SELECT RentedTo FROM Rental WHERE Rental_Id = @RentalId) > GETDATE())
+		BEGIN
+			DELETE FROM Rental
+			WHERE Rental_Id = @RentalId;
+		END
+	ELSE
+		BEGIN
+			RAISERROR('UnableToDelete', 16, 1);
+		END
 END
