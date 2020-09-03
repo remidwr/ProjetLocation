@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Models\Good\" />
     <Folder Include="Models\Rental\" />
   </ItemGroup>
 

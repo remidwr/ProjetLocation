@@ -4,7 +4,7 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
-using Tools.Security.RSA; // TODO Cryptage RSA
+using Tools.Security.RSA;
 using Microsoft.AspNetCore.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
@@ -25,11 +25,22 @@ namespace ProjetLocation.API.Controllers
     {
         private IAuthRepository<Dal.User> _authRepository;
         private readonly AppSettings _appSettings;
+        KeyGenerator _keyGenerator;
+        Decrypting decrypting = new Decrypting();
 
-        public AuthController(AuthRepository authRepository, IOptions<AppSettings> appSettings)
+        public AuthController(AuthRepository authRepository, IOptions<AppSettings> appSettings, KeyGenerator keyGenerator)
         {
             _authRepository = authRepository;
             _appSettings = appSettings.Value;
+            _keyGenerator = keyGenerator;
+        }
+
+        [HttpGet]
+        public IActionResult GetPublicKey() // POSTMAN OK
+        {
+            _keyGenerator.GenerateKeys(RSAKeySize.Key2048);
+            string publicKey = _keyGenerator.PublicKey;
+            return Ok(publicKey);
         }
 
         [AllowAnonymous]
@@ -64,6 +75,9 @@ namespace ProjetLocation.API.Controllers
         [Route("login")]
         public IActionResult Login([FromBody] UserLogin userLogin) // POSTMAN OK
         {
+            //string PrivateKey = _keyGenerator.PrivateKey;
+            //userLogin.Passwd = decrypting.Decrypt(userLogin.Passwd, PrivateKey);
+
             User user = new User();
 
             try

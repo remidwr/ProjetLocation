@@ -6,6 +6,8 @@ using DAL.Repositories;
 using System;
 using System.Net;
 using DAL.Models;
+using ProjetLocation.API.Utils.Extensions;
+using System.Security.Cryptography.X509Certificates;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
