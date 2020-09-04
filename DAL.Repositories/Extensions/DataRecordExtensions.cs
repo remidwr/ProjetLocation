@@ -87,6 +87,7 @@ namespace DAL.Repositories.Extensions
                 GoodId = (int)record["Good_Id"],
                 OwnerId = (int)record["Owner_Id"],
                 TenantId = (int)record["Tenant_Id"],
+                CreationDate = (DateTime)record["CreationDate"],
                 RentedFrom = (DateTime)record["RentedFrom"],
                 RentedTo = (DateTime)record["RentedTo"],
                 Amount = (double)record["Amount"],

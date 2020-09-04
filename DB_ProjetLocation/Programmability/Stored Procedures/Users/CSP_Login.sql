@@ -3,11 +3,11 @@
 	@Passwd NVARCHAR(20)
 AS
 BEGIN
-	IF EXISTS(SELECT [User_Id] FROM Users WHERE Email = @Email AND IsActive = 0)
+	IF EXISTS(SELECT [User_Id] FROM Users WHERE Email = @Email AND IsBanned = 0 AND IsActive = 0)
 		BEGIN
 			RAISERROR('User_Inactive', 16, 1);
 		END
-	ELSE IF EXISTS(SELECT [User_Id] FROM Users WHERE Email = @Email AND IsBanned = 1)
+	ELSE IF EXISTS(SELECT [User_Id] FROM Users WHERE Email = @Email AND IsBanned = 1 AND IsActive = 0)
 		BEGIN
 			RAISERROR('User_Banned', 16, 1);
 		END

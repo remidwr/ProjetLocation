@@ -8,6 +8,7 @@ namespace DAL.Models
         public int GoodId { get; set; }
         public int OwnerId { get; set; }
         public int TenantId { get; set; }
+        public DateTime CreationDate { get; set; }
         public DateTime RentedFrom { get; set; }
         public DateTime RentedTo { get; set; }
         public double Amount { get; set; }

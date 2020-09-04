@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using DAL.IRepositories;
 using DAL.Repositories;
 using DAL.Models;
+using ProjetLocation.API.Models.User.RoleName;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProjetLocation.API.Controllers
 {
+    [Authorize(Roles = Roles.User + "," + Roles.Admin + "," + Roles.SuperAdmin)]
     [Route("api/[controller]")]
     [ApiController]
     public class CategoryController : ControllerBase
@@ -34,9 +37,9 @@ namespace ProjetLocation.API.Controllers
 
         // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id) // POSTMAN OK
+        public IActionResult GetById(int id) // POSTMAN OK
         {
-            Category category = _categoryRepository.Get(id);
+            Category category = _categoryRepository.GetById(id);
 
             if (!(category is null))
                 return Ok(category);
@@ -45,6 +48,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // POST api/<CategoryController>
+        [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpPost]
         public IActionResult Post([FromBody] Category category) // POSTMAN OK
         {
@@ -57,6 +61,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // PUT api/<CategoryController>/5
+        [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Category category) // POSTMAN OK
         {
@@ -69,6 +74,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // DELETE api/<CategoryController>/5
+        [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) // POSTMAN OK
         {

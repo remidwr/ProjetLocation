@@ -23,7 +23,7 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User());
         }
 
-        public User Get(int id)
+        public User GetById(int id)
         {
             User user = new User();
 
@@ -31,6 +31,11 @@ namespace DAL.Repositories
             command.AddParameter("UserId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
+        }
+
+        public int Insert(User user)
+        {
+            throw new System.NotImplementedException();
         }
 
         public int Update(int id, User user)

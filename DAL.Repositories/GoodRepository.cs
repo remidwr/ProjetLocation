@@ -23,7 +23,7 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good());
         }
 
-        public Good Get(int id)
+        public Good GetById(int id)
         {
             Command command = new Command("SELECT * FROM V_Good WHERE Good_Id = @GoodId");
             command.AddParameter("GoodId", id);

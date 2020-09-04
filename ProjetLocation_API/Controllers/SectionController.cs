@@ -6,13 +6,14 @@ using DAL.Repositories;
 using System;
 using System.Net;
 using DAL.Models;
-using ProjetLocation.API.Utils.Extensions;
-using System.Security.Cryptography.X509Certificates;
+using ProjetLocation.API.Models.User.RoleName;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProjetLocation.API.Controllers
 {
+    [Authorize(Roles = Roles.User + "," + Roles.Admin + "," + Roles.SuperAdmin)]
     [Route("api/[controller]")]
     [ApiController]
     public class SectionController : ControllerBase
@@ -38,9 +39,9 @@ namespace ProjetLocation.API.Controllers
 
         // GET api/<SectionController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id) // POSTMAN OK
+        public IActionResult GetById(int id) // POSTMAN OK
         {
-            Section section = _sectionRepository.Get(id);
+            Section section = _sectionRepository.GetById(id);
 
             if (!(section is null))
                 return Ok(section);
@@ -49,6 +50,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // POST api/<SectionController>
+        [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpPost]
         public IActionResult Post([FromBody] Section section) // POSTMAN OK
         {
@@ -72,6 +74,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // PUT api/<SectionController>/5
+        [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Section section) // POSTMAN OK
         {
@@ -95,6 +98,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // DELETE api/<SectionController>/5
+        [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) // POSTMAN OK
         {

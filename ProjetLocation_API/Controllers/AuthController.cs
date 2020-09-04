@@ -35,6 +35,7 @@ namespace ProjetLocation.API.Controllers
             _keyGenerator = keyGenerator;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetPublicKey() // POSTMAN OK
         {
@@ -117,8 +118,11 @@ namespace ProjetLocation.API.Controllers
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                        new Claim("Id", user.Id.ToString()),
-                        new Claim("Role", user.RoleName)
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.LastName + " " + user.FirstName),
+                        new Claim(ClaimTypes.DateOfBirth, user.Birthdate.ToString()),
+                        new Claim(ClaimTypes.Email, user.Email),
+                        new Claim(ClaimTypes.Role, user.RoleName)
                     }),
                     Expires = DateTime.UtcNow.AddDays(1),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

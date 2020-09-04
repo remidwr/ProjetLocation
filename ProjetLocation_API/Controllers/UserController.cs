@@ -8,13 +8,12 @@ using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Utils.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using ProjetLocation.API.Models.User.RoleName;
-using ProjetLocation.API.Infrastructure;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProjetLocation.API.Controllers
 {
-    //[Authorize]
+    [Authorize(Roles = Roles.User + "," + Roles.Admin + "," + Roles.SuperAdmin)]
     //[Roles(Roles.Admin, Roles.SuperAdmin)]
     [Route("api/[controller]")]
     [ApiController]
@@ -28,6 +27,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // GET: api/<UserController>
+        [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
@@ -40,11 +40,10 @@ namespace ProjetLocation.API.Controllers
         }
 
         // GET api/<UserController>/5
-        //[Roles(Roles.User)]
         [HttpGet("{id}")]
-        public IActionResult Get(int id) // POSTMAN OK
+        public IActionResult GetById(int id) // POSTMAN OK
         {
-            Api.User user = _userRepository.Get(id).DALUserToAPI();
+            Api.User user = _userRepository.GetById(id).DALUserToAPI();
 
             if (!(user is null))
                 return Ok(user);
@@ -53,7 +52,6 @@ namespace ProjetLocation.API.Controllers
         }
 
         // PUT api/<UserController>/5
-        //[Roles(Roles.User)]
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Api.UserLogin user) // POSTMAN OK
         {
@@ -66,8 +64,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // PUT api/<UserController>/5
-        //[Roles(Roles.User)]
-        [HttpPut("{id}/pwd")]
+        [HttpPut("{id}/password")]
         public IActionResult PutPassword(int id, [FromBody] Api.UserPassword user)
         {
             int Successful = _userRepository.UpdatePassword(id, user.APIUserPasswordToDAL());
@@ -79,7 +76,6 @@ namespace ProjetLocation.API.Controllers
         }
 
         // DELETE api/<UserController>/5
-        //[Roles(Roles.User)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) // POSTMAN OK
         {

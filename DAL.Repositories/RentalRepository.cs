@@ -9,7 +9,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class RentalRepository : IGenericRepository<Rental>
+    public class RentalRepository : IRentalRepository<Rental>
     {
         Connection _connection;
 
@@ -25,7 +25,7 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Rental());
         }
 
-        public Rental Get(int id)
+        public Rental GetById(int id)
         {
             Command command = new Command("SELECT * FROM V_Rental WHERE Rental_Id = @RentalId");
             command.AddParameter("RentalId", id);
@@ -72,6 +72,28 @@ namespace DAL.Repositories
             catch (SqlException ex)
             {
                 if (ex.Message.Contains("UnableToDelete"))
+                    throw new Exception(ex.Message);
+            }
+
+            return Successful;
+        }
+
+        public int UpdateRating(int id, Rental rental)
+        {
+            int Successful = 0;
+
+            Command command = new Command("CSP_UpdateRentalRating", true);
+            command.AddParameter("RentalId", id);
+            command.AddParameter("Rating", rental.Rating);
+            command.AddParameter("Review", rental.Review);
+
+            try
+            {
+                Successful = _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("UnableToAddRating"))
                     throw new Exception(ex.Message);
             }
 

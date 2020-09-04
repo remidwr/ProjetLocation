@@ -25,7 +25,7 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section());
         }
 
-        public Section Get(int id)
+        public Section GetById(int id)
         {
             Command command = new Command("SELECT * FROM V_Section WHERE Section_Id = @SectionId");
             command.AddParameter("SectionId", id);

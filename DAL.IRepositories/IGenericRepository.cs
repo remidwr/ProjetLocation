@@ -2,12 +2,12 @@
 
 namespace DAL.IRepositories
 {
-    public interface IGenericRepository<T>
+    public interface IGenericRepository<Tentity>
     {
-        IEnumerable<T> GetAll();
-        T Get(int id);
-        int Insert(T entity);
-        int Update(int id, T entity);
+        IEnumerable<Tentity> GetAll();
+        Tentity GetById(int id);
+        int Insert(Tentity entity);
+        int Update(int id, Tentity entity);
         int Delete(int id);
     }
 }

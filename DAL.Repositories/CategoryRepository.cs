@@ -23,7 +23,7 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category());
         }
 
-        public Category Get(int id)
+        public Category GetById(int id)
         {
             Command command = new Command("SELECT * FROM V_Category WHERE Category_Id = @CategoryId");
             command.AddParameter("CategoryId", id);

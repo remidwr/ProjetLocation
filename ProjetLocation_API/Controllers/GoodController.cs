@@ -3,12 +3,15 @@ using System.Linq;
 using DAL.IRepositories;
 using DAL.Models;
 using DAL.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProjetLocation.API.Models.User.RoleName;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProjetLocation.API.Controllers
 {
+    [Authorize(Roles = Roles.User + "," + Roles.Admin + "," + Roles.SuperAdmin)]
     [Route("api/[controller]")]
     [ApiController]
     public class GoodController : ControllerBase
@@ -34,9 +37,9 @@ namespace ProjetLocation.API.Controllers
 
         // GET api/<GoodController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id) // POSTMAN OK
+        public IActionResult GetById(int id) // POSTMAN OK
         {
-            Good good = _goodRepository.Get(id);
+            Good good = _goodRepository.GetById(id);
 
             if (!(good is null))
                 return Ok(good);

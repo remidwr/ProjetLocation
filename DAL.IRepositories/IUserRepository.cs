@@ -1,13 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace DAL.IRepositories
+﻿namespace DAL.IRepositories
 {
-    public interface IUserRepository<TUser>
+    public interface IUserRepository<TUser> : IGenericRepository<TUser>
     {
-        IEnumerable<TUser> GetAll();
-        TUser Get(int id);
-        int Update(int id, TUser user);
         int UpdatePassword(int id, TUser user);
-        int Delete(int id);
     }
 }
