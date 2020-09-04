@@ -14,7 +14,6 @@ using ProjetLocation.API.Models.User.RoleName;
 namespace ProjetLocation.API.Controllers
 {
     [Authorize(Roles = Roles.User + "," + Roles.Admin + "," + Roles.SuperAdmin)]
-    //[Roles(Roles.Admin, Roles.SuperAdmin)]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
@@ -31,7 +30,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<Api.User> users = _userRepository.GetAll().Select(x => x.DALUserToAPI());
+            IEnumerable<Api.UserWithGoods> users = _userRepository.GetAll().Select(x => x.DALUserWithGoodsToAPI());
 
             if (!(users is null))
                 return Ok(users);
@@ -43,7 +42,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            Api.User user = _userRepository.GetById(id).DALUserToAPI();
+            Api.UserWithGoods user = _userRepository.GetById(id).DALUserWithGoodsToAPI();
 
             if (!(user is null))
                 return Ok(user);
@@ -53,9 +52,9 @@ namespace ProjetLocation.API.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Api.UserLogin user) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] Api.UserInfo user) // POSTMAN OK
         {
-            int Successful = _userRepository.Update(id, user.APIUserLoginToDAL());
+            int Successful = _userRepository.Update(id, user.APIUserInfoToDAL());
 
             if (Successful > 0)
                 return Ok();

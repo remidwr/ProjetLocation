@@ -104,7 +104,7 @@
     <Build Include="Views\V_Good.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserActive.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserBanned.sql" />
-    <Build Include="Views\V_User.sql" />
+    <Build Include="Views\V_AllUser.sql" />
     <Build Include="Tables\Users\Roles.sql" />
     <Build Include="Programmability\Stored Procedures\Users\Roles\CSP_InsertRole.sql" />
     <Build Include="Programmability\Stored Procedures\Users\Roles\CSP_UpdateRole.sql" />

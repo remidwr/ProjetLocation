@@ -9,16 +9,20 @@ namespace DAL.Repositories
 {
     public class UserRepository : IUserRepository<User>
     {
-        Connection _connection;
+        private static Connection _connection;
 
         public UserRepository(Connection connection)
         {
             _connection = connection;
         }
 
+        public UserRepository() : this(_connection)
+        {
+        }
+
         public IEnumerable<User> GetAll()
         {
-            Command command = new Command("SELECT * FROM V_ActiveUser");
+            Command command = new Command("SELECT * FROM Users WHERE IsActive = 1");
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User());
         }
@@ -27,10 +31,18 @@ namespace DAL.Repositories
         {
             User user = new User();
 
-            Command command = new Command("SELECT * FROM V_ActiveUser WHERE [User_Id] = @UserId");
+            Command command = new Command("SELECT * FROM Users WHERE IsActive = 1 AND [User_Id] = @UserId");
             command.AddParameter("UserId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
+        }
+
+        public IEnumerable<Good> GetGoodsByUserId(int id)
+        {
+            Command command = new Command("SELECT * FROM Good G JOIN Users U ON G.[User_Id] = U.[User_Id] WHERE U.[User_Id] = @UserId");
+            command.AddParameter("UserId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_Good());
         }
 
         public int Insert(User user)

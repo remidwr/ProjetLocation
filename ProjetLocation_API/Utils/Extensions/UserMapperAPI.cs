@@ -1,10 +1,22 @@
-﻿using Api = ProjetLocation.API.Models.User;
+﻿using DAL.Repositories;
+using System.Linq;
+using Api = ProjetLocation.API.Models.User;
 using Dal = DAL.Models;
 
 namespace ProjetLocation.API.Utils.Extensions
 {
     internal static class UserMapperAPI
     {
+        private static UserRepository _userRepository;
+
+        public static UserRepository userRepository
+        {
+            get
+            {
+                return new UserRepository();
+            }
+        }
+
         internal static Api.User DALUserToAPI(this Dal.User user)
         {
             if (!(user is null))
@@ -57,6 +69,52 @@ namespace ProjetLocation.API.Utils.Extensions
                 IsBanned = user.IsBanned,
                 RoleId = user.RoleId,
                 Token = user.Token
+            };
+        }
+
+        internal static Api.UserWithGoods DALUserWithGoodsToAPI(this Dal.User user)
+        {
+            if (!(user is null))
+            {
+                return new Api.UserWithGoods()
+                {
+                    Id = user.Id,
+                    LastName = user.LastName,
+                    FirstName = user.FirstName,
+                    Birthdate = user.Birthdate,
+                    Email = user.Email,
+                    Street = user.Street,
+                    Number = user.Number,
+                    Box = user.Box,
+                    PostCode = user.PostCode,
+                    City = user.City,
+                    Phone1 = user.Phone1,
+                    Phone2 = user.Phone2,
+                    Picture = user.Picture,
+                    Goods = userRepository.GetGoodsByUserId(user.Id).Select(x => x)
+                };
+            }
+            else
+                return null;
+        }
+
+        internal static Dal.User APIUserWithGoodsToDAL(this Api.UserWithGoods user)
+        {
+            return new Dal.User()
+            {
+                Id = user.Id,
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+                Birthdate = user.Birthdate,
+                Email = user.Email,
+                Street = user.Street,
+                Number = user.Number,
+                Box = user.Box,
+                PostCode = user.PostCode,
+                City = user.City,
+                Phone1 = user.Phone1,
+                Phone2 = user.Phone2,
+                Picture = user.Picture
             };
         }
 

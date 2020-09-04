@@ -61,6 +61,7 @@ namespace ProjetLocation_API
             services.AddSingleton<Connection>();
             services.AddSingleton<AuthRepository>();
             services.AddSingleton<UserRepository>();
+            services.AddSingleton<RoleRepository>();
             services.AddSingleton<GoodRepository>();
             services.AddSingleton<SectionRepository>();
             services.AddSingleton<CategoryRepository>();

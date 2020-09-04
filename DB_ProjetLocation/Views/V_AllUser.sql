@@ -1,4 +1,4 @@
-﻿CREATE VIEW [dbo].[V_User]
+﻿CREATE VIEW [dbo].[V_AllUser]
 	AS
 	SELECT [User_Id],
 		   LastName,
