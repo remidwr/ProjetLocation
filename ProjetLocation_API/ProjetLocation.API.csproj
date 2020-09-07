@@ -22,9 +22,5 @@
     <ProjectReference Include="..\Tools\Tools.Security.RSA\Tools.Security.RSA.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Good\" />
-  </ItemGroup>
-
 
 </Project>

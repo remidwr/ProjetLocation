@@ -11,11 +11,15 @@ namespace DAL.Repositories
 {
     public class SectionRepository : IGenericRepository<Section>
     {
-        Connection _connection;
+        private static Connection _connection;
 
         public SectionRepository(Connection connection)
         {
             _connection = connection;
+        }
+
+        public SectionRepository() : this(_connection)
+        {
         }
 
         public IEnumerable<Section> GetAll()

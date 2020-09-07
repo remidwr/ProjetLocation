@@ -6,10 +6,10 @@ using Api = ProjetLocation.API.Models.Rental;
 using Microsoft.AspNetCore.Mvc;
 using DAL.IRepositories;
 using DAL.Repositories;
-using System.Net; // TODO Creation Date
 using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
 using ProjetLocation.API.Utils.Extensions;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

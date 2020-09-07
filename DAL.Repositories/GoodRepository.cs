@@ -9,11 +9,15 @@ namespace DAL.Repositories
 {
     public class GoodRepository : IGenericRepository<Good>
     {
-        Connection _connection;
+        private static Connection _connection;
 
         public GoodRepository(Connection connection)
         {
             _connection = connection;
+        }
+
+        public GoodRepository() : this(_connection)
+        {
         }
 
         public IEnumerable<Good> GetAll()
@@ -29,6 +33,22 @@ namespace DAL.Repositories
             command.AddParameter("GoodId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();
+        }
+
+        public Section GetSectionByGoodId(int id)
+        {
+            Command command = new Command("SELECT * FROM Good G JOIN Section S ON G.Section_Id = S.Section_Id WHERE G.Good_Id = @GoodId");
+            command.AddParameter("GoodId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
+        }
+
+        public User GetUserByGoodId(int id)
+        {
+            Command command = new Command("SELECT U.[User_Id], LastName, FirstName, Birthdate, Email, Passwd, U.Street, U.Number, U.Box, U.PostCode, U.City, Phone1, Phone2, U.Picture, IsActive, IsBanned, Role_Id FROM Good G JOIN Users U ON G.[User_Id] = U.[User_Id] WHERE G.Good_Id = @GoodId");
+            command.AddParameter("GoodId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
         }
 
         public int Insert(Good good)

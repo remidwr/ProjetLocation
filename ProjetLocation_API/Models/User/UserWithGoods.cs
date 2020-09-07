@@ -1,4 +1,4 @@
-﻿using DAL.Models;
+﻿using Dal = DAL.Models;
 using System;
 using System.Collections.Generic;
 
@@ -19,6 +19,6 @@ namespace ProjetLocation.API.Models.User
         public string Phone1 { get; set; }
         public string Phone2 { get; set; }
         public string Picture { get; set; }
-        public IEnumerable<Good> Goods { get; set; }
+        public IEnumerable<Dal.Good> Goods { get; set; }
     }
 }
