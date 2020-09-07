@@ -10,6 +10,7 @@ using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
 using ProjetLocation.API.Utils.Extensions;
 using System.Net;
+using ProjetLocation.API.Models.Rental;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,7 +32,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<Rental> rentals = _rentalRepository.GetAll().Select(x => x);
+            IEnumerable<RentalWithUsersGood> rentals = _rentalRepository.GetAll().Select(x => x.DALRentalWithUsersGoodToDAL());
 
             if (!(rentals is null))
                 return Ok(rentals);
@@ -43,7 +44,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            Rental rental = _rentalRepository.GetById(id);
+            RentalWithUsersGood rental = _rentalRepository.GetById(id).DALRentalWithUsersGoodToDAL();
 
             if (!(rental is null))
                 return Ok(rental);

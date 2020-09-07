@@ -11,11 +11,15 @@ namespace DAL.Repositories
 {
     public class RentalRepository : IRentalRepository<Rental>
     {
-        Connection _connection;
+        private static Connection _connection;
 
         public RentalRepository(Connection connection)
         {
             _connection = connection;
+        }
+
+        public RentalRepository() : this(_connection)
+        {
         }
 
         public IEnumerable<Rental> GetAll()
@@ -31,6 +35,30 @@ namespace DAL.Repositories
             command.AddParameter("RentalId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Rental()).SingleOrDefault();
+        }
+
+        public User GetOwnerByRentalId(int id)
+        {
+            Command command = new Command("SELECT * FROM Rental R JOIN Users U ON R.Owner_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
+            command.AddParameter("RentalId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
+        }
+
+        public User GetTenantByRentalId(int id)
+        {
+            Command command = new Command("SELECT * FROM Rental R JOIN Users U ON R.Tenant_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
+            command.AddParameter("RentalId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
+        }
+
+        public Good GetGoodByRentalId(int id)
+        {
+            Command command = new Command("SELECT * FROM Rental R JOIN Good G ON R.Good_Id = G.Good_Id WHERE R.Rental_Id = @RentalId");
+            command.AddParameter("RentalId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();
         }
 
         public int Insert(Rental rental)
@@ -58,26 +86,6 @@ namespace DAL.Repositories
             return _connection.ExecuteNonQuery(command);
         }
 
-        public int Delete(int id)
-        {
-            int Successful = 0;
-
-            Command command = new Command("CSP_DeleteRental", true);
-            command.AddParameter("RentalId", id);
-
-            try
-            {
-                Successful = _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                if (ex.Message.Contains("UnableToDelete"))
-                    throw new Exception(ex.Message);
-            }
-
-            return Successful;
-        }
-
         public int UpdateRating(int id, Rental rental)
         {
             int Successful = 0;
@@ -94,6 +102,26 @@ namespace DAL.Repositories
             catch (SqlException ex)
             {
                 if (ex.Message.Contains("UnableToAddRating"))
+                    throw new Exception(ex.Message);
+            }
+
+            return Successful;
+        }
+
+        public int Delete(int id)
+        {
+            int Successful = 0;
+
+            Command command = new Command("CSP_DeleteRental", true);
+            command.AddParameter("RentalId", id);
+
+            try
+            {
+                Successful = _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Message.Contains("UnableToDelete"))
                     throw new Exception(ex.Message);
             }
 
