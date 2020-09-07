@@ -30,6 +30,7 @@ namespace DAL.Repositories
         public Role GetById(int id)
         {
             Command command = new Command("SELECT * FROM Roles WHERE Role_Id = @RoleId;");
+            command.AddParameter("RoleId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Role()).SingleOrDefault();
         }

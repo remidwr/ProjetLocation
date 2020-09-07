@@ -36,7 +36,8 @@ namespace ProjetLocation.API.Utils.Extensions
                     City = good.City,
                     Picture = good.Picture,
                     User = goodRepository.GetUserByGoodId(good.Id).DALUserInfoToAPI(),
-                    Section = goodRepository.GetSectionByGoodId(good.Id).DALSectionNameToAPI()
+                    Section = goodRepository.GetSectionByGoodId(good.Id).DALSectionNameToAPI(),
+                    Category = goodRepository.GetCategoryByGoodId(good.Id).DALCategoryNameToAPI()
                 };
             }
             else
@@ -60,48 +61,6 @@ namespace ProjetLocation.API.Utils.Extensions
                 PostCode = good.PostCode,
                 City = good.City,
                 Picture = good.Picture
-            };
-        }
-
-        internal static Api.SectionName DALSectionNameToAPI(this Dal.Section section)
-        {
-            if (!(section is null))
-            {
-                return new Api.SectionName()
-                {
-                    Name = section.Name
-                };
-            }
-            else
-                return null;
-        }
-
-        internal static Dal.Section APISectionNameToDAL(this Api.SectionName section)
-        {
-            return new Dal.Section()
-            {
-                Name = section.Name
-            };
-        }
-
-        internal static Api.CategoryName DALCategoryNameToAPI(this Dal.Category category)
-        {
-            if (!(category is null))
-            {
-                return new Api.CategoryName()
-                {
-                    Name = category.Name
-                };
-            }
-            else
-                return null;
-        }
-
-        internal static Dal.Category APICategoryNameToDAL(this Api.CategoryName category)
-        {
-            return new Dal.Category()
-            {
-                Name = category.Name
             };
         }
     }

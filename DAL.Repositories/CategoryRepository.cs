@@ -9,11 +9,15 @@ namespace DAL.Repositories
 {
     public class CategoryRepository : IGenericRepository<Category>
     {
-        Connection _connection;
+        private static Connection _connection;
 
         public CategoryRepository(Connection connection)
         {
             _connection = connection;
+        }
+
+        public CategoryRepository() : this(_connection)
+        {
         }
 
         public IEnumerable<Category> GetAll()
@@ -29,6 +33,14 @@ namespace DAL.Repositories
             command.AddParameter("CategoryId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category()).SingleOrDefault();
+        }
+
+        public Section GetSectionByCategoryId(int id)
+        {
+            Command command = new Command("SELECT * FROM Category C JOIN Section S ON C.Section_Id = S.Section_Id WHERE C.Category_Id = @CategoryId");
+            command.AddParameter("CategoryId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
         }
 
         public int Insert(Category category)

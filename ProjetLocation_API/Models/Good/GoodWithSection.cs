@@ -20,5 +20,6 @@ namespace ProjetLocation.API.Models.Good
         public string Picture { get; set; }
         public UserInfo User { get; set; }
         public SectionName Section { get; set; }
+        public CategoryName Category { get; set; }
     }
 }

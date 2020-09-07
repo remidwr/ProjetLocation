@@ -13,7 +13,8 @@
 	@City NVARCHAR(120),
 	@Picture NVARCHAR(320),
 	@UserId INT,
-	@SectionId INT
+	@SectionId INT,
+	@CategoryId INT
 AS
 BEGIN
 	UPDATE Good
@@ -29,6 +30,7 @@ BEGIN
 		PostCode = @PostCode,
 		City = @City,
 		Picture = @Picture,
-		Section_Id = @SectionId
+		Section_Id = @SectionId,
+		Category_Id = @CategoryId
 	WHERE Good_Id = @GoodId AND [User_Id] = @UserId;
 END

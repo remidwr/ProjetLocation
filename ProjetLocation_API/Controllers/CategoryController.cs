@@ -6,6 +6,8 @@ using DAL.Repositories;
 using DAL.Models;
 using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
+using ProjetLocation.API.Models.Good;
+using ProjetLocation.API.Utils.Extensions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -27,7 +29,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<Category> categories = _categoryRepository.GetAll().Select(x => x);
+            IEnumerable<CategoryName> categories = _categoryRepository.GetAll().Select(x => x.DALCategoryNameToAPI());
 
             if (!(categories is null))
                 return Ok(categories);
@@ -39,7 +41,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            Category category = _categoryRepository.GetById(id);
+            CategoryName category = _categoryRepository.GetById(id).DALCategoryNameToAPI();
 
             if (!(category is null))
                 return Ok(category);

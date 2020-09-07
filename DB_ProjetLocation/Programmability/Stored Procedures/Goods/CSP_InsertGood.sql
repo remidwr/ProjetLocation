@@ -12,13 +12,14 @@
 	@City NVARCHAR(120),
 	@Picture NVARCHAR(320),
 	@UserId INT,
-	@SectionId INT
+	@SectionId INT,
+	@CategoryId INT
 AS
 BEGIN
 	INSERT INTO Good ([Good_Name], [Description], [State], [AmountPerDay], [AmountPerWeek],
 					  [AmountPerMonth], [Street], [Number], [Box], [PostCode],
-					  [City], [Picture], [User_Id], [Section_Id])
+					  [City], [Picture], [User_Id], [Section_Id], [Category_Id])
 	VALUES (@GoodName, @Description, @State, @AmountPerDay, @AmountPerWeek,
 			@AmountPerMonth, @Street, @Number, @Box, @PostCode,
-			@City, @Picture, @UserId, @SectionId);
+			@City, @Picture, @UserId, @SectionId, @CategoryId);
 END

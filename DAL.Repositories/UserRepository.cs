@@ -69,6 +69,8 @@ namespace DAL.Repositories
             return _connection.ExecuteNonQuery(command);
         }
 
+        // TODO Update UserRole
+
         public int UpdatePassword(int id, User user)
         {
             Command command = new Command("CSP_UpdateUserPassword", true);

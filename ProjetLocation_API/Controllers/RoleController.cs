@@ -24,7 +24,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public IActionResult GetAll() // POSTMAN OK
         {
             IEnumerable<Api.Role> roles = _roleRepository.GetAll().Select(x => x.DALRoleToAPI());
 
@@ -35,7 +35,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(int id) // POSTMAN OK
         {
             Api.Role role = _roleRepository.GetById(id).DALRoleToAPI();
 

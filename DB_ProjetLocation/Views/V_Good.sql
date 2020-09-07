@@ -14,5 +14,6 @@
 		   City,
 		   Picture,
 		   [User_Id],
-		   Section_Id
+		   Section_Id,
+		   Category_Id
 	FROM Good

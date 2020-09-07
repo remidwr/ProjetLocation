@@ -49,7 +49,7 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Vacances'; -- ID 18
 EXEC DB_ProjetLocation.dbo.CSP_InsertSection 'Vêtements'; -- ID 19
 
 -- INSERT Category (Auto & Moto)
-EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Auto', 1;	
+EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Auto', 1;
 EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Moto', 1;	
 EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Remorque', 1;	
 EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Accessoires', 1;	
@@ -105,8 +105,9 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Pulvérisateur', 10;
 EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Scarificateur', 10;	
 EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Rouleau à gazon', 10;	
 EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Taille haie', 10;	
-EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Tondeuse', 10;	
-EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Motobineuse', 10;	
+EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Tondeuse', 10;
+EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Tronçonneuse', 10;
+EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Motobineuse', 10;
 EXEC DB_ProjetLocation.dbo.CSP_InsertCategory 'Autre', 10;	
 
 -- INSERT Category (Loisir)
@@ -181,7 +182,8 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Tronçonneuse Thermique Timberwolf 58
 										  'Beverly Hills',
 										  'Http://tronconneuse.png',
 										  1,
-										  10;
+										  10,
+										  44;
 
 EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Location de tonnelle',
 										  'Convient pour tout type d''évènements extérieurs.',
@@ -196,7 +198,9 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Location de tonnelle',
 										  'Wavre',
 										  'Http://tonnelle.png',
 										  4,
-										  7;
+										  7,
+										  29;
+
 
 EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Visseuse Bosch',
 										  'Pour faire des trous partout.',
@@ -211,7 +215,9 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Visseuse Bosch',
 										  'Herve',
 										  'Http://visseuse.png',
 										  5,
-										  14;
+										  14,
+										  69;
+
 
 -- INSERT Rental
 EXEC DB_ProjetLocation.dbo.CSP_InsertRental 1, 1, 4, '03-09-2020', '10-09-2020', 50;

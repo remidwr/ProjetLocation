@@ -8,6 +8,8 @@ using System.Net;
 using DAL.Models;
 using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
+using ProjetLocation.API.Models.Good;
+using ProjetLocation.API.Utils.Extensions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -18,7 +20,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class SectionController : ControllerBase
     {
-        private IGenericRepository<Section> _sectionRepository;
+        private SectionRepository _sectionRepository;
 
         public SectionController(SectionRepository sectionRepository)
         {
@@ -29,7 +31,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<Section> sections = _sectionRepository.GetAll().Select(x => x);
+            IEnumerable<SectionName> sections = _sectionRepository.GetAll().Select(x => x.DALSectionNameToAPI());
 
             if (!(sections is null))
                 return Ok(sections);
@@ -41,10 +43,21 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            Section section = _sectionRepository.GetById(id);
+            SectionName section = _sectionRepository.GetById(id).DALSectionNameToAPI();
 
             if (!(section is null))
                 return Ok(section);
+            else
+                return NotFound();
+        }
+
+        [HttpGet("{id}/categoriesbysection")]
+        public IActionResult GetCategoriesBySectionId(int id)
+        {
+            IEnumerable<CategoryName> categories = _sectionRepository.GetCategoriesBySectionId(id).Select(x => x.DALCategoryNameToAPI());
+
+            if (!(categories is null))
+                return Ok(categories);
             else
                 return NotFound();
         }

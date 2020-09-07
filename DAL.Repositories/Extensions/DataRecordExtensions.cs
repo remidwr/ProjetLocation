@@ -56,7 +56,8 @@ namespace DAL.Repositories.Extensions
                 City = (string)record["City"],
                 Picture = (string)record["Picture"],
                 UserId = (int)record["User_Id"],
-                SectionId = (int)record["Section_Id"]
+                SectionId = (int)record["Section_Id"],
+                CategoryId = (int)record["Category_Id"]
             };
         }
 

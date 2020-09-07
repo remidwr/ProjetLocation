@@ -37,6 +37,14 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
         }
 
+        public IEnumerable<Category> GetCategoriesBySectionId(int id)
+        {
+            Command command = new Command("SELECT * FROM Section S JOIN Category C ON S.Section_Id = C.Section_Id WHERE S.Section_Id = @SectionId");
+            command.AddParameter("SectionId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_Category());
+        }
+
         public int Insert(Section section)
         {
             int Successful = 0;

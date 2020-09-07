@@ -15,7 +15,9 @@
     [Picture] NVARCHAR(320) NOT NULL, 
     [User_Id] INT NOT NULL,
     [Section_Id] INT NOT NULL, 
+    [Category_Id] INT NOT NULL, 
     CONSTRAINT [PK_Good] PRIMARY KEY ([Good_Id]), 
     CONSTRAINT [FK_Good_ToUsers] FOREIGN KEY ([User_Id]) REFERENCES [Users]([User_Id]),
-    CONSTRAINT [FK_Good_ToSection] FOREIGN KEY ([Section_Id]) REFERENCES [Section]([Section_Id]) 
+    CONSTRAINT [FK_Good_ToSection] FOREIGN KEY ([Section_Id]) REFERENCES [Section]([Section_Id]), 
+    CONSTRAINT [FK_Good_ToCategory] FOREIGN KEY ([Category_id]) REFERENCES [Category]([Category_Id]) 
 )

@@ -35,6 +35,14 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();
         }
 
+        public User GetUserByGoodId(int id)
+        {
+            Command command = new Command("SELECT U.[User_Id], LastName, FirstName, Birthdate, Email, Passwd, U.Street, U.Number, U.Box, U.PostCode, U.City, Phone1, Phone2, U.Picture, IsActive, IsBanned, Role_Id FROM Good G JOIN Users U ON G.[User_Id] = U.[User_Id] WHERE G.Good_Id = @GoodId");
+            command.AddParameter("GoodId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
+        }
+
         public Section GetSectionByGoodId(int id)
         {
             Command command = new Command("SELECT * FROM Good G JOIN Section S ON G.Section_Id = S.Section_Id WHERE G.Good_Id = @GoodId");
@@ -43,12 +51,12 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
         }
 
-        public User GetUserByGoodId(int id)
+        public Category GetCategoryByGoodId(int id)
         {
-            Command command = new Command("SELECT U.[User_Id], LastName, FirstName, Birthdate, Email, Passwd, U.Street, U.Number, U.Box, U.PostCode, U.City, Phone1, Phone2, U.Picture, IsActive, IsBanned, Role_Id FROM Good G JOIN Users U ON G.[User_Id] = U.[User_Id] WHERE G.Good_Id = @GoodId");
+            Command command = new Command("SELECT * FROM Good G JOIN Category C ON G.Category_Id = C.Category_Id WHERE G.Good_Id = @GoodId");
             command.AddParameter("GoodId", id);
 
-            return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_Category()).SingleOrDefault();
         }
 
         public int Insert(Good good)
@@ -68,6 +76,7 @@ namespace DAL.Repositories
             command.AddParameter("Picture", good.Picture);
             command.AddParameter("UserId", good.UserId);
             command.AddParameter("SectionId", good.SectionId);
+            command.AddParameter("CategoryId", good.CategoryId);
 
             return _connection.ExecuteNonQuery(command);
         }
@@ -90,6 +99,7 @@ namespace DAL.Repositories
             command.AddParameter("Picture", good.Picture);
             command.AddParameter("UserId", good.UserId);
             command.AddParameter("SectionId", good.SectionId);
+            command.AddParameter("CategoryId", good.CategoryId);
 
             return _connection.ExecuteNonQuery(command);
         }

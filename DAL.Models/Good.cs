@@ -17,5 +17,6 @@
         public string Picture { get; set; }
         public int UserId { get; set; }
         public int SectionId { get; set; }
+        public int CategoryId { get; set; }
     }
 }
