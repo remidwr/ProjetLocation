@@ -17,11 +17,11 @@ namespace ProjetLocation.API.Utils.Extensions
             }
         }
 
-        internal static Api.User DALUserToAPI(this Dal.User user)
+        internal static Api.UserFull DALUserToAPI(this Dal.User user)
         {
             if (!(user is null))
             {
-                return new Api.User()
+                return new Api.UserFull()
                 {
                     Id = user.Id,
                     LastName = user.LastName,
@@ -47,7 +47,7 @@ namespace ProjetLocation.API.Utils.Extensions
                 return null;
         }
 
-        internal static Dal.User APIUserToDAL(this Api.User user)
+        internal static Dal.User APIUserToDAL(this Api.UserFull user)
         {
             return new Dal.User()
             {

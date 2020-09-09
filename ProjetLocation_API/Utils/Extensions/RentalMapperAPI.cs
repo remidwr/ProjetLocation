@@ -16,16 +16,16 @@ namespace ProjetLocation.API.Utils.Extensions
             }
         }
 
-        internal static Api.RentalWithUsersGood DALRentalWithUsersGoodToDAL(this Dal.Rental rental)
+        internal static Api.RentalWithUsersGood DALRentalWithUsersGoodToAPI(this Dal.Rental rental)
         {
             if (!(rental is null))
             {
                 return new Api.RentalWithUsersGood()
                 {
                     Id = rental.Id,
-                    Good = _rentalRepository.GetGoodByRentalId(rental.Id).DALGoodWithSectionToAPI(),
-                    Owner = _rentalRepository.GetOwnerByRentalId(rental.Id).DALUserInfoToAPI(),
-                    Tenant = _rentalRepository.GetTenantByRentalId(rental.Id).DALUserInfoToAPI(),
+                    Good = rentalRepository.GetGoodByRentalId(rental.Id).DALGoodWithSectionToAPI(),
+                    Owner = rentalRepository.GetOwnerByRentalId(rental.Id).DALUserInfoToAPI(),
+                    Tenant = rentalRepository.GetTenantByRentalId(rental.Id).DALUserInfoToAPI(),
                     CreationDate = rental.CreationDate,
                     RentedFrom = rental.RentedFrom,
                     RentedTo = rental.RentedTo,

@@ -18,7 +18,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private IGenericRepository<Category> _categoryRepository;
+        private ICategoryRepository<Category, Section> _categoryRepository;
 
         public CategoryController(CategoryRepository categoryRepository)
         {

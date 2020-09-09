@@ -9,7 +9,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class RentalRepository : IRentalRepository<Rental>
+    public class RentalRepository : IRentalRepository<Rental, User, Good>
     {
         private static Connection _connection;
 
@@ -24,14 +24,14 @@ namespace DAL.Repositories
 
         public IEnumerable<Rental> GetAll()
         {
-            Command command = new Command("SELECT * FROM V_Rental");
+            Command command = new Command("SELECT * FROM Rental");
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Rental());
         }
 
         public Rental GetById(int id)
         {
-            Command command = new Command("SELECT * FROM V_Rental WHERE Rental_Id = @RentalId");
+            Command command = new Command("SELECT * FROM Rental WHERE Rental_Id = @RentalId");
             command.AddParameter("RentalId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Rental()).SingleOrDefault();
@@ -39,7 +39,7 @@ namespace DAL.Repositories
 
         public User GetOwnerByRentalId(int id)
         {
-            Command command = new Command("SELECT * FROM Rental R JOIN Users U ON R.Owner_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
+            Command command = new Command("SELECT [User_Id], LastName, FirstName, Birthdate, Email, Passwd, Street, Number, Box, PostCode, City, Phone1, Phone2, Picture, IsActive, IsBanned, Role_Id FROM Rental R JOIN Users U ON R.Owner_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
             command.AddParameter("RentalId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
@@ -47,7 +47,7 @@ namespace DAL.Repositories
 
         public User GetTenantByRentalId(int id)
         {
-            Command command = new Command("SELECT * FROM Rental R JOIN Users U ON R.Tenant_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
+            Command command = new Command("SELECT [User_Id], LastName, FirstName, Birthdate, Email, Passwd, Street, Number, Box, PostCode, City, Phone1, Phone2, Picture, IsActive, IsBanned, Role_Id FROM Rental R JOIN Users U ON R.Tenant_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
             command.AddParameter("RentalId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
@@ -55,7 +55,7 @@ namespace DAL.Repositories
 
         public Good GetGoodByRentalId(int id)
         {
-            Command command = new Command("SELECT * FROM Rental R JOIN Good G ON R.Good_Id = G.Good_Id WHERE R.Rental_Id = @RentalId");
+            Command command = new Command("SELECT G.Good_Id, Good_Name, [Description], [State], AmountPerDay, AmountPerWeek, AmountPerMonth, Street, Number, Box, PostCode, City, Picture, [User_Id], Section_Id, Category_Id FROM Rental R JOIN Good G ON R.Good_Id = G.Good_Id WHERE R.Rental_Id = @RentalId");
             command.AddParameter("RentalId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();

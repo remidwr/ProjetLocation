@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using DAL.IRepositories;
 using DAL.Repositories;
 using System;
 using System.Net;
@@ -52,7 +51,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         [HttpGet("{id}/categoriesbysection")]
-        public IActionResult GetCategoriesBySectionId(int id)
+        public IActionResult GetCategoriesBySectionId(int id) // POSTMAN OK
         {
             IEnumerable<CategoryName> categories = _sectionRepository.GetCategoriesBySectionId(id).Select(x => x.DALCategoryNameToAPI());
 

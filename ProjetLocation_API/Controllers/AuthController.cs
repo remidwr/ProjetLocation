@@ -37,7 +37,7 @@ namespace ProjetLocation.API.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult GetPublicKey() // POSTMAN OK
+        public IActionResult GetPublicKey()
         {
             _keyGenerator.GenerateKeys(RSAKeySize.Key2048);
             string publicKey = _keyGenerator.PublicKey;
@@ -79,7 +79,7 @@ namespace ProjetLocation.API.Controllers
             //string PrivateKey = _keyGenerator.PrivateKey;
             //userLogin.Passwd = decrypting.Decrypt(userLogin.Passwd, PrivateKey);
 
-            User user = new User();
+            UserFull user = new UserFull();
 
             try
             {

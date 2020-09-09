@@ -18,7 +18,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class GoodController : ControllerBase
     {
-        private IGenericRepository<Good> _goodRepository;
+        private IGoodRepository<Good,User, Section, Category> _goodRepository;
 
         public GoodController(GoodRepository goodRepository)
         {

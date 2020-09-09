@@ -2,7 +2,7 @@
 
 namespace ProjetLocation.API.Models.User
 {
-    public class Role
+    public class RoleWithUsers
     {
         public int Id { get; set; }
         public string Name { get; set; }

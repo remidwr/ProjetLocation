@@ -7,7 +7,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IUserRepository<User>
+    public class UserRepository : IUserRepository<User, Good>
     {
         private static Connection _connection;
 
@@ -68,8 +68,6 @@ namespace DAL.Repositories
 
             return _connection.ExecuteNonQuery(command);
         }
-
-        // TODO Update UserRole
 
         public int UpdatePassword(int id, User user)
         {

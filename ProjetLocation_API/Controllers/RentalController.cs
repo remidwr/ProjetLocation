@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using DAL.Models;
-using Api = ProjetLocation.API.Models.Rental;
 using Microsoft.AspNetCore.Mvc;
 using DAL.IRepositories;
 using DAL.Repositories;
@@ -21,7 +20,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class RentalController : ControllerBase
     {
-        private IRentalRepository<Rental> _rentalRepository;
+        private IRentalRepository<Rental, User, Good> _rentalRepository;
 
         public RentalController(RentalRepository rentalRepository)
         {
@@ -32,7 +31,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<RentalWithUsersGood> rentals = _rentalRepository.GetAll().Select(x => x.DALRentalWithUsersGoodToDAL());
+            IEnumerable<RentalWithUsersGood> rentals = _rentalRepository.GetAll().Select(x => x.DALRentalWithUsersGoodToAPI());
 
             if (!(rentals is null))
                 return Ok(rentals);
@@ -44,7 +43,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            RentalWithUsersGood rental = _rentalRepository.GetById(id).DALRentalWithUsersGoodToDAL();
+            RentalWithUsersGood rental = _rentalRepository.GetById(id).DALRentalWithUsersGoodToAPI();
 
             if (!(rental is null))
                 return Ok(rental);
@@ -76,6 +75,28 @@ namespace ProjetLocation.API.Controllers
                 return NotFound();
         }
 
+        [HttpPut("{id}/rating")]
+        public IActionResult UpdateRating(int id, [FromBody] RentalRating rental) // POSTMAN OK
+        {
+            int Successful = 0;
+
+            try
+            {
+                Successful = _rentalRepository.UpdateRating(id, rental.APIRentalRatingToDAL());
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("UnableToAddRating"))
+                    return Problem(detail: "Unable to add a rating because the rental is not finished yet !",
+                                   statusCode: (int)HttpStatusCode.Unauthorized);
+            }
+
+            if (Successful > 0)
+                return Ok();
+            else
+                return NotFound();
+        }
+
         // DELETE api/<RentalController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) // POSTMAN OK
@@ -99,26 +120,5 @@ namespace ProjetLocation.API.Controllers
                 return NotFound();
         }
 
-        [HttpPut("{id}/rating")]
-        public IActionResult UpdateRating(int id, [FromBody] Api.RentalRating rental)
-        {
-            int Successful = 0;
-
-            try
-            {
-                Successful = _rentalRepository.UpdateRating(id, rental.APIRentalRatingToDAL());
-            }
-            catch (Exception ex)
-            {
-                if (ex.Message.Contains("UnableToAddRating"))
-                    return Problem(detail: "Unable to add a rating because the rental is not finished yet !",
-                                   statusCode: (int)HttpStatusCode.Unauthorized);
-            }
-
-            if (Successful > 0)
-                return Ok();
-            else
-                return NotFound();
-        }
     }
 }

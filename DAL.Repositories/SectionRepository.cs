@@ -24,14 +24,14 @@ namespace DAL.Repositories
 
         public IEnumerable<Section> GetAll()
         {
-            Command command = new Command("SELECT * FROM V_Section");
+            Command command = new Command("SELECT * FROM Section");
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section());
         }
 
         public Section GetById(int id)
         {
-            Command command = new Command("SELECT * FROM V_Section WHERE Section_Id = @SectionId");
+            Command command = new Command("SELECT * FROM Section WHERE Section_Id = @SectionId");
             command.AddParameter("SectionId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();

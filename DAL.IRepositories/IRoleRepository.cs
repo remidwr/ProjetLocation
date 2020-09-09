@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DAL.IRepositories
 {
-    public interface IRoleRepository<TRole>
+    public interface IRoleRepository<TRole, TUser>
     {
         IEnumerable<TRole> GetAll();
         TRole GetById(int id);
+        IEnumerable<TUser> GetUsersByRoleId(int id);
     }
 }

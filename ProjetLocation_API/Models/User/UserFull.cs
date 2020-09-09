@@ -2,7 +2,7 @@
 
 namespace ProjetLocation.API.Models.User
 {
-    public class User
+    public class UserFull
     {
         public int Id { get; set; }
         public string LastName { get; set; }

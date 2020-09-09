@@ -7,7 +7,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class CategoryRepository : IGenericRepository<Category>
+    public class CategoryRepository : ICategoryRepository<Category, Section>
     {
         private static Connection _connection;
 
@@ -22,14 +22,14 @@ namespace DAL.Repositories
 
         public IEnumerable<Category> GetAll()
         {
-            Command command = new Command("SELECT * FROM V_Category");
+            Command command = new Command("SELECT * FROM Category");
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category());
         }
 
         public Category GetById(int id)
         {
-            Command command = new Command("SELECT * FROM V_Category WHERE Category_Id = @CategoryId");
+            Command command = new Command("SELECT * FROM Category WHERE Category_Id = @CategoryId");
             command.AddParameter("CategoryId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category()).SingleOrDefault();

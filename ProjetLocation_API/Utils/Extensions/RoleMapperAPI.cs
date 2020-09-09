@@ -17,9 +17,9 @@ namespace ProjetLocation.API.Utils.Extensions
             }
         }
 
-        internal static Api.Role DALRoleToAPI(this Dal.Role role)
+        internal static Api.RoleWithUsers DALRoleWithUsersToAPI(this Dal.Role role)
         {
-            return new Api.Role()
+            return new Api.RoleWithUsers()
             {
                 Id = role.Id,
                 Name = role.Name,
@@ -27,7 +27,7 @@ namespace ProjetLocation.API.Utils.Extensions
             };
         }
 
-        internal static Dal.Role APIRoleToDAL(this Api.Role role)
+        internal static Dal.Role APIRoleWithUsersToDAL(this Api.RoleWithUsers role)
         {
             return new Dal.Role()
             {

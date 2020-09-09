@@ -59,7 +59,6 @@
     <Folder Include="Tables" />
     <Folder Include="Scripts" />
     <Folder Include="Functions" />
-    <Folder Include="Views" />
     <Folder Include="Tables\Users" />
     <Folder Include="Tables\Goods" />
     <Folder Include="Programmability" />
@@ -98,20 +97,13 @@
     <Build Include="Programmability\Stored Procedures\Rental\CSP_UpdateRental.sql" />
     <Build Include="Programmability\Stored Procedures\Rental\CSP_DeleteRental.sql" />
     <Build Include="Programmability\Stored Procedures\Rental\Rating\CSP_UpdateRentalRating.sql" />
-    <Build Include="Views\V_ActiveUser.sql" />
-    <Build Include="Views\V_Section.sql" />
-    <Build Include="Views\V_Category.sql" />
-    <Build Include="Views\V_Good.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserActive.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserBanned.sql" />
-    <Build Include="Views\V_AllUser.sql" />
     <Build Include="Tables\Users\Roles.sql" />
     <Build Include="Programmability\Stored Procedures\Users\Roles\CSP_InsertRole.sql" />
     <Build Include="Programmability\Stored Procedures\Users\Roles\CSP_UpdateRole.sql" />
     <Build Include="Programmability\Stored Procedures\Users\Roles\CSP_DeleteRole.sql" />
-    <Build Include="Views\V_Role.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserRole.sql" />
-    <Build Include="Views\V_Rental.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DB_ProjetLocation.refactorlog" />

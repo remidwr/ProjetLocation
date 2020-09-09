@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using DAL.IRepositories;
-using Dal = DAL.Models;
-using Api = ProjetLocation.API.Models.User;
+using DAL.Models;
+using ProjetLocation.API.Models.User;
 using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Utils.Extensions;
@@ -18,7 +18,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        IUserRepository<Dal.User> _userRepository;
+        IUserRepository<User, Good> _userRepository;
 
         public UserController(UserRepository userRepository)
         {
@@ -30,7 +30,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<Api.UserWithGoods> users = _userRepository.GetAll().Select(x => x.DALUserWithGoodsToAPI());
+            IEnumerable<UserWithGoods> users = _userRepository.GetAll().Select(x => x.DALUserWithGoodsToAPI());
 
             if (!(users is null))
                 return Ok(users);
@@ -42,7 +42,7 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            Api.UserWithGoods user = _userRepository.GetById(id).DALUserWithGoodsToAPI();
+            UserWithGoods user = _userRepository.GetById(id).DALUserWithGoodsToAPI();
 
             if (!(user is null))
                 return Ok(user);
@@ -52,7 +52,7 @@ namespace ProjetLocation.API.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Api.UserInfo user) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] UserInfo user) // POSTMAN OK
         {
             int Successful = _userRepository.Update(id, user.APIUserInfoToDAL());
 
@@ -64,7 +64,7 @@ namespace ProjetLocation.API.Controllers
 
         // PUT api/<UserController>/5
         [HttpPut("{id}/password")]
-        public IActionResult PutPassword(int id, [FromBody] Api.UserPassword user)
+        public IActionResult PutPassword(int id, [FromBody] UserPassword user) // POSTMAN OK
         {
             int Successful = _userRepository.UpdatePassword(id, user.APIUserPasswordToDAL());
 

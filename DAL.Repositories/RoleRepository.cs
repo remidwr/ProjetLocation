@@ -7,7 +7,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class RoleRepository : IRoleRepository<Role>
+    public class RoleRepository : IRoleRepository<Role, User>
     {
         private static Connection _connection;
 

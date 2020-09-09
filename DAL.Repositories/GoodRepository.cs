@@ -7,7 +7,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class GoodRepository : IGenericRepository<Good>
+    public class GoodRepository : IGoodRepository<Good, User, Section, Category>
     {
         private static Connection _connection;
 
@@ -22,14 +22,14 @@ namespace DAL.Repositories
 
         public IEnumerable<Good> GetAll()
         {
-            Command command = new Command("SELECT * FROM V_Good");
+            Command command = new Command("SELECT * FROM Good");
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good());
         }
 
         public Good GetById(int id)
         {
-            Command command = new Command("SELECT * FROM V_Good WHERE Good_Id = @GoodId");
+            Command command = new Command("SELECT * FROM Good WHERE Good_Id = @GoodId");
             command.AddParameter("GoodId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();
@@ -45,7 +45,7 @@ namespace DAL.Repositories
 
         public Section GetSectionByGoodId(int id)
         {
-            Command command = new Command("SELECT * FROM Good G JOIN Section S ON G.Section_Id = S.Section_Id WHERE G.Good_Id = @GoodId");
+            Command command = new Command("SELECT S.Section_Id, Section_Name FROM Good G JOIN Section S ON G.Section_Id = S.Section_Id WHERE G.Good_Id = @GoodId");
             command.AddParameter("GoodId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
@@ -53,7 +53,7 @@ namespace DAL.Repositories
 
         public Category GetCategoryByGoodId(int id)
         {
-            Command command = new Command("SELECT * FROM Good G JOIN Category C ON G.Category_Id = C.Category_Id WHERE G.Good_Id = @GoodId");
+            Command command = new Command("SELECT C.Category_Id, Category_Name, C.Section_Id FROM Good G JOIN Category C ON G.Category_Id = C.Category_Id WHERE G.Good_Id = @GoodId");
             command.AddParameter("GoodId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category()).SingleOrDefault();
