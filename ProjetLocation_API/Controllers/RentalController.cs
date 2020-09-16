@@ -69,6 +69,8 @@ namespace ProjetLocation.API.Controllers
         {
             int Successful = _rentalRepository.Update(id, rental);
 
+            // condition pour le rating
+
             if (Successful > 0)
                 return Ok();
             else

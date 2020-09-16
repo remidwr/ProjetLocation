@@ -18,7 +18,7 @@ namespace DAL.Repositories.Extensions
                 Street = record["Street"] is DBNull ? null : (string)record["Street"],
                 Number = record["Number"] is DBNull ? null : (string)record["Number"],
                 Box = record["Box"] is DBNull ? null : (string)record["Box"],
-                PostCode = record["PostCode"] is DBNull ? 0 : (int)record["PostCode"],
+                PostCode = record["PostCode"] is DBNull ? null : (int?)record["PostCode"],
                 City = record["City"] is DBNull ? null : (string)record["City"],
                 Phone1 = record["Phone1"] is DBNull ? null : (string)record["Phone1"],
                 Phone2 = record["Phone2"] is DBNull ? null : (string)record["Phone2"],

@@ -54,7 +54,18 @@ namespace ProjetLocation_API
                 };
             });
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    builder =>
+                    {
+                        builder.WithOrigins("http://example.com",
+                                            "http://www.contoso.com");
+                    });
+            });
+
             services.AddControllers();
+
             services.AddSingleton<KeyGenerator>();
             services.AddSingleton<DbProviderFactory>(sp => SqlClientFactory.Instance);
             services.AddSingleton(sp => new ConnectionInfo(connectionString));
@@ -79,6 +90,8 @@ namespace ProjetLocation_API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
