@@ -56,11 +56,12 @@ namespace ProjetLocation_API
 
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(
+                options.AddPolicy(name:"AccessGranted",
                     builder =>
                     {
-                        builder.WithOrigins("http://example.com",
-                                            "http://www.contoso.com");
+                        builder.WithOrigins("https://localhost:4200")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
                     });
             });
 
@@ -91,7 +92,7 @@ namespace ProjetLocation_API
 
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors("AccessGranted");
 
             app.UseAuthentication();
             app.UseAuthorization();
