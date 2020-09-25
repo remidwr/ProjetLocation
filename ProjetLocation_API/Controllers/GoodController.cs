@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using DAL.IRepositories;
 using DAL.Models;
 using DAL.Repositories;
@@ -34,7 +35,8 @@ namespace ProjetLocation.API.Controllers
             if (!(goods is null))
                 return Ok(goods);
             else
-                return NotFound();
+                return Problem(detail: "Goods not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // GET api/<GoodController>/5
@@ -46,7 +48,8 @@ namespace ProjetLocation.API.Controllers
             if (!(good is null))
                 return Ok(good);
             else
-                return NotFound();
+                return Problem(detail: "Good not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // POST api/<GoodController>
@@ -58,7 +61,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to create good",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // PUT api/<GoodController>/5
@@ -70,7 +74,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to update good",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // DELETE api/<GoodController>/5
@@ -82,7 +87,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to delete good",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }
 }

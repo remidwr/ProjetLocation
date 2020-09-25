@@ -36,7 +36,8 @@ namespace ProjetLocation.API.Controllers
             if (!(rentals is null))
                 return Ok(rentals);
             else
-                return NotFound();
+                return Problem(detail: "Rentals not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // GET api/<RentalController>/5
@@ -48,7 +49,8 @@ namespace ProjetLocation.API.Controllers
             if (!(rental is null))
                 return Ok(rental);
             else
-                return NotFound();
+                return Problem(detail: "Rental not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // POST api/<RentalController>
@@ -60,7 +62,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to create rental",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // PUT api/<RentalController>/5
@@ -74,7 +77,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to update rental",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         [HttpPut("{id}/rating")]
@@ -90,13 +94,14 @@ namespace ProjetLocation.API.Controllers
             {
                 if (ex.Message.Contains("UnableToAddRating"))
                     return Problem(detail: "Unable to add a rating because the rental is not finished yet !",
-                                   statusCode: (int)HttpStatusCode.Unauthorized);
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to update rating",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // DELETE api/<RentalController>/5
@@ -113,13 +118,14 @@ namespace ProjetLocation.API.Controllers
             {
                 if (ex.Message.Contains("UnableToDelete"))
                     return Problem(detail: "Unable to delete because the rental is not finished yet !",
-                                   statusCode: (int)HttpStatusCode.Unauthorized);
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to delete rental",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
     }

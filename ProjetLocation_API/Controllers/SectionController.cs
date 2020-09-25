@@ -35,7 +35,8 @@ namespace ProjetLocation.API.Controllers
             if (!(sections is null))
                 return Ok(sections);
             else
-                return NotFound();
+                return Problem(detail: "Sections not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // GET api/<SectionController>/5
@@ -47,7 +48,8 @@ namespace ProjetLocation.API.Controllers
             if (!(section is null))
                 return Ok(section);
             else
-                return NotFound();
+                return Problem(detail: "Section not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         [HttpGet("{id}/categoriesbysection")]
@@ -58,7 +60,8 @@ namespace ProjetLocation.API.Controllers
             if (!(categories is null))
                 return Ok(categories);
             else
-                return NotFound();
+                return Problem(detail: "Unable to get categories from section",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // POST api/<SectionController>
@@ -76,13 +79,14 @@ namespace ProjetLocation.API.Controllers
             {
                 if (ex.Message.Contains("UK_Section_Name"))
                     return Problem(detail: "Section name already exists !",
-                                   statusCode: (int)HttpStatusCode.Unauthorized);
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to create section",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // PUT api/<SectionController>/5
@@ -100,13 +104,14 @@ namespace ProjetLocation.API.Controllers
             {
                 if (ex.Message.Contains("UK_Section_Name"))
                     return Problem(detail: "Section name already exists !",
-                                   statusCode: (int)HttpStatusCode.Unauthorized);
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to update section",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // DELETE api/<SectionController>/5
@@ -119,7 +124,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to delete section",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }
 }

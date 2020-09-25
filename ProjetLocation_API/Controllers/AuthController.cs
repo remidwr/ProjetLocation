@@ -91,10 +91,10 @@ namespace ProjetLocation.API.Controllers
             {
                 if (ex.Message.Contains("User_Inactive"))
                     return Problem(detail: "User account is inactive !",
-                                   statusCode: (int)HttpStatusCode.Unauthorized);
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("User_Banned"))
                     return Problem(detail: "User account is BANNED !!!",
-                                   statusCode: (int)HttpStatusCode.Unauthorized);
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (!(user is null))

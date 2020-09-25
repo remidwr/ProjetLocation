@@ -8,6 +8,7 @@ using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
 using ProjetLocation.API.Models.Good;
 using ProjetLocation.API.Utils.Extensions;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -34,7 +35,8 @@ namespace ProjetLocation.API.Controllers
             if (!(categories is null))
                 return Ok(categories);
             else
-                return NotFound();
+                return Problem(detail: "Categories not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // GET api/<CategoryController>/5
@@ -46,7 +48,8 @@ namespace ProjetLocation.API.Controllers
             if (!(category is null))
                 return Ok(category);
             else
-                return NotFound();
+                return Problem(detail: "Category not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // POST api/<CategoryController>
@@ -59,7 +62,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to create category",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // PUT api/<CategoryController>/5
@@ -72,7 +76,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to update category",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // DELETE api/<CategoryController>/5
@@ -85,7 +90,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to delete category",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }
 }

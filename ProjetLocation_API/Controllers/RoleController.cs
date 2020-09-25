@@ -8,6 +8,7 @@ using ProjetLocation.API.Models.User;
 using DAL.IRepositories;
 using DAL.Repositories;
 using ProjetLocation.API.Utils.Extensions;
+using System.Net;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -31,7 +32,8 @@ namespace ProjetLocation.API.Controllers
             if (!(roles is null))
                 return Ok(roles);
             else
-                return NotFound();
+                return Problem(detail: "Roles not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         [HttpGet("{id}")]
@@ -42,7 +44,8 @@ namespace ProjetLocation.API.Controllers
             if (!(role is null))
                 return Ok(role);
             else
-                return NotFound();
+                return Problem(detail: "Role not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }
 }

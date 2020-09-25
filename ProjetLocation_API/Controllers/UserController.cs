@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Utils.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using ProjetLocation.API.Models.User.RoleName;
+using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,7 +36,8 @@ namespace ProjetLocation.API.Controllers
             if (!(users is null))
                 return Ok(users);
             else
-                return NotFound();
+                return Problem(detail: "Users not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // GET api/<UserController>/5
@@ -47,7 +49,8 @@ namespace ProjetLocation.API.Controllers
             if (!(user is null))
                 return Ok(user);
             else
-                return NotFound();
+                return Problem(detail: "User not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // PUT api/<UserController>/5
@@ -59,7 +62,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to update user",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // PUT api/<UserController>/5
@@ -71,7 +75,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to change password",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // DELETE api/<UserController>/5
@@ -83,7 +88,8 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to desactivate user",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }
 }
