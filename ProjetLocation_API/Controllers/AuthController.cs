@@ -15,6 +15,7 @@ using Microsoft.Extensions.Options;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Utils.Extensions;
 using ProjetLocation.API.Models.User;
+using Microsoft.AspNetCore.Cors;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -59,16 +60,17 @@ namespace ProjetLocation.API.Controllers
             {
                 if (ex.Message.Contains("UK_Users_Email"))
                     return Problem(detail: "Email already used !",
-                                   statusCode: (int)HttpStatusCode.Unauthorized);
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("User_Banned"))
                     return Problem(detail: "User account is BANNED !!!",
-                                   statusCode: (int)HttpStatusCode.Unauthorized);
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return NotFound();
+                return Problem(detail: "Unable to register User",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         [AllowAnonymous]
@@ -133,7 +135,8 @@ namespace ProjetLocation.API.Controllers
                 return Ok(user);
             }
             else
-                return NotFound();
+                return Problem(detail: "User not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }
 }
