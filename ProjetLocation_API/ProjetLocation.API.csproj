@@ -23,5 +23,9 @@
     <ProjectReference Include="..\Tools\Tools.Security.RSA\Tools.Security.RSA.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Resources\Images\" />
+  </ItemGroup>
+
 
 </Project>

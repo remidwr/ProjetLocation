@@ -23,7 +23,7 @@ namespace ProjetLocation.API.Utils.Extensions
             {
                 return new Api.SectionName()
                 {
-                    //Id = section.Id,
+                    Id = section.Id,
                     Name = section.Name
                 };
             }
@@ -35,7 +35,7 @@ namespace ProjetLocation.API.Utils.Extensions
         {
             return new Dal.Section()
             {
-                //Id = section.Id,
+                Id = section.Id,
                 Name = section.Name
             };
         }

@@ -11,7 +11,7 @@ namespace ProjetLocation.API.Utils.Extensions
             {
                 return new Api.CategoryName()
                 {
-                    //Id = category.Id,
+                    Id = category.Id,
                     Name = category.Name
                 };
             }
@@ -23,7 +23,7 @@ namespace ProjetLocation.API.Utils.Extensions
         {
             return new Dal.Category()
             {
-                //Id = category.Id,
+                Id = category.Id,
                 Name = category.Name
             };
         }

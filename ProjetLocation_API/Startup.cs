@@ -5,13 +5,17 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Tools.Database;
+using DB = Tools.Database;
 using Tools.Security.RSA;
 using DAL.Repositories;
 using ProjetLocation.API.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace ProjetLocation_API
 {
@@ -63,12 +67,18 @@ namespace ProjetLocation_API
                     });
             });
 
+            services.Configure<FormOptions>(o => {
+                o.ValueLengthLimit = int.MaxValue;
+                o.MultipartBodyLengthLimit = int.MaxValue;
+                o.MemoryBufferThreshold = int.MaxValue;
+            });
+
             services.AddControllers();
 
             services.AddSingleton<KeyGenerator>();
             services.AddSingleton<DbProviderFactory>(sp => SqlClientFactory.Instance);
-            services.AddSingleton(sp => new ConnectionInfo(connectionString));
-            services.AddSingleton<Connection>();
+            services.AddSingleton(sp => new DB.ConnectionInfo(connectionString));
+            services.AddSingleton<DB.Connection>();
             services.AddSingleton<AuthRepository>();
             services.AddSingleton<UserRepository>();
             services.AddSingleton<RoleRepository>();
@@ -88,9 +98,16 @@ namespace ProjetLocation_API
 
             app.UseHttpsRedirection();
 
-            app.UseRouting();
-
             app.UseCors();
+
+            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
+                RequestPath = new PathString("/Resources")
+            });
+
+            app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();

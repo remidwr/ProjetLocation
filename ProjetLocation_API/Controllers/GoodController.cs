@@ -27,6 +27,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // GET: api/<GoodController>
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {

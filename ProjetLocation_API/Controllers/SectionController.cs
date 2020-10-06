@@ -27,6 +27,7 @@ namespace ProjetLocation.API.Controllers
         }
 
         // GET: api/<SectionController>
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
@@ -52,7 +53,8 @@ namespace ProjetLocation.API.Controllers
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
-        [HttpGet("{id}/categoriesbysection")]
+        [AllowAnonymous]
+        [HttpGet("{id}/categories")]
         public IActionResult GetCategoriesBySectionId(int id) // POSTMAN OK
         {
             IEnumerable<CategoryName> categories = _sectionRepository.GetCategoriesBySectionId(id).Select(x => x.DALCategoryNameToAPI());

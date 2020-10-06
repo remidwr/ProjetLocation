@@ -15,7 +15,6 @@ using Microsoft.Extensions.Options;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Utils.Extensions;
 using ProjetLocation.API.Models.User;
-using Microsoft.AspNetCore.Cors;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -59,17 +58,17 @@ namespace ProjetLocation.API.Controllers
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UK_Users_Email"))
-                    return Problem(detail: "Email already used !",
+                    return Problem(detail: "L'email existe déjà",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("User_Banned"))
-                    return Problem(detail: "User account is BANNED !!!",
+                    return Problem(detail: "Le compte de l'utilisateur est banni",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to register User",
+                return Problem(detail: "Un ou plusieurs champs sont incorrects",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -90,10 +89,10 @@ namespace ProjetLocation.API.Controllers
             catch (Exception ex)
             {
                 if (ex.Message.Contains("User_Inactive"))
-                    return Problem(detail: "User account is inactive !",
+                    return Problem(detail: "Le compte de l'utilisateur est inactif",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("User_Banned"))
-                    return Problem(detail: "User account is BANNED !!!",
+                    return Problem(detail: "Le compte de l'utilisateur est banni",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
@@ -135,7 +134,7 @@ namespace ProjetLocation.API.Controllers
                 return Ok(user);
             }
             else
-                return Problem(detail: "User not found",
+                return Problem(detail: "L'identifiant ou le mot de passe est incorrect",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }
