@@ -67,12 +67,6 @@ namespace ProjetLocation_API
                     });
             });
 
-            services.Configure<FormOptions>(o => {
-                o.ValueLengthLimit = int.MaxValue;
-                o.MultipartBodyLengthLimit = int.MaxValue;
-                o.MemoryBufferThreshold = int.MaxValue;
-            });
-
             services.AddControllers();
 
             services.AddSingleton<KeyGenerator>();
@@ -99,13 +93,6 @@ namespace ProjetLocation_API
             app.UseHttpsRedirection();
 
             app.UseCors();
-
-            app.UseStaticFiles();
-            app.UseStaticFiles(new StaticFileOptions()
-            {
-                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Resources")),
-                RequestPath = new PathString("/Resources")
-            });
 
             app.UseRouting();
 

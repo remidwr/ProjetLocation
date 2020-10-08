@@ -23,9 +23,7 @@
     <ProjectReference Include="..\Tools\Tools.Security.RSA\Tools.Security.RSA.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Resources\Images\" />
-  </ItemGroup>
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 
 </Project>
