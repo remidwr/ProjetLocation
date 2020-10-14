@@ -7,6 +7,7 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Models.Good;
+using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Utils.Extensions;
 
@@ -50,6 +51,18 @@ namespace ProjetLocation.API.Controllers
                 return Ok(good);
             else
                 return Problem(detail: "Good not found",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+        }
+
+        [HttpGet("{id}/user")]
+        public IActionResult GetUserByGoodId(int id)
+        {
+            UserInfo user = _goodRepository.GetUserByGoodId(id).DALUserInfoToAPI();
+
+            if (!(user is null))
+                return Ok(user);
+            else
+                return Problem(detail: "Utilisateur introuvable",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 

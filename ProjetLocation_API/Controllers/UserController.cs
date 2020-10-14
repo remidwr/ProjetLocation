@@ -19,7 +19,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        IUserRepository<User, Good> _userRepository;
+        IUserRepository<Role, User, Good> _userRepository;
 
         public UserController(UserRepository userRepository)
         {
@@ -51,6 +51,18 @@ namespace ProjetLocation.API.Controllers
             else
                 return Problem(detail: "User not found",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
+        }
+
+        [HttpGet("{id}/role")]
+        public IActionResult GetRoleByUserId(int id)
+        {
+            Role role = _userRepository.GetRoleByUserId(id);
+
+            if (!(role is null))
+                return Ok(role);
+            else
+                return Problem(detail: "Rôle introuvable",
+                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // PUT api/<UserController>/5

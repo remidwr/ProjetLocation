@@ -7,7 +7,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IUserRepository<User, Good>
+    public class UserRepository : IUserRepository<Role, User, Good>
     {
         private static Connection _connection;
 
@@ -35,6 +35,14 @@ namespace DAL.Repositories
             command.AddParameter("UserId", id);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
+        }
+
+        public Role GetRoleByUserId(int id)
+        {
+            Command command = new Command("SELECT * FROM Users U JOIN Roles R ON U.Role_Id = R.Role_Id WHERE U.[User_Id] = @UserId");
+            command.AddParameter("UserId", id);
+
+            return _connection.ExecuteReader(command, dr => dr.ToDAL_Role()).SingleOrDefault();
         }
 
         public IEnumerable<Good> GetGoodsByUserId(int id)
