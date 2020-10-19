@@ -70,6 +70,7 @@
     <Folder Include="Programmability\Stored Procedures\Rental" />
     <Folder Include="Programmability\Stored Procedures\Rental\Rating" />
     <Folder Include="Programmability\Stored Procedures\Users\Roles" />
+    <Folder Include="Programmability\Stored Procedures\Users\Auth" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Functions\GetPreSalt.sql" />
@@ -79,8 +80,6 @@
     <Build Include="Tables\Goods\Category.sql" />
     <Build Include="Tables\Goods\Section.sql" />
     <Build Include="Tables\Goods\Rental.sql" />
-    <Build Include="Programmability\Stored Procedures\Users\CSP_Login.sql" />
-    <Build Include="Programmability\Stored Procedures\Users\CSP_Register.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserInfo.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserPassword.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_DeleteUser.sql" />
@@ -104,6 +103,8 @@
     <Build Include="Programmability\Stored Procedures\Users\Roles\CSP_UpdateRole.sql" />
     <Build Include="Programmability\Stored Procedures\Users\Roles\CSP_DeleteRole.sql" />
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserRole.sql" />
+    <Build Include="Programmability\Stored Procedures\Users\Auth\CSP_Login.sql" />
+    <Build Include="Programmability\Stored Procedures\Users\Auth\CSP_Register.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DB_ProjetLocation.refactorlog" />

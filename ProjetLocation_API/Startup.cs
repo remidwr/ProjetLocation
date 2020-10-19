@@ -59,7 +59,7 @@ namespace ProjetLocation_API
                 options.AddDefaultPolicy(
                     builder =>
                     {
-                        builder.WithOrigins("http://localhost:4200").AllowAnyHeader();
+                        builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
                     });
             });
 

@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using DAL.IRepositories;
 using DAL.Models;
 using ProjetLocation.API.Models.User;
-using DAL.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using ProjetLocation.API.Utils.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using ProjetLocation.API.Models.User.RoleName;
 using System.Net;
+using System;
+using ProjetLocation.API.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,11 +17,11 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        IUserRepository<Role, User, Good> _userRepository;
+        UserService _userService;
 
-        public UserController(UserRepository userRepository)
+        public UserController(UserService userService)
         {
-            _userRepository = userRepository;
+            _userService = userService;
         }
 
         // GET: api/<UserController>
@@ -31,12 +29,12 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<UserWithGoods> users = _userRepository.GetAll().Select(x => x.DALUserWithGoodsToAPI());
+            IEnumerable<UserFull> users = _userService.GetAll();
 
             if (!(users is null))
                 return Ok(users);
             else
-                return Problem(detail: "Users not found",
+                return Problem(detail: "Utilisateurs non trouvés.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -44,19 +42,19 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            UserWithGoods user = _userRepository.GetById(id).DALUserWithGoodsToAPI();
+            UserFull user = _userService.GetById(id);
 
             if (!(user is null))
                 return Ok(user);
             else
-                return Problem(detail: "User not found",
+                return Problem(detail: "Utilisateur non trouvé.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         [HttpGet("{id}/role")]
         public IActionResult GetRoleByUserId(int id)
         {
-            Role role = _userRepository.GetRoleByUserId(id);
+            Role role = _userService.GetRoleByUserId(id);
 
             if (!(role is null))
                 return Ok(role);
@@ -69,25 +67,25 @@ namespace ProjetLocation.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UserInfo user) // POSTMAN OK
         {
-            int Successful = _userRepository.Update(id, user.APIUserInfoToDAL());
+            int Successful = _userService.Put(id, user);
 
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to update user",
+                return Problem(detail: "Impossible de mettre à jour l'utilisateur.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
         // PUT api/<UserController>/5
         [HttpPut("{id}/password")]
-        public IActionResult PutPassword(int id, [FromBody] UserPassword user) // POSTMAN OK
+        public IActionResult PutPassword(int id, [FromBody] UserFull user) // POSTMAN OK
         {
-            int Successful = _userRepository.UpdatePassword(id, user.APIUserPasswordToDAL());
+            int Successful = _userService.PutPassword(id, user);
 
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to change password",
+                return Problem(detail: "Impossible de changer le mot de passe.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -95,13 +93,17 @@ namespace ProjetLocation.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id) // POSTMAN OK
         {
-            int Successful = _userRepository.Delete(id);
-
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Unable to desactivate user",
+            try
+            {
+                _userService.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                return Problem(detail: "Impossible de désactiver l'utilisateur.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
+
+            return Ok();
         }
     }
 }

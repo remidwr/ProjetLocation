@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProjetLocation.API.Models.Good;
+using System;
+using System.Collections.Generic;
 
 namespace ProjetLocation.API.Models.User
 {
@@ -23,5 +25,6 @@ namespace ProjetLocation.API.Models.User
         public int RoleId { get; set; }
         public string RoleName { get; set; }
         public string Token { get; set; }
+        public IEnumerable<GoodFull> Goods { get; set; }
     }
 }

@@ -1,6 +1,9 @@
-﻿namespace ProjetLocation.API.Models.Good
+﻿using DAL.Models;
+using ProjetLocation.API.Models.User;
+
+namespace ProjetLocation.API.Models.Good
 {
-    public class GoodWithSection
+    public class GoodFull
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -15,7 +18,8 @@
         public int? PostCode { get; set; }
         public string City { get; set; }
         public string Picture { get; set; }
-        public SectionName Section { get; set; }
-        public CategoryName Category { get; set; }
+        public Section Section { get; set; }
+        public Category Category { get; set; }
+        public UserInfo User { get; set; }
     }
 }

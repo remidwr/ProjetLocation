@@ -18,10 +18,6 @@ namespace DAL.Repositories
             _connection = connection;
         }
 
-        public RentalRepository() : this(_connection)
-        {
-        }
-
         public IEnumerable<Rental> GetAll()
         {
             Command command = new Command("SELECT * FROM Rental");
@@ -29,34 +25,34 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Rental());
         }
 
-        public Rental GetById(int id)
+        public Rental GetById(int rentalId)
         {
             Command command = new Command("SELECT * FROM Rental WHERE Rental_Id = @RentalId");
-            command.AddParameter("RentalId", id);
+            command.AddParameter("RentalId", rentalId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Rental()).SingleOrDefault();
         }
 
-        public User GetOwnerByRentalId(int id)
+        public User GetOwnerByRentalId(int rentalId)
         {
-            Command command = new Command("SELECT [User_Id], LastName, FirstName, Birthdate, Email, Passwd, Street, Number, Box, PostCode, City, Phone1, Phone2, Picture, IsActive, IsBanned, Role_Id FROM Rental R JOIN Users U ON R.Owner_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
-            command.AddParameter("RentalId", id);
+            Command command = new Command("SELECT * FROM Rental R JOIN Users U ON R.Owner_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
+            command.AddParameter("RentalId", rentalId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
         }
 
-        public User GetTenantByRentalId(int id)
+        public User GetTenantByRentalId(int rentalId)
         {
-            Command command = new Command("SELECT [User_Id], LastName, FirstName, Birthdate, Email, Passwd, Street, Number, Box, PostCode, City, Phone1, Phone2, Picture, IsActive, IsBanned, Role_Id FROM Rental R JOIN Users U ON R.Tenant_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
-            command.AddParameter("RentalId", id);
+            Command command = new Command("SELECT * FROM Rental R JOIN Users U ON R.Tenant_Id = U.[User_Id] WHERE R.Rental_Id = @RentalId");
+            command.AddParameter("RentalId", rentalId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
         }
 
-        public Good GetGoodByRentalId(int id)
+        public Good GetGoodByRentalId(int rentalId)
         {
-            Command command = new Command("SELECT G.Good_Id, Good_Name, [Description], [State], AmountPerDay, AmountPerWeek, AmountPerMonth, Street, Number, Box, PostCode, City, Picture, [User_Id], Section_Id, Category_Id FROM Rental R JOIN Good G ON R.Good_Id = G.Good_Id WHERE R.Rental_Id = @RentalId");
-            command.AddParameter("RentalId", id);
+            Command command = new Command("SELECT * FROM Rental R JOIN Good G ON R.Good_Id = G.Good_Id WHERE R.Rental_Id = @RentalId");
+            command.AddParameter("RentalId", rentalId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();
         }
@@ -74,10 +70,10 @@ namespace DAL.Repositories
             return _connection.ExecuteNonQuery(command);
         }
 
-        public int Update(int id, Rental rental)
+        public int Update(int rentalId, Rental rental)
         {
             Command command = new Command("CSP_UpdateRental", true);
-            command.AddParameter("RentalId", id);
+            command.AddParameter("RentalId", rentalId);
             command.AddParameter("RentedFrom", rental.RentedFrom);
             command.AddParameter("RentedTo", rental.RentedTo);
             command.AddParameter("Amount", rental.Amount);
@@ -86,12 +82,12 @@ namespace DAL.Repositories
             return _connection.ExecuteNonQuery(command);
         }
 
-        public int UpdateRating(int id, Rental rental)
+        public int UpdateRating(int rentalId, Rental rental)
         {
             int Successful = 0;
 
             Command command = new Command("CSP_UpdateRentalRating", true);
-            command.AddParameter("RentalId", id);
+            command.AddParameter("RentalId", rentalId);
             command.AddParameter("Rating", rental.Rating);
             command.AddParameter("Review", rental.Review);
 
@@ -108,12 +104,12 @@ namespace DAL.Repositories
             return Successful;
         }
 
-        public int Delete(int id)
+        public int Delete(int rentalId)
         {
             int Successful = 0;
 
             Command command = new Command("CSP_DeleteRental", true);
-            command.AddParameter("RentalId", id);
+            command.AddParameter("RentalId", rentalId);
 
             try
             {

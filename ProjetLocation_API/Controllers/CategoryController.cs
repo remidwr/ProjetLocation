@@ -6,8 +6,6 @@ using DAL.Repositories;
 using DAL.Models;
 using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
-using ProjetLocation.API.Models.Good;
-using ProjetLocation.API.Utils.Extensions;
 using System.Net;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,12 +29,12 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<CategoryName> categories = _categoryRepository.GetAll().Select(x => x.DALCategoryNameToAPI());
+            IEnumerable<Category> categories = _categoryRepository.GetAll().Select(x => x);
 
             if (!(categories is null))
                 return Ok(categories);
             else
-                return Problem(detail: "Categories not found",
+                return Problem(detail: "Catégories introuvables.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -44,12 +42,12 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            CategoryName category = _categoryRepository.GetById(id).DALCategoryNameToAPI();
+            Category category = _categoryRepository.GetById(id);
 
             if (!(category is null))
                 return Ok(category);
             else
-                return Problem(detail: "Category not found",
+                return Problem(detail: "Catégorie introuvable.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -63,7 +61,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to create category",
+                return Problem(detail: "Impossible de créer une catégorie.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -77,7 +75,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to update category",
+                return Problem(detail: "Impossible de mettre à jour la catégorie.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -91,7 +89,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to delete category",
+                return Problem(detail: "Impossible de supprimer la catégorie.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }

@@ -4,10 +4,10 @@ using System;
 
 namespace ProjetLocation.API.Models.Rental
 {
-    public class RentalWithUsersGood
+    public class RentalFull
     {
         public int Id { get; set; }
-        public GoodWithSection Good { get; set; }
+        public GoodFull Good { get; set; }
         public UserInfo Owner { get; set; }
         public UserInfo Tenant { get; set; }
         public DateTime CreationDate { get; set; }

@@ -16,10 +16,6 @@ namespace DAL.Repositories
             _connection = connection;
         }
 
-        public GoodRepository() : this(_connection)
-        {
-        }
-
         public IEnumerable<Good> GetAll()
         {
             Command command = new Command("SELECT * FROM Good");
@@ -27,34 +23,34 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good());
         }
 
-        public Good GetById(int id)
+        public Good GetById(int goodId)
         {
             Command command = new Command("SELECT * FROM Good WHERE Good_Id = @GoodId");
-            command.AddParameter("GoodId", id);
+            command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();
         }
 
-        public User GetUserByGoodId(int id)
+        public User GetUserByGoodId(int goodId)
         {
-            Command command = new Command("SELECT U.[User_Id], LastName, FirstName, Birthdate, Email, Passwd, U.Street, U.Number, U.Box, U.PostCode, U.City, Phone1, Phone2, U.Picture, IsActive, IsBanned, Role_Id FROM Good G JOIN Users U ON G.[User_Id] = U.[User_Id] WHERE G.Good_Id = @GoodId");
-            command.AddParameter("GoodId", id);
+            Command command = new Command("SELECT * FROM Good G JOIN Users U ON G.[User_Id] = U.[User_Id] WHERE G.Good_Id = @GoodId");
+            command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
         }
 
-        public Section GetSectionByGoodId(int id)
+        public Section GetSectionByGoodId(int goodId)
         {
-            Command command = new Command("SELECT S.Section_Id, Section_Name FROM Good G JOIN Section S ON G.Section_Id = S.Section_Id WHERE G.Good_Id = @GoodId");
-            command.AddParameter("GoodId", id);
+            Command command = new Command("SELECT * FROM Good G JOIN Section S ON G.Section_Id = S.Section_Id WHERE G.Good_Id = @GoodId");
+            command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
         }
 
-        public Category GetCategoryByGoodId(int id)
+        public Category GetCategoryByGoodId(int goodId)
         {
-            Command command = new Command("SELECT C.Category_Id, Category_Name, C.Section_Id FROM Good G JOIN Category C ON G.Category_Id = C.Category_Id WHERE G.Good_Id = @GoodId");
-            command.AddParameter("GoodId", id);
+            Command command = new Command("SELECT * FROM Good G JOIN Category C ON G.Category_Id = C.Category_Id WHERE G.Good_Id = @GoodId");
+            command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category()).SingleOrDefault();
         }
@@ -81,10 +77,10 @@ namespace DAL.Repositories
             return _connection.ExecuteNonQuery(command);
         }
 
-        public int Update(int id, Good good)
+        public int Update(int goodId, Good good)
         {
             Command command = new Command("CSP_UpdateGood", true);
-            command.AddParameter("GoodId", id);
+            command.AddParameter("GoodId", goodId);
             command.AddParameter("GoodName", good.Name);
             command.AddParameter("Description", good.Description);
             command.AddParameter("State", good.State);
@@ -104,10 +100,10 @@ namespace DAL.Repositories
             return _connection.ExecuteNonQuery(command);
         }
 
-        public int Delete(int id)
+        public int Delete(int goodId)
         {
             Command command = new Command("CSP_DeleteGood", true);
-            command.AddParameter("GoodId", id);
+            command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteNonQuery(command);
         }

@@ -32,7 +32,7 @@ namespace ProjetLocation.API.Controllers
             if (!(roles is null))
                 return Ok(roles);
             else
-                return Problem(detail: "Roles not found",
+                return Problem(detail: "Rôles introuvables.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -44,7 +44,7 @@ namespace ProjetLocation.API.Controllers
             if (!(role is null))
                 return Ok(role);
             else
-                return Problem(detail: "Role not found",
+                return Problem(detail: "Rôles introuvable.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }

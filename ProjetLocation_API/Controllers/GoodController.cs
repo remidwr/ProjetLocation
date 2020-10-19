@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using DAL.IRepositories;
 using DAL.Models;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Models.Good;
 using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Models.User.RoleName;
+using ProjetLocation.API.Services;
 using ProjetLocation.API.Utils.Extensions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -21,10 +21,12 @@ namespace ProjetLocation.API.Controllers
     public class GoodController : ControllerBase
     {
         private IGoodRepository<Good,User, Section, Category> _goodRepository;
+        private GoodService _goodService;
 
-        public GoodController(GoodRepository goodRepository)
+        public GoodController(GoodRepository goodRepository, GoodService goodService)
         {
             _goodRepository = goodRepository;
+            _goodService = goodService;
         }
 
         // GET: api/<GoodController>
@@ -32,12 +34,12 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<GoodWithSection> goods = _goodRepository.GetAll().Select(x => x.DALGoodWithSectionToAPI());
+            IEnumerable<GoodFull> goods = _goodService.GetAll();
 
             if (!(goods is null))
                 return Ok(goods);
             else
-                return Problem(detail: "Goods not found",
+                return Problem(detail: "Biens non trouvés.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -45,15 +47,16 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            GoodWithSection good = _goodRepository.GetById(id).DALGoodWithSectionToAPI();
+            GoodFull good = _goodRepository.GetById(id).DALGoodFullToAPI();
 
             if (!(good is null))
                 return Ok(good);
             else
-                return Problem(detail: "Good not found",
+                return Problem(detail: "Bien introuvable.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}/user")]
         public IActionResult GetUserByGoodId(int id)
         {
@@ -75,7 +78,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to create good",
+                return Problem(detail: "Impossible de créer un bien.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -88,7 +91,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to update good",
+                return Problem(detail: "Impossible de mettre à jour un bien.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -101,7 +104,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to delete good",
+                return Problem(detail: "Impossible de supprimer un bien.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }

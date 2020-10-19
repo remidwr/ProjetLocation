@@ -9,17 +9,13 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class SectionRepository : IGenericRepository<Section>
+    public class SectionRepository : ISectionRepository<Section, Category>
     {
         private static Connection _connection;
 
         public SectionRepository(Connection connection)
         {
             _connection = connection;
-        }
-
-        public SectionRepository() : this(_connection)
-        {
         }
 
         public IEnumerable<Section> GetAll()
@@ -29,18 +25,18 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section());
         }
 
-        public Section GetById(int id)
+        public Section GetById(int sectionId)
         {
             Command command = new Command("SELECT * FROM Section WHERE Section_Id = @SectionId");
-            command.AddParameter("SectionId", id);
+            command.AddParameter("SectionId", sectionId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
         }
 
-        public IEnumerable<Category> GetCategoriesBySectionId(int id)
+        public IEnumerable<Category> GetCategoriesBySectionId(int sectionId)
         {
             Command command = new Command("SELECT * FROM Section S JOIN Category C ON S.Section_Id = C.Section_Id WHERE S.Section_Id = @SectionId");
-            command.AddParameter("SectionId", id);
+            command.AddParameter("SectionId", sectionId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category());
         }
@@ -65,11 +61,11 @@ namespace DAL.Repositories
             return Successful;
         }
 
-        public int Update(int id, Section section)
+        public int Update(int sectionId, Section section)
         {
             int Successful = 0;
             Command command = new Command("CSP_UpdateSection", true);
-            command.AddParameter("SectionId", id);
+            command.AddParameter("SectionId", sectionId);
             command.AddParameter("SectionName", section.Name);
 
             try
@@ -84,10 +80,10 @@ namespace DAL.Repositories
             return Successful;
         }
 
-        public int Delete(int id)
+        public int Delete(int sectionId)
         {
             Command command = new Command("CSP_DeleteSection", true);
-            command.AddParameter("SectionId", id);
+            command.AddParameter("SectionId", sectionId);
 
             return _connection.ExecuteNonQuery(command);
         }

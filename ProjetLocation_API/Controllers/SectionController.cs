@@ -7,8 +7,6 @@ using System.Net;
 using DAL.Models;
 using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
-using ProjetLocation.API.Models.Good;
-using ProjetLocation.API.Utils.Extensions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -31,12 +29,12 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<SectionName> sections = _sectionRepository.GetAll().Select(x => x.DALSectionNameToAPI());
+            IEnumerable<Section> sections = _sectionRepository.GetAll().Select(x => x);
 
             if (!(sections is null))
                 return Ok(sections);
             else
-                return Problem(detail: "Sections not found",
+                return Problem(detail: "Sections introuvables.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -44,12 +42,12 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            SectionName section = _sectionRepository.GetById(id).DALSectionNameToAPI();
+            Section section = _sectionRepository.GetById(id);
 
             if (!(section is null))
                 return Ok(section);
             else
-                return Problem(detail: "Section not found",
+                return Problem(detail: "Section introuvable.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -57,12 +55,12 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}/categories")]
         public IActionResult GetCategoriesBySectionId(int id) // POSTMAN OK
         {
-            IEnumerable<CategoryName> categories = _sectionRepository.GetCategoriesBySectionId(id).Select(x => x.DALCategoryNameToAPI());
+            IEnumerable<Category> categories = _sectionRepository.GetCategoriesBySectionId(id).Select(x => x);
 
             if (!(categories is null))
                 return Ok(categories);
             else
-                return Problem(detail: "Unable to get categories from section",
+                return Problem(detail: "Impossible de récupérer les catégories de la section.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -80,14 +78,14 @@ namespace ProjetLocation.API.Controllers
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UK_Section_Name"))
-                    return Problem(detail: "Section name already exists !",
+                    return Problem(detail: "Le nom de la section existe déjà.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to create section",
+                return Problem(detail: "Impossible de créer une section.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -105,14 +103,14 @@ namespace ProjetLocation.API.Controllers
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UK_Section_Name"))
-                    return Problem(detail: "Section name already exists !",
+                    return Problem(detail: "Le nom de la section existe déjà.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to update section",
+                return Problem(detail: "Impossible de mettre à jour la section.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -126,7 +124,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to delete section",
+                return Problem(detail: "Impossible de supprimer la section.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
     }

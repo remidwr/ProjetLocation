@@ -1,35 +1,22 @@
-﻿using Dal = DAL.Models;
-using Api = ProjetLocation.API.Models.User;
-using System.Linq;
-using DAL.Repositories;
+﻿using DAL.Models;
+using ProjetLocation.API.Models.User;
 
 namespace ProjetLocation.API.Utils.Extensions
 {
     internal static class RoleMapperAPI
     {
-        private static RoleRepository _roleRepository;
-
-        public static RoleRepository roleRepository
+        internal static RoleWithUsers DALRoleWithUsersToAPI(this Role role)
         {
-            get
-            {
-                return new RoleRepository();
-            }
-        }
-
-        internal static Api.RoleWithUsers DALRoleWithUsersToAPI(this Dal.Role role)
-        {
-            return new Api.RoleWithUsers()
+            return new RoleWithUsers()
             {
                 Id = role.Id,
-                Name = role.Name,
-                Users = roleRepository.GetUsersByRoleId(role.Id).Select(x => x.DALUserInfoToAPI())
+                Name = role.Name
             };
         }
 
-        internal static Dal.Role APIRoleWithUsersToDAL(this Api.RoleWithUsers role)
+        internal static Role APIRoleWithUsersToDAL(this RoleWithUsers role)
         {
-            return new Dal.Role()
+            return new Role()
             {
                 Id = role.Id,
                 Name = role.Name

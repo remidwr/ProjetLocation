@@ -31,12 +31,12 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll() // POSTMAN OK
         {
-            IEnumerable<RentalWithUsersGood> rentals = _rentalRepository.GetAll().Select(x => x.DALRentalWithUsersGoodToAPI());
+            IEnumerable<RentalFull> rentals = _rentalRepository.GetAll().Select(x => x.DALRentalFullToAPI());
 
             if (!(rentals is null))
                 return Ok(rentals);
             else
-                return Problem(detail: "Rentals not found",
+                return Problem(detail: "Locations non trouvées.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -44,12 +44,12 @@ namespace ProjetLocation.API.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id) // POSTMAN OK
         {
-            RentalWithUsersGood rental = _rentalRepository.GetById(id).DALRentalWithUsersGoodToAPI();
+            RentalFull rental = _rentalRepository.GetById(id).DALRentalFullToAPI();
 
             if (!(rental is null))
                 return Ok(rental);
             else
-                return Problem(detail: "Rental not found",
+                return Problem(detail: "Location non trouvée.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -62,7 +62,7 @@ namespace ProjetLocation.API.Controllers
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to create rental",
+                return Problem(detail: "Impossible de créer une location.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -72,12 +72,10 @@ namespace ProjetLocation.API.Controllers
         {
             int Successful = _rentalRepository.Update(id, rental);
 
-            // condition pour le rating
-
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to update rental",
+                return Problem(detail: "Impossible de mettre à jour une location.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -93,14 +91,14 @@ namespace ProjetLocation.API.Controllers
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UnableToAddRating"))
-                    return Problem(detail: "Unable to add a rating because the rental is not finished yet !",
+                    return Problem(detail: "Impossible d'ajouter une évaluation car la location n'est pas encore finie.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to update rating",
+                return Problem(detail: "Impossible de mettre à jour son évaluation.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
 
@@ -117,16 +115,15 @@ namespace ProjetLocation.API.Controllers
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UnableToDelete"))
-                    return Problem(detail: "Unable to delete because the rental is not finished yet !",
+                    return Problem(detail: "Impossible de supprimer une location car elle n'est pas encore finie.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             if (Successful > 0)
                 return Ok();
             else
-                return Problem(detail: "Unable to delete rental",
+                return Problem(detail: "Impossible de supprimer une location.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
         }
-
     }
 }
