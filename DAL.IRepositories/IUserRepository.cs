@@ -6,6 +6,7 @@ namespace DAL.IRepositories
     {
         TRole GetRoleByUserId(int id);
         IEnumerable<TGood> GetGoodsByUserId(int id);
-        int UpdatePassword(int id, TUser user);
+        void UpdatePicture(int id, TUser user);
+        void UpdatePassword(int id, TUser user);
     }
 }

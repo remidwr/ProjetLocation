@@ -1,14 +1,12 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using DAL.Repositories;
 using System;
 using System.Net;
 using DAL.Models;
 using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using ProjetLocation.API.Services;
+using ProjetLocation.API.Models.Good;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -17,115 +15,94 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class SectionController : ControllerBase
     {
-        private SectionRepository _sectionRepository;
+        private SectionService _sectionService;
 
-        public SectionController(SectionRepository sectionRepository)
+        public SectionController(SectionService sectionService)
         {
-            _sectionRepository = sectionRepository;
+            _sectionService = sectionService;
         }
 
-        // GET: api/<SectionController>
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult GetAll() // POSTMAN OK
+        public IActionResult GetAll()
         {
-            IEnumerable<Section> sections = _sectionRepository.GetAll().Select(x => x);
+            IEnumerable<SectionWithCategories> sections = _sectionService.GetAll();
 
             if (!(sections is null))
                 return Ok(sections);
             else
-                return Problem(detail: "Sections introuvables.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        // GET api/<SectionController>/5
+        [AllowAnonymous]
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) // POSTMAN OK
+        public IActionResult GetById(int id)
         {
-            Section section = _sectionRepository.GetById(id);
+            Section section = _sectionService.GetById(id);
 
             if (!(section is null))
                 return Ok(section);
             else
-                return Problem(detail: "Section introuvable.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        [AllowAnonymous]
-        [HttpGet("{id}/categories")]
-        public IActionResult GetCategoriesBySectionId(int id) // POSTMAN OK
-        {
-            IEnumerable<Category> categories = _sectionRepository.GetCategoriesBySectionId(id).Select(x => x);
-
-            if (!(categories is null))
-                return Ok(categories);
-            else
-                return Problem(detail: "Impossible de récupérer les catégories de la section.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
-        }
-
-        // POST api/<SectionController>
         [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpPost]
-        public IActionResult Post([FromBody] Section section) // POSTMAN OK
+        public IActionResult Post([FromBody] Section section)
         {
-            int Successful = 0;
-
             try
             {
-                Successful = _sectionRepository.Insert(section);
+                _sectionService.Post(section);
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UK_Section_Name"))
-                    return Problem(detail: "Le nom de la section existe déjà.",
+                    return Problem(detail: "Le nom de cette section existe déjà.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else
+                    return Problem(detail: "Impossible de créer cette section.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de créer une section.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            return Ok();
         }
 
-        // PUT api/<SectionController>/5
         [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Section section) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] Section section)
         {
-            int Successful = 0;
-
             try
             {
-                Successful = _sectionRepository.Update(id, section);
+                _sectionService.Put(id, section);
             }
             catch (Exception ex)
             {
                 if (ex.Message.Contains("UK_Section_Name"))
-                    return Problem(detail: "Le nom de la section existe déjà.",
+                    return Problem(detail: "Le nom de cette section existe déjà.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else
+                    return Problem(detail: "Impossible de mettre à jour cette section.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de mettre à jour la section.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            return Ok();
         }
 
-        // DELETE api/<SectionController>/5
         [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id) // POSTMAN OK
+        public IActionResult Delete(int id)
         {
-            int Successful = _sectionRepository.Delete(id);
-
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de supprimer la section.",
+            try
+            {
+                _sectionService.Delete(id);
+            }
+            catch (Exception)
+            {
+                return Problem(detail: "Impossible de supprimer cette section.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
+
+            return Ok();
         }
     }
 }

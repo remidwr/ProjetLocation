@@ -1,7 +1,4 @@
-﻿using DAL.IRepositories;
-using DAL.Models;
-using DAL.Repositories;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
 using Microsoft.AspNetCore.Authorization;
@@ -15,12 +12,10 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private IAuthRepository<User> _authRepository;
         private AuthService _authService;
 
-        public AuthController(AuthRepository authRepository, AuthService authService)
+        public AuthController(AuthService authService)
         {
-            _authRepository = authRepository;
             _authService = authService;
         }
 
@@ -36,35 +31,35 @@ namespace ProjetLocation.API.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("register")]
-        public IActionResult Register([FromBody] UserRegister user) // POSTMAN OK
+        public IActionResult Register([FromBody] UserRegister user)
         {
-            int Successful = 0;
-
             try
             {
-                Successful = _authService.Register(user);
+                _authService.Register(user);
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UK_Users_Email"))
-                    return Problem(detail: "L'email existe déjà.",
+                if (ex.Message.Contains("NULL"))
+                    return Problem(detail: "Il y a des données manquantes.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("User_Banned"))
-                    return Problem(detail: "Le compte de l'utilisateur est banni.",
+                    return Problem(detail: "Ce compte utilisateur est banni.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else if (ex.Message.Contains("UK_Users_Email"))
+                    return Problem(detail: "Cet email est déjà utilisé.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else if (ex.Message.Contains("CK_Users_BirthDate"))
+                    return Problem(detail: "La date de naissance non conforme.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Un ou plusieurs champs sont incorrects.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            return Ok();
         }
 
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        public IActionResult Login([FromBody] UserLogin userLogin) // POSTMAN OK
+        public IActionResult Login([FromBody] UserLogin userLogin)
         {
             //string PrivateKey = _keyGenerator.PrivateKey;
             //userLogin.Passwd = decrypting.Decrypt(userLogin.Passwd, PrivateKey);
@@ -77,11 +72,14 @@ namespace ProjetLocation.API.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("User_Inactive"))
-                    return Problem(detail: "Le compte de l'utilisateur est inactif.",
+                if (ex.Message.Contains("NULL"))
+                    return Problem(detail: "Il y a des données manquantes.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else if (ex.Message.Contains("User_Inactive"))
+                    return Problem(detail: "Ce compte utilisateur est inactif.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("User_Banned"))
-                    return Problem(detail: "Le compte de l'utilisateur est banni.",
+                    return Problem(detail: "Ce compte utilisateur est banni.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 

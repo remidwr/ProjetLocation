@@ -1,7 +1,9 @@
 ﻿using DAL.IRepositories;
 using DAL.Models;
 using DAL.Repositories.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using Tools.Database;
 
@@ -39,31 +41,52 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
         }
 
-        public int Insert(Category category)
+        public void Insert(Category category)
         {
             Command command = new Command("CSP_InsertCategory", true);
             command.AddParameter("CategoryName", category.Name);
             command.AddParameter("SectionId", category.SectionId);
 
-            return _connection.ExecuteNonQuery(command);
+            try
+            {
+                _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int Update(int categoryId, Category category)
+        public void Update(int categoryId, Category category)
         {
             Command command = new Command("CSP_UpdateCategory", true);
             command.AddParameter("CategoryId", categoryId);
             command.AddParameter("CategoryName", category.Name);
             command.AddParameter("SectionId", category.SectionId);
 
-            return _connection.ExecuteNonQuery(command);
+            try
+            {
+                _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int Delete(int categoryId)
+        public void Delete(int categoryId)
         {
             Command command = new Command("CSP_DeleteCategory", true);
             command.AddParameter("CategoryId", categoryId);
 
-            return _connection.ExecuteNonQuery(command);
+            try
+            {
+                _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

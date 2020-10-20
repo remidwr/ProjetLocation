@@ -259,4 +259,25 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Owner_Id" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="6e364c95-cc4e-4237-86da-37e8323560df" ChangeDateTime="10/19/2020 18:49:48">
+    <Property Name="ElementName" Value="[dbo].[CK_Rental_Rented]" />
+    <Property Name="ElementType" Value="SqlCheckConstraint" />
+    <Property Name="ParentElementName" Value="[dbo].[Rental]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[CK_Rental_RentedDate]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ac37d86d-ef80-4fe3-8844-004d0a611e6a" ChangeDateTime="10/19/2020 19:07:34">
+    <Property Name="ElementName" Value="[dbo].[Users].[Birthdate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Users]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="BirthDate" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="759c7d2c-3402-4b96-9fdd-8198d3eec9ad" ChangeDateTime="10/20/2020 15:23:28">
+    <Property Name="ElementName" Value="[dbo].[Good].[AmountPerDay]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Good]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Amount" />
+  </Operation>
 </Operations>

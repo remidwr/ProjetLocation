@@ -17,30 +17,23 @@ namespace DAL.Repositories
             _connection = connection;
         }
 
-        public int Register(User user)
+        public void Register(User user)
         {
-            int Successful = 0;
-
             Command command = new Command("CSP_Register", true);
             command.AddParameter("LastName", user.LastName);
             command.AddParameter("FirstName", user.FirstName);
-            command.AddParameter("Birthdate", user.Birthdate);
+            command.AddParameter("Birthdate", user.BirthDate);
             command.AddParameter("Email", user.Email);
             command.AddParameter("Passwd", user.Passwd);
 
             try
             {
-                Successful = _connection.ExecuteNonQuery(command);
+                _connection.ExecuteNonQuery(command);
             }
             catch (SqlException ex)
             {
-                if (ex.Message.Contains("UK_Users_Email"))
-                    throw new Exception(ex.Message);
-                else if (ex.Message.Contains("User_Banned"))
-                    throw new Exception(ex.Message);
+                throw new Exception(ex.Message);
             }
-
-            return Successful;
         }
 
         public User Login(string email, string passwd)
@@ -57,9 +50,6 @@ namespace DAL.Repositories
             }
             catch (SqlException ex)
             {
-                if (ex.Message.Contains("User_Inactive"))
-                    throw new Exception(ex.Message);
-                else if (ex.Message.Contains("User_Banned"))
                     throw new Exception(ex.Message);
             }
 

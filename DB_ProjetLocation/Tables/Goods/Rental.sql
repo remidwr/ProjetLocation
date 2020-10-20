@@ -14,5 +14,10 @@
     CONSTRAINT [PK_Rental] PRIMARY KEY ([Rental_Id], [Good_Id], [Owner_Id], [Tenant_Id]), 
     CONSTRAINT [FK_Rental_ToOwner] FOREIGN KEY ([Owner_Id]) REFERENCES [Users]([User_Id]), 
     CONSTRAINT [FK_Rental_ToTenant] FOREIGN KEY ([Tenant_Id]) REFERENCES [Users]([User_Id]), 
-    CONSTRAINT [FK_Rental_ToGood] FOREIGN KEY ([Good_Id]) REFERENCES [Good]([Good_Id]) 
+    CONSTRAINT [FK_Rental_ToGood] FOREIGN KEY ([Good_Id]) REFERENCES [Good]([Good_Id]),
+    CONSTRAINT [CK_Rental_RentedDate] CHECK (RentedFrom < RentedTo), 
+    CONSTRAINT [CK_Rental_Amount] CHECK (Amount > 0), 
+    CONSTRAINT [CK_Rental_Deposit] CHECK (Deposit > 0), 
+    CONSTRAINT [CK_Rental_Rating] CHECK (Rating > 0 AND Rating <= 5), 
+    CONSTRAINT [CK_Rental_UnableRating] CHECK (RentedTo < GetDate())
 )

@@ -30,13 +30,5 @@ namespace DAL.Repositories
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Role()).SingleOrDefault();
         }
-
-        public IEnumerable<User> GetUsersByRoleId(int roleId)
-        {
-            Command command = new Command("SELECT * FROM Roles R JOIN Users U ON R.Role_Id = U.Role_Id WHERE R.Role_Id = @RoleId;");
-            command.AddParameter("RoleId", roleId);
-
-            return _connection.ExecuteReader(command, dr => dr.ToDAL_User());
-        }
     }
 }

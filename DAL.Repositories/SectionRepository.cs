@@ -41,51 +41,56 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category());
         }
 
-        public int Insert(Section section)
+        public void Insert(Section section)
         {
-            int Successful = 0;
+            int Success;
 
             Command command = new Command("CSP_InsertSection", true);
             command.AddParameter("SectionName", section.Name);
 
             try
             {
-                Successful = _connection.ExecuteNonQuery(command);
+                Success = _connection.ExecuteNonQuery(command);
             }
             catch (SqlException ex)
             {
-                if (ex.Message.Contains("UK_Section_Name"))
-                    throw new Exception(ex.Message);
+                throw new Exception(ex.Message);
             }
 
-            return Successful;
+            if (Success == 0)
+                throw new Exception();
         }
 
-        public int Update(int sectionId, Section section)
+        public void Update(int sectionId, Section section)
         {
-            int Successful = 0;
+            int Success;
+
             Command command = new Command("CSP_UpdateSection", true);
             command.AddParameter("SectionId", sectionId);
             command.AddParameter("SectionName", section.Name);
 
             try
             {
-                Successful = _connection.ExecuteNonQuery(command);
+                Success = _connection.ExecuteNonQuery(command);
             }
             catch (SqlException ex)
             {
-                if (ex.Message.Contains("UK_Section_Name"))
-                    throw new Exception(ex.Message);
+                throw new Exception(ex.Message);
             }
-            return Successful;
+
+            if (Success == 0)
+                throw new Exception();
         }
 
-        public int Delete(int sectionId)
+        public void Delete(int sectionId)
         {
             Command command = new Command("CSP_DeleteSection", true);
             command.AddParameter("SectionId", sectionId);
 
-            return _connection.ExecuteNonQuery(command);
+            int Success = _connection.ExecuteNonQuery(command);
+
+            if (Success == 0)
+                throw new Exception();
         }
     }
 }

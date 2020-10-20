@@ -12,6 +12,7 @@ using ProjetLocation.API.Helpers;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ProjetLocation.API.Services;
 
 namespace ProjetLocation_API
 {
@@ -76,6 +77,12 @@ namespace ProjetLocation_API
             services.AddSingleton<SectionRepository>();
             services.AddSingleton<CategoryRepository>();
             services.AddSingleton<RentalRepository>();
+            services.AddSingleton<AuthService>();
+            services.AddSingleton<UserService>();
+            services.AddSingleton<RoleService>();
+            services.AddSingleton<GoodService>();
+            services.AddSingleton<SectionService>();
+            services.AddSingleton<RentalService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

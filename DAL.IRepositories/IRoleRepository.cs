@@ -6,6 +6,5 @@ namespace DAL.IRepositories
     {
         IEnumerable<TRole> GetAll();
         TRole GetById(int id);
-        IEnumerable<TUser> GetUsersByRoleId(int id);
     }
 }

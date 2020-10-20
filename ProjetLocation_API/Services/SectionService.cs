@@ -3,6 +3,7 @@ using DAL.Models;
 using DAL.Repositories;
 using ProjetLocation.API.Models.Good;
 using ProjetLocation.API.Utils.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,57 +18,69 @@ namespace ProjetLocation.API.Services
             _sectionRepository = sectionRepository;
         }
 
-        public IEnumerable<Section> GetAll()
+        public IEnumerable<SectionWithCategories> GetAll()
         {
-            IEnumerable<Section> sections = _sectionRepository.GetAll().Select(x => x);
-
-            return sections;
-        }
-
-        public IEnumerable<Category> GetCategoriesBySectionId(int categoryId)
-        {
-            IEnumerable<Category> categories = _sectionRepository.GetCategoriesBySectionId(categoryId).Select(x => x);
-
-            return categories;
-        }
-
-        public IEnumerable<SectionWithCategories> GetAllSectionWithCategories()
-        {
-            IEnumerable<SectionWithCategories> sections = _sectionRepository.GetAll().Select(x => x.DALSectionWithCategoriesToAPI());
+            List<SectionWithCategories> sections = _sectionRepository.GetAll().Select(x => x.DALSectionWithCategoriesToAPI()).ToList();
             foreach (SectionWithCategories section in sections)
             {
-                section.Categories = GetCategoriesBySectionId(section.Id);
+                section.Categories = _sectionRepository.GetCategoriesBySectionId(section.Id);
             }
 
             return sections;
         }
 
-        public Section GetById(int categoryId)
+        public IEnumerable<SectionWithCategories> GetAllSectionWithCategories()
         {
-            Section section = _sectionRepository.GetById(categoryId);
+            List<SectionWithCategories> sections = _sectionRepository.GetAll().Select(x => x.DALSectionWithCategoriesToAPI()).ToList();
+            foreach (SectionWithCategories section in sections)
+            {
+                section.Categories = _sectionRepository.GetCategoriesBySectionId(section.Id);
+            }
+
+            return sections;
+        }
+
+        public Section GetById(int sectionId)
+        {
+            Section section = _sectionRepository.GetById(sectionId);
 
             return section;
         }
 
-        public int Post(Section section)
+        public void Post(Section section)
         {
-            int Successful = _sectionRepository.Insert(section);
-
-            return Successful;
+            try
+            {
+                _sectionRepository.Insert(section);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int Put(int categoryId, Section section)
+        public void Put(int sectionId, Section section)
         {
-            int Successful = _sectionRepository.Update(categoryId, section);
-
-            return Successful;
+            try
+            {
+                _sectionRepository.Update(sectionId, section);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int Delete(int categoryId)
+        public void Delete(int sectionId)
         {
-            int Successful = _sectionRepository.Delete(categoryId);
-
-            return Successful;
+            try
+            {
+                _sectionRepository.Delete(sectionId);
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
     }
 }

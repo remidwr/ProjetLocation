@@ -14,7 +14,7 @@ namespace ProjetLocation.API.Utils.Extensions
                     Id = user.Id,
                     LastName = user.LastName,
                     FirstName = user.FirstName,
-                    Birthdate = user.Birthdate,
+                    BirthDate = user.BirthDate,
                     Email = user.Email,
                     Passwd = user.Passwd,
                     Street = user.Street,
@@ -42,7 +42,7 @@ namespace ProjetLocation.API.Utils.Extensions
                 Id = user.Id,
                 LastName = user.LastName,
                 FirstName = user.FirstName,
-                Birthdate = user.Birthdate,
+                BirthDate = user.BirthDate,
                 Email = user.Email,
                 Passwd = user.Passwd,
                 Street = user.Street,
@@ -84,7 +84,7 @@ namespace ProjetLocation.API.Utils.Extensions
             {
                 LastName = user.LastName,
                 FirstName = user.FirstName,
-                Birthdate = user.Birthdate,
+                BirthDate = user.BirthDate,
                 Email = user.Email,
                 Passwd = user.Passwd
             };
@@ -96,7 +96,7 @@ namespace ProjetLocation.API.Utils.Extensions
             {
                 LastName = user.LastName,
                 FirstName = user.FirstName,
-                Birthdate = user.Birthdate,
+                BirthDate = user.BirthDate,
                 Email = user.Email,
                 Passwd = user.Passwd
             };
@@ -109,7 +109,7 @@ namespace ProjetLocation.API.Utils.Extensions
                 Id = user.Id,
                 LastName = user.LastName,
                 FirstName = user.FirstName,
-                Birthdate = user.Birthdate,
+                BirthDate = user.BirthDate,
                 Street = user.Street,
                 Number = user.Number,
                 Box = user.Box,
@@ -128,7 +128,7 @@ namespace ProjetLocation.API.Utils.Extensions
                 Id = user.Id,
                 LastName = user.LastName,
                 FirstName = user.FirstName,
-                Birthdate = user.Birthdate,
+                BirthDate = user.BirthDate,
                 Street = user.Street,
                 Number = user.Number,
                 Box = user.Box,

@@ -2,8 +2,8 @@
 using DAL.Models;
 using DAL.Repositories;
 using ProjetLocation.API.Models.Good;
-using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,32 +41,40 @@ namespace ProjetLocation.API.Services
             return good;
         }
 
-        public UserInfo GetUserByGoodId(int goodId)
+        public void Post(Good good)
         {
-            UserInfo user = _goodRepository.GetUserByGoodId(goodId).DALUserInfoToAPI();
-
-            return user;
+            try
+            {
+                _goodRepository.Insert(good);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int Post(Good good)
+        public void Put(int goodId, Good good)
         {
-            int Successful = _goodRepository.Insert(good);
-
-            return Successful;
+            try
+            {
+                _goodRepository.Update(goodId, good);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int Put(int goodId, Good good)
+        public void Delete(int goodId)
         {
-            int Successful = _goodRepository.Update(goodId, good);
-
-            return Successful;
-        }
-
-        public int Delete(int goodId)
-        {
-            int Successful = _goodRepository.Delete(goodId);
-
-            return Successful;
+            try
+            {
+                _goodRepository.Delete(goodId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

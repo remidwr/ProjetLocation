@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
-using DAL.IRepositories;
-using DAL.Repositories;
 using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
-using ProjetLocation.API.Utils.Extensions;
 using System.Net;
 using ProjetLocation.API.Models.Rental;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using ProjetLocation.API.Services;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -20,110 +15,124 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class RentalController : ControllerBase
     {
-        private IRentalRepository<Rental, User, Good> _rentalRepository;
+        private RentalService _rentalService;
 
-        public RentalController(RentalRepository rentalRepository)
+        public RentalController(RentalService rentalService)
         {
-            _rentalRepository = rentalRepository;
+            _rentalService = rentalService;
         }
 
-        // GET: api/<RentalController>
         [HttpGet]
-        public IActionResult GetAll() // POSTMAN OK
+        public IActionResult GetAll()
         {
-            IEnumerable<RentalFull> rentals = _rentalRepository.GetAll().Select(x => x.DALRentalFullToAPI());
+            IEnumerable<RentalFull> rentals = _rentalService.GetAll();
 
             if (!(rentals is null))
                 return Ok(rentals);
             else
-                return Problem(detail: "Locations non trouvées.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        // GET api/<RentalController>/5
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) // POSTMAN OK
+        public IActionResult GetById(int id)
         {
-            RentalFull rental = _rentalRepository.GetById(id).DALRentalFullToAPI();
+            RentalFull rental = _rentalService.GetById(id);
 
             if (!(rental is null))
                 return Ok(rental);
             else
-                return Problem(detail: "Location non trouvée.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        // POST api/<RentalController>
         [HttpPost]
-        public IActionResult Post([FromBody] Rental rental) // POSTMAN OK
+        public IActionResult Post([FromBody] Rental rental)
         {
-            int Successful = _rentalRepository.Insert(rental);
+            try
+            {
+                _rentalService.Post(rental);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("CK_Rental_RentedDate"))
+                    return Problem(detail: "La date de fin de location doit être supérieure à la date de début de location.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else if (ex.Message.Contains("CK_Rental_Amount"))
+                    return Problem(detail: "Le montant doit être positif.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else if (ex.Message.Contains("CK_Rental_Deposit"))
+                    return Problem(detail: "La caution doit être positive.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else
+                    return Problem(detail: "Impossible de créer la location.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
 
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de créer une location.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            return Ok();
         }
 
-        // PUT api/<RentalController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Rental rental) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] Rental rental)
         {
-            int Successful = _rentalRepository.Update(id, rental);
+            try
+            {
+                _rentalService.Put(id, rental);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("CK_Rental_RentedDate"))
+                    return Problem(detail: "La date de fin de location doit être supérieure à la date de début de location.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else if (ex.Message.Contains("CK_Rental_Amount"))
+                    return Problem(detail: "Le montant doit être positif.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else if (ex.Message.Contains("CK_Rental_Deposit"))
+                    return Problem(detail: "La caution doit être positive.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else
+                    return Problem(detail: "Impossible de mettre à jour la location.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
 
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de mettre à jour une location.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            return Ok();
         }
 
         [HttpPut("{id}/rating")]
-        public IActionResult UpdateRating(int id, [FromBody] RentalRating rental) // POSTMAN OK
+        public IActionResult UpdateRating(int id, [FromBody] RentalRating rental)
         {
-            int Successful = 0;
-
             try
             {
-                Successful = _rentalRepository.UpdateRating(id, rental.APIRentalRatingToDAL());
+                _rentalService.UpdateRating(id, rental);
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("UnableToAddRating"))
-                    return Problem(detail: "Impossible d'ajouter une évaluation car la location n'est pas encore finie.",
+                if (ex.Message.Contains("CK_Rental_UnableRating"))
+                    return Problem(detail: "Impossible d'ajouter une évaluation tant que la location n'est pas finie.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else if (ex.Message.Contains("CK_Rental_Rating"))
+                    return Problem(detail: "L'évaluation doit être entre 1 et 5.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else
+                    return Problem(detail: "Impossible d'évaluer la location.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de mettre à jour son évaluation.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            return Ok();
         }
 
-        // DELETE api/<RentalController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id) // POSTMAN OK
+        public IActionResult Delete(int id)
         {
-            int Successful = 0;
-
             try
             {
-                Successful = _rentalRepository.Delete(id);
+                _rentalService.Delete(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                if (ex.Message.Contains("UnableToDelete"))
-                    return Problem(detail: "Impossible de supprimer une location car elle n'est pas encore finie.",
-                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(detail: "Impossible de supprimer la location.",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de supprimer une location.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            return Ok();
         }
     }
 }

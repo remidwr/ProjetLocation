@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using DAL.Models;
 using ProjetLocation.API.Models.User;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
@@ -7,8 +6,6 @@ using ProjetLocation.API.Models.User.RoleName;
 using System.Net;
 using System;
 using ProjetLocation.API.Services;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProjetLocation.API.Controllers
 {
@@ -24,82 +21,87 @@ namespace ProjetLocation.API.Controllers
             _userService = userService;
         }
 
-        // GET: api/<UserController>
         [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpGet]
-        public IActionResult GetAll() // POSTMAN OK
+        public IActionResult GetAll()
         {
             IEnumerable<UserFull> users = _userService.GetAll();
 
             if (!(users is null))
                 return Ok(users);
             else
-                return Problem(detail: "Utilisateurs non trouvés.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) // POSTMAN OK
+        public IActionResult GetById(int id)
         {
             UserFull user = _userService.GetById(id);
 
             if (!(user is null))
                 return Ok(user);
             else
-                return Problem(detail: "Utilisateur non trouvé.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        [HttpGet("{id}/role")]
-        public IActionResult GetRoleByUserId(int id)
-        {
-            Role role = _userService.GetRoleByUserId(id);
-
-            if (!(role is null))
-                return Ok(role);
-            else
-                return Problem(detail: "Rôle introuvable",
-                                statusCode: (int)HttpStatusCode.PreconditionFailed);
-        }
-
-        // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] UserInfo user) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] UserInfo user)
         {
-            int Successful = _userService.Put(id, user);
-
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de mettre à jour l'utilisateur.",
+            try
+            {
+                _userService.Put(id, user);
+            }
+            catch (Exception)
+            {
+                return Problem(detail: "Impossible de modifier les données utilisateur.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
+
+            return Ok();
         }
 
-        // PUT api/<UserController>/5
+        [HttpPut("{id}/picture")]
+        public IActionResult PutPicture(int id, [FromBody] UserInfo user)
+        {
+            try
+            {
+                _userService.PutPicture(id, user);
+            }
+            catch (Exception)
+            {
+                return Problem(detail: "Impossible de modifier votre image de profil.",
+                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
+
+            return Ok();
+        }
+
         [HttpPut("{id}/password")]
-        public IActionResult PutPassword(int id, [FromBody] UserFull user) // POSTMAN OK
+        public IActionResult PutPassword(int id, [FromBody] UserFull user)
         {
-            int Successful = _userService.PutPassword(id, user);
-
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de changer le mot de passe.",
+            try
+            {
+            _userService.PutPassword(id, user);
+            }
+            catch (Exception)
+            {
+                return Problem(detail: "Modification de votre mot de passe impossible.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
+
+            return Ok();
         }
 
-        // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id) // POSTMAN OK
+        public IActionResult Delete(int id)
         {
             try
             {
                 _userService.Delete(id);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return Problem(detail: "Impossible de désactiver l'utilisateur.",
+                return Problem(detail: "Impossible de supprimer ce compte.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 

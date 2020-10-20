@@ -1,7 +1,9 @@
 ﻿using DAL.IRepositories;
 using DAL.Models;
 using DAL.Repositories.Extensions;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using Tools.Database;
 
@@ -55,15 +57,13 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category()).SingleOrDefault();
         }
 
-        public int Insert(Good good)
+        public void Insert(Good good)
         {
             Command command = new Command("CSP_InsertGood", true);
             command.AddParameter("GoodName", good.Name);
             command.AddParameter("Description", good.Description);
             command.AddParameter("State", good.State);
-            command.AddParameter("AmountPerDay", good.AmountPerDay);
-            command.AddParameter("AmountPerWeek", good.AmountPerWeek);
-            command.AddParameter("AmountPerMonth", good.AmountPerMonth);
+            command.AddParameter("Amount", good.Amount);
             command.AddParameter("Street", good.Street);
             command.AddParameter("Number", good.Number);
             command.AddParameter("Box", good.Box);
@@ -74,19 +74,24 @@ namespace DAL.Repositories
             command.AddParameter("SectionId", good.SectionId);
             command.AddParameter("CategoryId", good.CategoryId);
 
-            return _connection.ExecuteNonQuery(command);
+            try
+            {
+            _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int Update(int goodId, Good good)
+        public void Update(int goodId, Good good)
         {
             Command command = new Command("CSP_UpdateGood", true);
             command.AddParameter("GoodId", goodId);
             command.AddParameter("GoodName", good.Name);
             command.AddParameter("Description", good.Description);
             command.AddParameter("State", good.State);
-            command.AddParameter("AmountPerDay", good.AmountPerDay);
-            command.AddParameter("AmountPerWeek", good.AmountPerWeek);
-            command.AddParameter("AmountPerMonth", good.AmountPerMonth);
+            command.AddParameter("Amount", good.Amount);
             command.AddParameter("Street", good.Street);
             command.AddParameter("Number", good.Number);
             command.AddParameter("Box", good.Box);
@@ -97,15 +102,29 @@ namespace DAL.Repositories
             command.AddParameter("SectionId", good.SectionId);
             command.AddParameter("CategoryId", good.CategoryId);
 
-            return _connection.ExecuteNonQuery(command);
+            try
+            {
+                _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int Delete(int goodId)
+        public void Delete(int goodId)
         {
             Command command = new Command("CSP_DeleteGood", true);
             command.AddParameter("GoodId", goodId);
 
-            return _connection.ExecuteNonQuery(command);
+            try
+            {
+                _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

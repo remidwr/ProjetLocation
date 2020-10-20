@@ -1,14 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Models.User;
-using DAL.IRepositories;
-using DAL.Repositories;
-using ProjetLocation.API.Utils.Extensions;
 using System.Net;
+using ProjetLocation.API.Services;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -17,35 +13,33 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class RoleController : ControllerBase
     {
-        private IRoleRepository<Role, User> _roleRepository;
+        private RoleService _roleService;
 
-        public RoleController(RoleRepository roleRepository)
+        public RoleController(RoleService roleService)
         {
-            _roleRepository = roleRepository;
+            _roleService = roleService;
         }
 
         [HttpGet]
-        public IActionResult GetAll() // POSTMAN OK
+        public IActionResult GetAll()
         {
-            IEnumerable<RoleWithUsers> roles = _roleRepository.GetAll().Select(x => x.DALRoleWithUsersToAPI());
+            IEnumerable<RoleWithUsers> roles = _roleService.GetAll();
 
             if (!(roles is null))
                 return Ok(roles);
             else
-                return Problem(detail: "Rôles introuvables.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(statusCode: (int)HttpStatusCode.NoContent);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) // POSTMAN OK
+        public IActionResult GetById(int id)
         {
-            RoleWithUsers role = _roleRepository.GetById(id).DALRoleWithUsersToAPI();
+            RoleWithUsers role = _roleService.GetById(id);
 
             if (!(role is null))
                 return Ok(role);
             else
-                return Problem(detail: "Rôles introuvable.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(statusCode: (int)HttpStatusCode.NoContent);
         }
     }
 }

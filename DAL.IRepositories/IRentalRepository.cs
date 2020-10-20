@@ -5,6 +5,6 @@
         TUser GetOwnerByRentalId(int id);
         TUser GetTenantByRentalId(int id);
         TGood GetGoodByRentalId(int id);
-        int UpdateRating(int id, TRental entity);
+        void UpdateRating(int id, TRental entity);
     }
 }

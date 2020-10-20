@@ -7,8 +7,7 @@ using DAL.Models;
 using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
 using System.Net;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using System;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -24,10 +23,9 @@ namespace ProjetLocation.API.Controllers
             _categoryRepository = categoryRepository;
         }
 
-        // GET: api/<CategoryController>
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult GetAll() // POSTMAN OK
+        public IActionResult GetAll()
         {
             IEnumerable<Category> categories = _categoryRepository.GetAll().Select(x => x);
 
@@ -35,12 +33,11 @@ namespace ProjetLocation.API.Controllers
                 return Ok(categories);
             else
                 return Problem(detail: "Catégories introuvables.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                               statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        // GET api/<CategoryController>/5
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) // POSTMAN OK
+        public IActionResult GetById(int id)
         {
             Category category = _categoryRepository.GetById(id);
 
@@ -48,49 +45,58 @@ namespace ProjetLocation.API.Controllers
                 return Ok(category);
             else
                 return Problem(detail: "Catégorie introuvable.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                               statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        // POST api/<CategoryController>
         [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpPost]
-        public IActionResult Post([FromBody] Category category) // POSTMAN OK
+        public IActionResult Post([FromBody] Category category)
         {
-            int Successful = _categoryRepository.Insert(category);
-
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de créer une catégorie.",
+            try
+            {
+                _categoryRepository.Insert(category);
+            }
+            catch (Exception)
+            {
+                return Problem(detail: "Impossible de créer cette catégorie.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
+
+            return Ok();
         }
 
-        // PUT api/<CategoryController>/5
         [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Category category) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] Category category)
         {
-            int Successful = _categoryRepository.Update(id, category);
-
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de mettre à jour la catégorie.",
+            try
+            {
+                _categoryRepository.Update(id, category);
+            }
+            catch (Exception)
+            {
+                return Problem(detail: "Impossible de mettre à jour cette catégorie.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
+
+            return Ok();
         }
 
-        // DELETE api/<CategoryController>/5
         [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id) // POSTMAN OK
+        public IActionResult Delete(int id)
         {
-            int Successful = _categoryRepository.Delete(id);
-
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de supprimer la catégorie.",
+            try
+            {
+                _categoryRepository.Delete(id);
+            }
+            catch (Exception)
+            {
+                return Problem(detail: "Impossible de supprimer cette catégorie.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
+
+            return Ok();
         }
     }
 }

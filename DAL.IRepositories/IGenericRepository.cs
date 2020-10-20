@@ -6,8 +6,8 @@ namespace DAL.IRepositories
     {
         IEnumerable<Tentity> GetAll();
         Tentity GetById(int id);
-        int Insert(Tentity entity);
-        int Update(int id, Tentity entity);
-        int Delete(int id);
+        void Insert(Tentity entity);
+        void Update(int id, Tentity entity);
+        void Delete(int id);
     }
 }

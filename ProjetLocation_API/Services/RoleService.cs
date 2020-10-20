@@ -21,7 +21,7 @@ namespace ProjetLocation.API.Services
 
         public IEnumerable<RoleWithUsers> GetAll()
         {
-            IEnumerable<RoleWithUsers> roles = _roleRepository.GetAll().Select(x => x.DALRoleWithUsersToAPI());
+            List<RoleWithUsers> roles = _roleRepository.GetAll().Select(x => x.DALRoleWithUsersToAPI()).ToList();
             foreach (RoleWithUsers role in roles)
             {
                 role.Users = _userRepository.GetAll().Select(x => x.DALUserInfoToAPI());
@@ -33,6 +33,7 @@ namespace ProjetLocation.API.Services
         public RoleWithUsers GetById(int roleId)
         {
             RoleWithUsers role = _roleRepository.GetById(roleId).DALRoleWithUsersToAPI();
+            role.Users = _userRepository.GetAll().Select(x => x.DALUserInfoToAPI());
 
             return role;
         }

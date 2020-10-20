@@ -57,7 +57,7 @@ namespace DAL.Repositories
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();
         }
 
-        public int Insert(Rental rental)
+        public void Insert(Rental rental)
         {
             Command command = new Command("CSP_InsertRental", true);
             command.AddParameter("GoodId", rental.GoodId);
@@ -67,10 +67,17 @@ namespace DAL.Repositories
             command.AddParameter("RentedTo", rental.RentedTo);
             command.AddParameter("Deposit", rental.Deposit);
 
-            return _connection.ExecuteNonQuery(command);
+            try
+            {
+                _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int Update(int rentalId, Rental rental)
+        public void Update(int rentalId, Rental rental)
         {
             Command command = new Command("CSP_UpdateRental", true);
             command.AddParameter("RentalId", rentalId);
@@ -79,13 +86,18 @@ namespace DAL.Repositories
             command.AddParameter("Amount", rental.Amount);
             command.AddParameter("Deposit", rental.Deposit);
 
-            return _connection.ExecuteNonQuery(command);
+            try
+            {
+                _connection.ExecuteNonQuery(command);
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
-        public int UpdateRating(int rentalId, Rental rental)
+        public void UpdateRating(int rentalId, Rental rental)
         {
-            int Successful = 0;
-
             Command command = new Command("CSP_UpdateRentalRating", true);
             command.AddParameter("RentalId", rentalId);
             command.AddParameter("Rating", rental.Rating);
@@ -93,35 +105,23 @@ namespace DAL.Repositories
 
             try
             {
-                Successful = _connection.ExecuteNonQuery(command);
+                _connection.ExecuteNonQuery(command);
             }
             catch (SqlException ex)
             {
-                if (ex.Message.Contains("UnableToAddRating"))
-                    throw new Exception(ex.Message);
+                throw new Exception(ex.Message);
             }
-
-            return Successful;
         }
 
-        public int Delete(int rentalId)
+        public void Delete(int rentalId)
         {
-            int Successful = 0;
-
             Command command = new Command("CSP_DeleteRental", true);
             command.AddParameter("RentalId", rentalId);
 
-            try
-            {
-                Successful = _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                if (ex.Message.Contains("UnableToDelete"))
-                    throw new Exception(ex.Message);
-            }
+            int Success = _connection.ExecuteNonQuery(command);
 
-            return Successful;
+            if (Success == 0)
+                throw new Exception();
         }
     }
 }

@@ -4,9 +4,7 @@
     [Good_Name] NVARCHAR(50) NOT NULL, 
     [Description] NVARCHAR(MAX) NOT NULL, 
     [State] NVARCHAR(50) NOT NULL, 
-    [AmountPerDay] FLOAT NULL, 
-    [AmountPerWeek] FLOAT NULL, 
-    [AmountPerMonth] FLOAT NULL, 
+    [Amount] FLOAT NOT NULL, 
     [Street] NVARCHAR(120) NOT NULL, 
     [Number] NVARCHAR(10) NOT NULL, 
     [Box] NVARCHAR(10) NULL, 
@@ -19,5 +17,10 @@
     CONSTRAINT [PK_Good] PRIMARY KEY ([Good_Id]), 
     CONSTRAINT [FK_Good_ToUsers] FOREIGN KEY ([User_Id]) REFERENCES [Users]([User_Id]),
     CONSTRAINT [FK_Good_ToSection] FOREIGN KEY ([Section_Id]) REFERENCES [Section]([Section_Id]), 
-    CONSTRAINT [FK_Good_ToCategory] FOREIGN KEY ([Category_id]) REFERENCES [Category]([Category_Id]) 
+    CONSTRAINT [FK_Good_ToCategory] FOREIGN KEY ([Category_id]) REFERENCES [Category]([Category_Id]), 
+    CONSTRAINT [CK_Good_Amount] CHECK ([Amount] > 0),
 )
+
+GO
+
+CREATE INDEX [IX_Good_UserId] ON [dbo].[Good] ([User_Id])

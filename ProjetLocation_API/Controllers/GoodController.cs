@@ -1,17 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Net;
-using DAL.IRepositories;
 using DAL.Models;
-using DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Models.Good;
-using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Services;
-using ProjetLocation.API.Utils.Extensions;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProjetLocation.API.Controllers
 {
@@ -20,92 +15,92 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class GoodController : ControllerBase
     {
-        private IGoodRepository<Good,User, Section, Category> _goodRepository;
         private GoodService _goodService;
 
-        public GoodController(GoodRepository goodRepository, GoodService goodService)
+        public GoodController(GoodService goodService)
         {
-            _goodRepository = goodRepository;
             _goodService = goodService;
         }
 
-        // GET: api/<GoodController>
         [AllowAnonymous]
         [HttpGet]
-        public IActionResult GetAll() // POSTMAN OK
+        public IActionResult GetAll()
         {
             IEnumerable<GoodFull> goods = _goodService.GetAll();
 
             if (!(goods is null))
                 return Ok(goods);
             else
-                return Problem(detail: "Biens non trouvés.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                return Problem(detail: "Biens introuvables.",
+                               statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        // GET api/<GoodController>/5
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) // POSTMAN OK
+        public IActionResult GetById(int id)
         {
-            GoodFull good = _goodRepository.GetById(id).DALGoodFullToAPI();
+            GoodFull good = _goodService.GetById(id);
 
             if (!(good is null))
                 return Ok(good);
             else
                 return Problem(detail: "Bien introuvable.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                               statusCode: (int)HttpStatusCode.NoContent);
         }
 
-        [AllowAnonymous]
-        [HttpGet("{id}/user")]
-        public IActionResult GetUserByGoodId(int id)
-        {
-            UserInfo user = _goodRepository.GetUserByGoodId(id).DALUserInfoToAPI();
-
-            if (!(user is null))
-                return Ok(user);
-            else
-                return Problem(detail: "Utilisateur introuvable",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
-        }
-
-        // POST api/<GoodController>
         [HttpPost]
-        public IActionResult Post([FromBody] Good good) // POSTMAN OK
+        public IActionResult Post([FromBody] Good good)
         {
-            int Successful =  _goodRepository.Insert(good);
+            try
+            {
+                _goodService.Post(good);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("CK_Good_Amount"))
+                    return Problem(detail: "Le montant doit être positif.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else
+                    return Problem(detail: "Impossible de créer ce bien.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
 
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de créer un bien.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            return Ok();
         }
 
-        // PUT api/<GoodController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] Good good) // POSTMAN OK
+        public IActionResult Put(int id, [FromBody] Good good)
         {
-            int Successful = _goodRepository.Update(id, good);
+            try
+            {
+                _goodService.Put(id, good);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("CK_Good_Amount"))
+                    return Problem(detail: "Le montant doit être positif.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else
+                    return Problem(detail: "Impossible de mettre à jour un bien.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
 
-            if (Successful > 0)
-                return Ok();
-            else
-                return Problem(detail: "Impossible de mettre à jour un bien.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+            return Ok();
         }
 
-        // DELETE api/<GoodController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id) // POSTMAN OK
+        public IActionResult Delete(int id)
         {
-            int Successful = _goodRepository.Delete(id);
-
-            if (Successful > 0)
-                return Ok();
-            else
+            try
+            {
+                _goodService.Delete(id);
+            }
+            catch (Exception)
+            {
                 return Problem(detail: "Impossible de supprimer un bien.",
                                statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
+
+            return Ok();
         }
     }
 }

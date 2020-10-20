@@ -4,6 +4,7 @@ using DAL.Repositories;
 using ProjetLocation.API.Models.Good;
 using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +23,7 @@ namespace ProjetLocation.API.Services
 
         public IEnumerable<UserFull> GetAll()
         {
-            IEnumerable<UserFull> users = _userRepository.GetAll().Select(u => u.DALUserFullToAPI());
+            List<UserFull> users = _userRepository.GetAll().Select(x => x.DALUserFullToAPI()).ToList();
             foreach (UserFull user in users)
             {
                 List<GoodFull> goods = _userRepository.GetGoodsByUserId(user.Id).Select(x => x.DALGoodFullToAPI()).ToList();
@@ -30,8 +31,12 @@ namespace ProjetLocation.API.Services
                 {
                     good.Section = _goodRepository.GetSectionByGoodId(good.Id);
                     good.Category = _goodRepository.GetCategoryByGoodId(good.Id);
+                    good.User = _goodRepository.GetUserByGoodId(good.Id).DALUserInfoToAPI();
                 }
                 user.Goods = goods;
+
+                Role role = _userRepository.GetRoleByUserId(user.Id);
+                user.RoleName = role.Name;
             }
 
             return users;
@@ -45,38 +50,62 @@ namespace ProjetLocation.API.Services
             {
                 good.Section = _goodRepository.GetSectionByGoodId(good.Id);
                 good.Category = _goodRepository.GetCategoryByGoodId(good.Id);
+                good.User = _goodRepository.GetUserByGoodId(good.Id).DALUserInfoToAPI();
             }
             user.Goods = goods;
+
+            Role role = _userRepository.GetRoleByUserId(userId);
+            user.RoleName = role.Name;
 
             return user;
         }
 
-        public Role GetRoleByUserId(int userId)
+        public void Put(int userId, UserInfo user)
         {
-            Role role = _userRepository.GetRoleByUserId(userId);
-
-            return role;
+            try
+            {
+                _userRepository.Update(userId, user.APIUserInfoToDAL());
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
 
-        public int Put(int userId, UserInfo user)
+        public void PutPicture(int userId, UserInfo user)
         {
-            int Successful = _userRepository.Update(userId, user.APIUserInfoToDAL());
-
-            return Successful;
+            try
+            {
+                _userRepository.UpdatePicture(userId, user.APIUserInfoToDAL());
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
 
-        public int PutPassword(int userId, UserFull user)
+        public void PutPassword(int userId, UserFull user)
         {
-            int Successful = _userRepository.UpdatePassword(userId, user.APIUserFullToDAL());
-
-            return Successful;
+            try
+            {
+                _userRepository.UpdatePassword(userId, user.APIUserFullToDAL());
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
 
-        public int Delete(int userId)
+        public void Delete(int userId)
         {
-            int Successful = _userRepository.Delete(userId);
-
-            return Successful;
+            try
+            {
+                _userRepository.Delete(userId);
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
         }
     }
 }

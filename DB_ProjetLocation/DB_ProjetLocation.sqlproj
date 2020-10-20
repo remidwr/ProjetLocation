@@ -57,7 +57,6 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Tables" />
-    <Folder Include="Scripts" />
     <Folder Include="Functions" />
     <Folder Include="Tables\Users" />
     <Folder Include="Tables\Goods" />
@@ -105,14 +104,13 @@
     <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserRole.sql" />
     <Build Include="Programmability\Stored Procedures\Users\Auth\CSP_Login.sql" />
     <Build Include="Programmability\Stored Procedures\Users\Auth\CSP_Register.sql" />
+    <Build Include="Programmability\Stored Procedures\Users\CSP_UpdateUserPicture.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="DB_ProjetLocation.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <PostDeploy Include="Scripts\PostDeployment.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="DB_ProjetLocation.publish.xml" />
+    <None Include="DB_ProjetLocation_1.publish.xml" />
   </ItemGroup>
 </Project>
