@@ -70,6 +70,7 @@
     <Folder Include="Programmability\Stored Procedures\Rental\Rating" />
     <Folder Include="Programmability\Stored Procedures\Users\Roles" />
     <Folder Include="Programmability\Stored Procedures\Users\Auth" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Functions\GetPreSalt.sql" />
@@ -112,5 +113,8 @@
   <ItemGroup>
     <None Include="DB_ProjetLocation.publish.xml" />
     <None Include="DB_ProjetLocation_1.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
   </ItemGroup>
 </Project>
