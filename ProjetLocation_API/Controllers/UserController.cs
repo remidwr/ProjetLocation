@@ -30,7 +30,7 @@ namespace ProjetLocation.API.Controllers
             if (!(users is null))
                 return Ok(users);
             else
-                return Problem(statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [HttpGet("{id}")]
@@ -41,7 +41,7 @@ namespace ProjetLocation.API.Controllers
             if (!(user is null))
                 return Ok(user);
             else
-                return Problem(statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [HttpPut("{id}")]
@@ -51,10 +51,14 @@ namespace ProjetLocation.API.Controllers
             {
                 _userService.Put(id, user);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Problem(detail: "Impossible de modifier les données utilisateur.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                if (ex.Message.Contains("User not found"))
+                    return Problem(detail: "Utilisateur introuvable.",
+                                   statusCode: (int)HttpStatusCode.NotFound);
+                else
+                    return Problem(detail: "Modification de votre profil impossible.",
+                                   statusCode: (int)HttpStatusCode.BadRequest);
             }
 
             return Ok();
@@ -67,10 +71,14 @@ namespace ProjetLocation.API.Controllers
             {
                 _userService.PutPicture(id, user);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Problem(detail: "Impossible de modifier votre image de profil.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                if (ex.Message.Contains("User not found"))
+                    return Problem(detail: "Utilisateur introuvable.",
+                               statusCode: (int)HttpStatusCode.NotFound);
+                else
+                    return Problem(detail: "Modification de votre photo de profil impossible.",
+                                   statusCode: (int)HttpStatusCode.BadRequest);
             }
 
             return Ok();
@@ -81,12 +89,16 @@ namespace ProjetLocation.API.Controllers
         {
             try
             {
-            _userService.PutPassword(id, user);
+                _userService.PutPassword(id, user);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Problem(detail: "Modification de votre mot de passe impossible.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                if (ex.Message.Contains("User not found"))
+                    return Problem(detail: "Utilisateur introuvable.",
+                               statusCode: (int)HttpStatusCode.NotFound);
+                else
+                    return Problem(detail: "Modification de votre mot de passe impossible.",
+                                   statusCode: (int)HttpStatusCode.BadRequest);
             }
 
             return Ok();
@@ -99,10 +111,14 @@ namespace ProjetLocation.API.Controllers
             {
                 _userService.Delete(id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return Problem(detail: "Impossible de supprimer ce compte.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
+                if (ex.Message.Contains("User not found"))
+                    return Problem(detail: "Utilisateur introuvable.",
+                               statusCode: (int)HttpStatusCode.NotFound);
+                else
+                    return Problem(detail: "Désactivation de votre compte impossible.",
+                                   statusCode: (int)HttpStatusCode.BadRequest);
             }
 
             return Ok();

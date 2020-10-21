@@ -59,6 +59,38 @@ namespace ProjetLocation.API.Utils.Extensions
                 Token = user.Token
             };
         }
+        internal static UserSimple DALUserSimpleToAPI(this User user)
+        {
+            if (!(user is null))
+            {
+                return new UserSimple()
+                {
+                    Id = user.Id,
+                    LastName = user.LastName,
+                    FirstName = user.FirstName,
+                    BirthDate = user.BirthDate,
+                    Email = user.Email,
+                    RoleId = user.RoleId,
+                    Token = user.Token
+                };
+            }
+            else
+                return null;
+        }
+
+        internal static User APIUserSimpleToDAL(this UserSimple user)
+        {
+            return new User()
+            {
+                Id = user.Id,
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+                BirthDate = user.BirthDate,
+                Email = user.Email,
+                RoleId = user.RoleId,
+                Token = user.Token
+            };
+        }
 
         internal static UserLogin DALUserLoginToAPI(this User user)
         {

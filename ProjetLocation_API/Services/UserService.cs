@@ -66,9 +66,9 @@ namespace ProjetLocation.API.Services
             {
                 _userRepository.Update(userId, user.APIUserInfoToDAL());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
 
@@ -78,9 +78,9 @@ namespace ProjetLocation.API.Services
             {
                 _userRepository.UpdatePicture(userId, user.APIUserInfoToDAL());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw new Exception();
+                throw new Exception(ex.Message);
             }
         }
 

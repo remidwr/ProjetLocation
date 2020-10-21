@@ -49,16 +49,16 @@ namespace ProjetLocation.API.Services
             }
         }
 
-        public UserFull Login(UserLogin userLogin)
+        public UserSimple Login(UserLogin userLogin)
         {
             //string PrivateKey = _keyGenerator.PrivateKey;
             //userLogin.Passwd = decrypting.Decrypt(userLogin.Passwd, PrivateKey);
 
-            UserFull user;
+            UserSimple user;
 
             try
             {
-                user = _authRepository.Login(userLogin.Email, userLogin.Passwd).DALUserFullToAPI();
+                user = _authRepository.Login(userLogin.Email, userLogin.Passwd).DALUserSimpleToAPI();
 
                 if (!(user is null))
                 {

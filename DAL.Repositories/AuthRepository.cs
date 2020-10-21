@@ -19,6 +19,8 @@ namespace DAL.Repositories
 
         public void Register(User user)
         {
+            int Success;
+
             Command command = new Command("CSP_Register", true);
             command.AddParameter("LastName", user.LastName);
             command.AddParameter("FirstName", user.FirstName);
@@ -28,12 +30,15 @@ namespace DAL.Repositories
 
             try
             {
-                _connection.ExecuteNonQuery(command);
+                Success = _connection.ExecuteNonQuery(command);
             }
             catch (SqlException ex)
             {
                 throw new Exception(ex.Message);
             }
+
+            if (Success == 0)
+                throw new Exception();
         }
 
         public User Login(string email, string passwd)
@@ -50,7 +55,7 @@ namespace DAL.Repositories
             }
             catch (SqlException ex)
             {
-                    throw new Exception(ex.Message);
+                throw new Exception(ex.Message);
             }
 
             return user;

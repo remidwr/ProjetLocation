@@ -51,6 +51,9 @@ namespace ProjetLocation.API.Controllers
                 else if (ex.Message.Contains("CK_Users_BirthDate"))
                     return Problem(detail: "La date de naissance non conforme.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else
+                    return Problem(detail: "Erreur lors de l'enregistrement de votre compte.",
+                                   statusCode: (int)HttpStatusCode.BadRequest);
             }
 
             return Ok();
@@ -64,7 +67,7 @@ namespace ProjetLocation.API.Controllers
             //string PrivateKey = _keyGenerator.PrivateKey;
             //userLogin.Passwd = decrypting.Decrypt(userLogin.Passwd, PrivateKey);
 
-            UserFull user = new UserFull();
+            UserSimple user;
 
             try
             {
@@ -81,6 +84,9 @@ namespace ProjetLocation.API.Controllers
                 else if (ex.Message.Contains("User_Banned"))
                     return Problem(detail: "Ce compte utilisateur est banni.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
+                else
+                    return Problem(detail: "Erreur lors de votre identification.",
+                                   statusCode: (int)HttpStatusCode.BadRequest);
             }
 
             if (!(user is null))

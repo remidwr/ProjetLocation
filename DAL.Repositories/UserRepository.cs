@@ -70,7 +70,7 @@ namespace DAL.Repositories
             int Success = _connection.ExecuteNonQuery(command);
 
             if (Success == 0)
-                throw new Exception();
+                throw new Exception("User not found.");
         }
 
         public void UpdatePicture(int userId, User user)
@@ -82,7 +82,7 @@ namespace DAL.Repositories
             int Success = _connection.ExecuteNonQuery(command);
 
             if (Success == 0)
-                throw new Exception();
+                throw new Exception("User not found.");
         }
 
         public void UpdatePassword(int userId, User user)
