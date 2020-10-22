@@ -1,5 +1,4 @@
 ﻿using DAL.IRepositories;
-using DAL.Models;
 using DAL.Repositories;
 using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Extensions;
@@ -10,8 +9,8 @@ namespace ProjetLocation.API.Services
 {
     public class RoleService
     {
-        private IRoleRepository<Role, User> _roleRepository;
-        private IUserRepository<Role, User, Good> _userRepository;
+        private IRoleRepository _roleRepository;
+        private UserRepository _userRepository;
 
         public RoleService(RoleRepository roleRepository, UserRepository userRepository)
         {
@@ -22,10 +21,15 @@ namespace ProjetLocation.API.Services
         public IEnumerable<RoleWithUsers> GetAll()
         {
             List<RoleWithUsers> roles = _roleRepository.GetAll().Select(x => x.DALRoleWithUsersToAPI()).ToList();
-            foreach (RoleWithUsers role in roles)
+
+            if (!(roles is null))
             {
-                role.Users = _userRepository.GetAll().Select(x => x.DALUserInfoToAPI());
+                foreach (RoleWithUsers role in roles)
+                {
+                    role.Users = _userRepository.GetAll().Select(x => x.DALUserInfoToAPI());
+                }
             }
+
 
             return roles;
         }
@@ -33,7 +37,11 @@ namespace ProjetLocation.API.Services
         public RoleWithUsers GetById(int roleId)
         {
             RoleWithUsers role = _roleRepository.GetById(roleId).DALRoleWithUsersToAPI();
-            role.Users = _userRepository.GetAll().Select(x => x.DALUserInfoToAPI());
+
+            if (!(role is null))
+            {
+                role.Users = _userRepository.GetAll().Select(x => x.DALUserInfoToAPI());
+            }
 
             return role;
         }

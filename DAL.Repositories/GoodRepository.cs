@@ -9,7 +9,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class GoodRepository : IGoodRepository<Good, User, Section, Category>
+    public class GoodRepository : IGenericRepository<Good>
     {
         private static Connection _connection;
 
@@ -76,7 +76,7 @@ namespace DAL.Repositories
 
             try
             {
-            _connection.ExecuteNonQuery(command);
+                _connection.ExecuteNonQuery(command);
             }
             catch (SqlException ex)
             {
@@ -117,14 +117,7 @@ namespace DAL.Repositories
             Command command = new Command("CSP_DeleteGood", true);
             command.AddParameter("GoodId", goodId);
 
-            try
-            {
-                _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            _connection.ExecuteNonQuery(command);
         }
     }
 }

@@ -9,7 +9,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class RentalRepository : IRentalRepository<Rental, User, Good>
+    public class RentalRepository : IGenericRepository<Rental>
     {
         private static Connection _connection;
 
@@ -118,10 +118,7 @@ namespace DAL.Repositories
             Command command = new Command("CSP_DeleteRental", true);
             command.AddParameter("RentalId", rentalId);
 
-            int Success = _connection.ExecuteNonQuery(command);
-
-            if (Success == 0)
-                throw new Exception();
+            _connection.ExecuteNonQuery(command);
         }
     }
 }

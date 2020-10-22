@@ -30,7 +30,7 @@ namespace ProjetLocation.API.Controllers
             if (!(rentals is null))
                 return Ok(rentals);
             else
-                return Problem(statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [HttpGet("{id}")]
@@ -41,7 +41,7 @@ namespace ProjetLocation.API.Controllers
             if (!(rental is null))
                 return Ok(rental);
             else
-                return Problem(statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [HttpPost]
@@ -61,9 +61,6 @@ namespace ProjetLocation.API.Controllers
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("CK_Rental_Deposit"))
                     return Problem(detail: "La caution doit être positive.",
-                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else
-                    return Problem(detail: "Impossible de créer la location.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
@@ -88,9 +85,6 @@ namespace ProjetLocation.API.Controllers
                 else if (ex.Message.Contains("CK_Rental_Deposit"))
                     return Problem(detail: "La caution doit être positive.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else
-                    return Problem(detail: "Impossible de mettre à jour la location.",
-                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             return Ok();
@@ -111,9 +105,6 @@ namespace ProjetLocation.API.Controllers
                 else if (ex.Message.Contains("CK_Rental_Rating"))
                     return Problem(detail: "L'évaluation doit être entre 1 et 5.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else
-                    return Problem(detail: "Impossible d'évaluer la location.",
-                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             return Ok();
@@ -122,15 +113,7 @@ namespace ProjetLocation.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                _rentalService.Delete(id);
-            }
-            catch (Exception)
-            {
-                return Problem(detail: "Impossible de supprimer la location.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
-            }
+            _rentalService.Delete(id);
 
             return Ok();
         }

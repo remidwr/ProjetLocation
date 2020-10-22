@@ -9,7 +9,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class SectionRepository : ISectionRepository<Section, Category>
+    public class SectionRepository : IGenericRepository<Section>
     {
         private static Connection _connection;
 
@@ -43,43 +43,33 @@ namespace DAL.Repositories
 
         public void Insert(Section section)
         {
-            int Success;
-
             Command command = new Command("CSP_InsertSection", true);
             command.AddParameter("SectionName", section.Name);
 
             try
             {
-                Success = _connection.ExecuteNonQuery(command);
+                _connection.ExecuteNonQuery(command);
             }
             catch (SqlException ex)
             {
                 throw new Exception(ex.Message);
             }
-
-            if (Success == 0)
-                throw new Exception();
         }
 
         public void Update(int sectionId, Section section)
         {
-            int Success;
-
             Command command = new Command("CSP_UpdateSection", true);
             command.AddParameter("SectionId", sectionId);
             command.AddParameter("SectionName", section.Name);
 
             try
             {
-                Success = _connection.ExecuteNonQuery(command);
+                _connection.ExecuteNonQuery(command);
             }
             catch (SqlException ex)
             {
                 throw new Exception(ex.Message);
             }
-
-            if (Success == 0)
-                throw new Exception();
         }
 
         public void Delete(int sectionId)
@@ -87,10 +77,7 @@ namespace DAL.Repositories
             Command command = new Command("CSP_DeleteSection", true);
             command.AddParameter("SectionId", sectionId);
 
-            int Success = _connection.ExecuteNonQuery(command);
-
-            if (Success == 0)
-                throw new Exception();
+            _connection.ExecuteNonQuery(command);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using DAL.IRepositories;
-using DAL.Models;
+﻿using DAL.Models;
 using DAL.Repositories;
 using ProjetLocation.API.Models.Rental;
 using ProjetLocation.API.Utils.Extensions;
@@ -11,8 +10,8 @@ namespace ProjetLocation.API.Services
 {
     public class RentalService
     {
-        private IRentalRepository<Rental, User, Good> _rentalRepository;
-        private IGoodRepository<Good, User, Section, Category> _goodRepository;
+        private RentalRepository _rentalRepository;
+        private GoodRepository _goodRepository;
 
         public RentalService(RentalRepository rentalRepository, GoodRepository goodRepository)
         {
@@ -23,13 +22,17 @@ namespace ProjetLocation.API.Services
         public IEnumerable<RentalFull> GetAll()
         {
             List<RentalFull> rentals = _rentalRepository.GetAll().Select(x => x.DALRentalFullToAPI()).ToList();
-            foreach (RentalFull rental in rentals)
+
+            if (!(rentals is null))
             {
-                rental.Good = _rentalRepository.GetGoodByRentalId(rental.Id).DALGoodFullToAPI();
-                rental.Good.Section = _goodRepository.GetSectionByGoodId(rental.Good.Id);
-                rental.Good.Category = _goodRepository.GetCategoryByGoodId(rental.Good.Id);
-                rental.Owner = _rentalRepository.GetOwnerByRentalId(rental.Id).DALUserInfoToAPI();
-                rental.Tenant = _rentalRepository.GetTenantByRentalId(rental.Id).DALUserInfoToAPI();
+                foreach (RentalFull rental in rentals)
+                {
+                    rental.Good = _rentalRepository.GetGoodByRentalId(rental.Id).DALGoodFullToAPI();
+                    rental.Good.Section = _goodRepository.GetSectionByGoodId(rental.Good.Id);
+                    rental.Good.Category = _goodRepository.GetCategoryByGoodId(rental.Good.Id).DALCategoryToAPI();
+                    rental.Owner = _rentalRepository.GetOwnerByRentalId(rental.Id).DALUserInfoToAPI();
+                    rental.Tenant = _rentalRepository.GetTenantByRentalId(rental.Id).DALUserInfoToAPI();
+                }
             }
 
             return rentals;
@@ -38,11 +41,15 @@ namespace ProjetLocation.API.Services
         public RentalFull GetById(int rentalId)
         {
             RentalFull rental = _rentalRepository.GetById(rentalId).DALRentalFullToAPI();
-            rental.Good = _rentalRepository.GetGoodByRentalId(rental.Id).DALGoodFullToAPI();
-            rental.Good.Section = _goodRepository.GetSectionByGoodId(rental.Good.Id);
-            rental.Good.Category = _goodRepository.GetCategoryByGoodId(rental.Good.Id);
-            rental.Owner = _rentalRepository.GetOwnerByRentalId(rental.Id).DALUserInfoToAPI();
-            rental.Tenant = _rentalRepository.GetTenantByRentalId(rental.Id).DALUserInfoToAPI();
+
+            if (!(rental is null))
+            {
+                rental.Good = _rentalRepository.GetGoodByRentalId(rental.Id).DALGoodFullToAPI();
+                rental.Good.Section = _goodRepository.GetSectionByGoodId(rental.Good.Id);
+                rental.Good.Category = _goodRepository.GetCategoryByGoodId(rental.Good.Id).DALCategoryToAPI();
+                rental.Owner = _rentalRepository.GetOwnerByRentalId(rental.Id).DALUserInfoToAPI();
+                rental.Tenant = _rentalRepository.GetTenantByRentalId(rental.Id).DALUserInfoToAPI();
+            }
 
             return rental;
         }
@@ -85,14 +92,7 @@ namespace ProjetLocation.API.Services
 
         public void Delete(int rentalId)
         {
-            try
-            {
-                _rentalRepository.Delete(rentalId);
-            }
-            catch (Exception)
-            {
-                throw new Exception();
-            }
+            _rentalRepository.Delete(rentalId);
         }
     }
 }

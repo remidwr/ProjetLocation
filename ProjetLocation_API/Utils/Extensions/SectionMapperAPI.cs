@@ -5,12 +5,11 @@ namespace ProjetLocation.API.Utils.Extensions
 {
     internal static class SectionMapperAPI
     {
-
-        internal static SectionWithCategories DALSectionWithCategoriesToAPI(this Section section)
+        internal static SectionFull DALSectionWithCategoriesToAPI(this Section section)
         {
             if (!(section is null))
             {
-                return new SectionWithCategories()
+                return new SectionFull()
                 {
                     Id = section.Id,
                     Name = section.Name
@@ -20,7 +19,7 @@ namespace ProjetLocation.API.Utils.Extensions
                 return null;
         }
 
-        internal static Section APISectionWithCategoriesToDAL(this SectionWithCategories section)
+        internal static Section APISectionWithCategoriesToDAL(this SectionFull section)
         {
             return new Section()
             {

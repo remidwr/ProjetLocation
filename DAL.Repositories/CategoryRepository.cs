@@ -1,15 +1,13 @@
 ﻿using DAL.IRepositories;
 using DAL.Models;
 using DAL.Repositories.Extensions;
-using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class CategoryRepository : ICategoryRepository<Category, Section>
+    public class CategoryRepository : IGenericRepository<Category>
     {
         private static Connection _connection;
 
@@ -47,14 +45,7 @@ namespace DAL.Repositories
             command.AddParameter("CategoryName", category.Name);
             command.AddParameter("SectionId", category.SectionId);
 
-            try
-            {
-                _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            _connection.ExecuteNonQuery(command);
         }
 
         public void Update(int categoryId, Category category)
@@ -64,14 +55,7 @@ namespace DAL.Repositories
             command.AddParameter("CategoryName", category.Name);
             command.AddParameter("SectionId", category.SectionId);
 
-            try
-            {
-                _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            _connection.ExecuteNonQuery(command);
         }
 
         public void Delete(int categoryId)
@@ -79,14 +63,7 @@ namespace DAL.Repositories
             Command command = new Command("CSP_DeleteCategory", true);
             command.AddParameter("CategoryId", categoryId);
 
-            try
-            {
-                _connection.ExecuteNonQuery(command);
-            }
-            catch (SqlException ex)
-            {
-                throw new Exception(ex.Message);
-            }
+            _connection.ExecuteNonQuery(command);
         }
     }
 }

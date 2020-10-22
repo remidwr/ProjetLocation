@@ -1,8 +1,10 @@
-﻿namespace DAL.IRepositories
+﻿using DAL.Models;
+
+namespace DAL.IRepositories
 {
-    public interface IAuthRepository<TUser>
+    public interface IAuthRepository
     {
-        TUser Login(string email, string passwd);
-        void Register(TUser user);
+        User Login(string email, string passwd);
+        void Register(User user);
     }
 }

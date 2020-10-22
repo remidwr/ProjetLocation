@@ -49,11 +49,8 @@ namespace ProjetLocation.API.Controllers
                     return Problem(detail: "Cet email est déjà utilisé.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("CK_Users_BirthDate"))
-                    return Problem(detail: "La date de naissance non conforme.",
+                    return Problem(detail: "Votre date de naissance est non conforme.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else
-                    return Problem(detail: "Erreur lors de l'enregistrement de votre compte.",
-                                   statusCode: (int)HttpStatusCode.BadRequest);
             }
 
             return Ok();
@@ -67,7 +64,7 @@ namespace ProjetLocation.API.Controllers
             //string PrivateKey = _keyGenerator.PrivateKey;
             //userLogin.Passwd = decrypting.Decrypt(userLogin.Passwd, PrivateKey);
 
-            UserSimple user;
+            UserSimple user = new UserSimple();
 
             try
             {
@@ -75,18 +72,12 @@ namespace ProjetLocation.API.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("NULL"))
-                    return Problem(detail: "Il y a des données manquantes.",
-                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else if (ex.Message.Contains("User_Inactive"))
+                if (ex.Message.Contains("User_Inactive"))
                     return Problem(detail: "Ce compte utilisateur est inactif.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("User_Banned"))
                     return Problem(detail: "Ce compte utilisateur est banni.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else
-                    return Problem(detail: "Erreur lors de votre identification.",
-                                   statusCode: (int)HttpStatusCode.BadRequest);
             }
 
             if (!(user is null))

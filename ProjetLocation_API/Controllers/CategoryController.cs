@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using DAL.IRepositories;
 using DAL.Repositories;
 using DAL.Models;
 using ProjetLocation.API.Models.User.RoleName;
 using Microsoft.AspNetCore.Authorization;
-using System.Net;
-using System;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -16,7 +13,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private ICategoryRepository<Category, Section> _categoryRepository;
+        private CategoryRepository _categoryRepository;
 
         public CategoryController(CategoryRepository categoryRepository)
         {
@@ -32,8 +29,7 @@ namespace ProjetLocation.API.Controllers
             if (!(categories is null))
                 return Ok(categories);
             else
-                return Problem(detail: "Catégories introuvables.",
-                               statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [HttpGet("{id}")]
@@ -44,23 +40,14 @@ namespace ProjetLocation.API.Controllers
             if (!(category is null))
                 return Ok(category);
             else
-                return Problem(detail: "Catégorie introuvable.",
-                               statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
         [HttpPost]
         public IActionResult Post([FromBody] Category category)
         {
-            try
-            {
-                _categoryRepository.Insert(category);
-            }
-            catch (Exception)
-            {
-                return Problem(detail: "Impossible de créer cette catégorie.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
-            }
+            _categoryRepository.Insert(category);
 
             return Ok();
         }
@@ -69,15 +56,7 @@ namespace ProjetLocation.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Category category)
         {
-            try
-            {
-                _categoryRepository.Update(id, category);
-            }
-            catch (Exception)
-            {
-                return Problem(detail: "Impossible de mettre à jour cette catégorie.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
-            }
+            _categoryRepository.Update(id, category);
 
             return Ok();
         }
@@ -86,15 +65,7 @@ namespace ProjetLocation.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                _categoryRepository.Delete(id);
-            }
-            catch (Exception)
-            {
-                return Problem(detail: "Impossible de supprimer cette catégorie.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
-            }
+            _categoryRepository.Delete(id);
 
             return Ok();
         }

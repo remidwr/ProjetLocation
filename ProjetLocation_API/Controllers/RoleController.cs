@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Models.User;
-using System.Net;
 using ProjetLocation.API.Services;
 
 namespace ProjetLocation.API.Controllers
@@ -28,7 +27,7 @@ namespace ProjetLocation.API.Controllers
             if (!(roles is null))
                 return Ok(roles);
             else
-                return Problem(statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [HttpGet("{id}")]
@@ -39,7 +38,7 @@ namespace ProjetLocation.API.Controllers
             if (!(role is null))
                 return Ok(role);
             else
-                return Problem(statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
     }
 }

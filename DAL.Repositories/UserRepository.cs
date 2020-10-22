@@ -8,7 +8,7 @@ using Tools.Database;
 
 namespace DAL.Repositories
 {
-    public class UserRepository : IUserRepository<Role, User, Good>
+    public class UserRepository : IGenericRepository<User>
     {
         private static Connection _connection;
 
@@ -67,10 +67,7 @@ namespace DAL.Repositories
             command.AddParameter("Phone1", user.Phone1);
             command.AddParameter("Phone2", user.Phone2);
 
-            int Success = _connection.ExecuteNonQuery(command);
-
-            if (Success == 0)
-                throw new Exception("User not found.");
+            _connection.ExecuteNonQuery(command);
         }
 
         public void UpdatePicture(int userId, User user)
@@ -79,10 +76,7 @@ namespace DAL.Repositories
             command.AddParameter("UserId", userId);
             command.AddParameter("Picture", user.Picture);
 
-            int Success = _connection.ExecuteNonQuery(command);
-
-            if (Success == 0)
-                throw new Exception("User not found.");
+            _connection.ExecuteNonQuery(command);
         }
 
         public void UpdatePassword(int userId, User user)
@@ -91,10 +85,7 @@ namespace DAL.Repositories
             command.AddParameter("UserId", userId);
             command.AddParameter("Passwd", user.Passwd);
 
-            int Success = _connection.ExecuteNonQuery(command);
-
-            if (Success == 0)
-                throw new Exception();
+            _connection.ExecuteNonQuery(command);
         }
 
         public void Delete(int userId)
@@ -102,10 +93,7 @@ namespace DAL.Repositories
             Command command = new Command("CSP_DeleteUser", true);
             command.AddParameter("UserId", userId);
 
-            int Success = _connection.ExecuteNonQuery(command);
-
-            if (Success == 0)
-                throw new Exception();
+            _connection.ExecuteNonQuery(command);
         }
     }
 }

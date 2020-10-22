@@ -26,24 +26,24 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            IEnumerable<SectionWithCategories> sections = _sectionService.GetAll();
+            IEnumerable<SectionFull> sections = _sectionService.GetAll();
 
             if (!(sections is null))
                 return Ok(sections);
             else
-                return Problem(statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [AllowAnonymous]
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            Section section = _sectionService.GetById(id);
+            SectionFull section = _sectionService.GetById(id);
 
             if (!(section is null))
                 return Ok(section);
             else
-                return Problem(statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [Authorize(Roles = Roles.Admin + "," + Roles.SuperAdmin)]
@@ -58,9 +58,6 @@ namespace ProjetLocation.API.Controllers
             {
                 if (ex.Message.Contains("UK_Section_Name"))
                     return Problem(detail: "Le nom de cette section existe déjà.",
-                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else
-                    return Problem(detail: "Impossible de créer cette section.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
@@ -80,9 +77,6 @@ namespace ProjetLocation.API.Controllers
                 if (ex.Message.Contains("UK_Section_Name"))
                     return Problem(detail: "Le nom de cette section existe déjà.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else
-                    return Problem(detail: "Impossible de mettre à jour cette section.",
-                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             return Ok();
@@ -92,15 +86,7 @@ namespace ProjetLocation.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                _sectionService.Delete(id);
-            }
-            catch (Exception)
-            {
-                return Problem(detail: "Impossible de supprimer cette section.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
-            }
+            _sectionService.Delete(id);
 
             return Ok();
         }

@@ -59,6 +59,7 @@ namespace ProjetLocation.API.Utils.Extensions
                 Token = user.Token
             };
         }
+
         internal static UserSimple DALUserSimpleToAPI(this User user)
         {
             if (!(user is null))
@@ -89,6 +90,56 @@ namespace ProjetLocation.API.Utils.Extensions
                 Email = user.Email,
                 RoleId = user.RoleId,
                 Token = user.Token
+            };
+        }
+        internal static UserData DALUserDataToAPI(this User user)
+        {
+            if (!(user is null))
+            {
+                return new UserData()
+                {
+                    Id = user.Id,
+                    LastName = user.LastName,
+                    FirstName = user.FirstName,
+                    BirthDate = user.BirthDate,
+                    Email = user.Email,
+                    Street = user.Street,
+                    Number = user.Number,
+                    Box = user.Box,
+                    PostCode = user.PostCode,
+                    City = user.City,
+                    Phone1 = user.Phone1,
+                    Phone2 = user.Phone2,
+                    Picture = user.Picture,
+                    IsActive = user.IsActive,
+                    IsBanned = user.IsBanned,
+                    RoleId = user.RoleId
+                };
+            }
+            else
+                return null;
+        }
+
+        internal static User APIUserDataToDAL(this UserData user)
+        {
+            return new User()
+            {
+                Id = user.Id,
+                LastName = user.LastName,
+                FirstName = user.FirstName,
+                BirthDate = user.BirthDate,
+                Email = user.Email,
+                Street = user.Street,
+                Number = user.Number,
+                Box = user.Box,
+                PostCode = user.PostCode,
+                City = user.City,
+                Phone1 = user.Phone1,
+                Phone2 = user.Phone2,
+                Picture = user.Picture,
+                IsActive = user.IsActive,
+                IsBanned = user.IsBanned,
+                RoleId = user.RoleId
             };
         }
 
@@ -169,6 +220,26 @@ namespace ProjetLocation.API.Utils.Extensions
                 Phone1 = user.Phone1,
                 Phone2 = user.Phone2,
                 Picture = user.Picture
+            };
+        }
+
+        internal static UserPasswd DALUserPasswdToAPI(this User user)
+        {
+            return new UserPasswd()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Passwd = user.Passwd
+            };
+        }
+
+        internal static User APIUserPasswdToDAL(this UserPasswd user)
+        {
+            return new User()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                Passwd = user.Passwd
             };
         }
     }

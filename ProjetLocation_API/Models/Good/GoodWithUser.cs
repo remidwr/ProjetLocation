@@ -1,8 +1,9 @@
 ﻿using DAL.Models;
+using ProjetLocation.API.Models.User;
 
 namespace ProjetLocation.API.Models.Good
 {
-    public class GoodFull
+    public class GoodWithUser
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -17,5 +18,6 @@ namespace ProjetLocation.API.Models.Good
         public string Picture { get; set; }
         public Section Section { get; set; }
         public CategorySimple Category { get; set; }
+        public UserInfo User { get; set; }
     }
 }

@@ -26,25 +26,23 @@ namespace ProjetLocation.API.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            IEnumerable<GoodFull> goods = _goodService.GetAll();
+            IEnumerable<GoodWithUser> goods = _goodService.GetAll();
 
             if (!(goods is null))
                 return Ok(goods);
             else
-                return Problem(detail: "Biens introuvables.",
-                               statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            GoodFull good = _goodService.GetById(id);
+            GoodWithUser good = _goodService.GetById(id);
 
             if (!(good is null))
                 return Ok(good);
             else
-                return Problem(detail: "Bien introuvable.",
-                               statusCode: (int)HttpStatusCode.NoContent);
+                return NotFound();
         }
 
         [HttpPost]
@@ -58,9 +56,6 @@ namespace ProjetLocation.API.Controllers
             {
                 if (ex.Message.Contains("CK_Good_Amount"))
                     return Problem(detail: "Le montant doit être positif.",
-                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else
-                    return Problem(detail: "Impossible de créer ce bien.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
@@ -79,9 +74,6 @@ namespace ProjetLocation.API.Controllers
                 if (ex.Message.Contains("CK_Good_Amount"))
                     return Problem(detail: "Le montant doit être positif.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
-                else
-                    return Problem(detail: "Impossible de mettre à jour un bien.",
-                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
             }
 
             return Ok();
@@ -90,15 +82,7 @@ namespace ProjetLocation.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                _goodService.Delete(id);
-            }
-            catch (Exception)
-            {
-                return Problem(detail: "Impossible de supprimer un bien.",
-                               statusCode: (int)HttpStatusCode.PreconditionFailed);
-            }
+            _goodService.Delete(id);
 
             return Ok();
         }

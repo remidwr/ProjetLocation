@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Data.SqlClient;
 
 namespace Tools.Database
 {
@@ -21,7 +22,7 @@ namespace Tools.Database
             _connectionString = connectionInfo.ConnectionString;
             _providerFactory = providerFactory;
 
-            using(DbConnection dbConnection = CreateConnection())
+            using (DbConnection dbConnection = CreateConnection())
             {
                 dbConnection.Open();
             }
@@ -31,7 +32,7 @@ namespace Tools.Database
         {
             using (DbConnection dbConnection = CreateConnection())
             {
-                using(DbCommand dbCommand = CreateCommand(command, dbConnection))
+                using (DbCommand dbCommand = CreateCommand(command, dbConnection))
                 {
                     dbConnection.Open();
                     object result = dbCommand.ExecuteScalar();
@@ -64,7 +65,7 @@ namespace Tools.Database
                 {
                     dbConnection.Open();
 
-                    using(DbDataReader dbDataReader = dbCommand.ExecuteReader())
+                    using (DbDataReader dbDataReader = dbCommand.ExecuteReader())
                     {
                         while (dbDataReader.Read())
                         {
