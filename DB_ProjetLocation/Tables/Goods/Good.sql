@@ -14,13 +14,30 @@
     [User_Id] INT NOT NULL,
     [Section_Id] INT NOT NULL, 
     [Category_Id] INT NOT NULL, 
+    [IsActive] BIT NOT NULL DEFAULT 1, 
     CONSTRAINT [PK_Good] PRIMARY KEY ([Good_Id]), 
     CONSTRAINT [FK_Good_ToUsers] FOREIGN KEY ([User_Id]) REFERENCES [Users]([User_Id]),
     CONSTRAINT [FK_Good_ToSection] FOREIGN KEY ([Section_Id]) REFERENCES [Section]([Section_Id]), 
-    CONSTRAINT [FK_Good_ToCategory] FOREIGN KEY ([Category_id]) REFERENCES [Category]([Category_Id]), 
+    CONSTRAINT [FK_Good_ToCategory] FOREIGN KEY ([Category_Id]) REFERENCES [Category]([Category_Id]), 
     CONSTRAINT [CK_Good_Amount] CHECK ([Amount] > 0),
 )
 
 GO
 
 CREATE INDEX [IX_Good_UserId] ON [dbo].[Good] ([User_Id])
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Good_Delete]
+    ON [dbo].[Good]
+    INSTEAD OF DELETE
+    AS
+    BEGIN
+        DECLARE @GoodId INT;
+
+        SET @GoodId = (SELECT [Good_Id] FROM deleted);
+
+        UPDATE Good
+        SET [IsActive] = 0
+        WHERE [Good_Id] = @GoodId AND IsActive = 1;
+    END

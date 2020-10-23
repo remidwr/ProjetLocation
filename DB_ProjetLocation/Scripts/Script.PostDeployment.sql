@@ -214,7 +214,7 @@ EXEC DB_ProjetLocation.dbo.CSP_InsertGood 'Visseuse Bosch',
 
 
 -- INSERT Rental
-EXEC DB_ProjetLocation.dbo.CSP_InsertRental 1, 1, 4, '03-09-2020', '10-09-2020', 50;
+EXEC DB_ProjetLocation.dbo.CSP_InsertRental 1, 1, 4, '23-10-2020', '10-11-2020', 50;
 EXEC DB_ProjetLocation.dbo.CSP_InsertRental 2, 4, 5, '15-09-2020', '30-09-2020', 100;
 EXEC DB_ProjetLocation.dbo.CSP_InsertRental 2, 4, 6, '01-09-2020', '02-09-2020', 100;
 

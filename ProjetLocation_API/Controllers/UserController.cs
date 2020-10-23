@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Services;
+using System;
+using System.Net;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -69,7 +71,16 @@ namespace ProjetLocation.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _userService.Delete(id);
+            try
+            {
+                _userService.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("User Linked To Current Rental"))
+                    return Problem(detail: "Vous ne pouvez pas désactiver votre compte car vous avez une ou plusieurs locations en cours.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
 
             return Ok();
         }

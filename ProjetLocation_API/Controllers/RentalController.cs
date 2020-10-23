@@ -99,7 +99,7 @@ namespace ProjetLocation.API.Controllers
             }
             catch (Exception ex)
             {
-                if (ex.Message.Contains("CK_Rental_UnableRating"))
+                if (ex.Message.Contains("Rating unabled"))
                     return Problem(detail: "Impossible d'ajouter une évaluation tant que la location n'est pas finie.",
                                    statusCode: (int)HttpStatusCode.PreconditionFailed);
                 else if (ex.Message.Contains("CK_Rental_Rating"))

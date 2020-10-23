@@ -18,6 +18,5 @@
     CONSTRAINT [CK_Rental_RentedDate] CHECK (RentedFrom < RentedTo), 
     CONSTRAINT [CK_Rental_Amount] CHECK (Amount > 0), 
     CONSTRAINT [CK_Rental_Deposit] CHECK (Deposit > 0), 
-    CONSTRAINT [CK_Rental_Rating] CHECK (Rating > 0 AND Rating <= 5), 
-    CONSTRAINT [CK_Rental_UnableRating] CHECK (RentedTo < GetDate())
+    CONSTRAINT [CK_Rental_Rating] CHECK (Rating > 0 AND Rating <= 5),
 )

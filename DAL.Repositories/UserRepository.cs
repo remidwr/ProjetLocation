@@ -93,7 +93,14 @@ namespace DAL.Repositories
             Command command = new Command("CSP_DeleteUser", true);
             command.AddParameter("UserId", userId);
 
-            _connection.ExecuteNonQuery(command);
+            try
+            {
+                _connection.ExecuteNonQuery(command);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

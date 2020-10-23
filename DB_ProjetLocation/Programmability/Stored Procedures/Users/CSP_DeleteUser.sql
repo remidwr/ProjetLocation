@@ -2,6 +2,15 @@
 	@UserId INT
 AS
 BEGIN
-	DELETE FROM Users
-	WHERE [User_Id] = @UserId;
+	IF NOT EXISTS(SELECT Rental_Id FROM Rental WHERE (Tenant_Id = @UserId OR Owner_Id = @UserId) AND RentedTo > GETDATE())
+		BEGIN
+			DELETE FROM Users
+			WHERE [User_Id] = @UserId;
+			DELETE FROM Good
+			WHERE [User_Id] = @UserId;
+		END
+	ELSE
+		BEGIN
+			RAISERROR('User Linked To Current Rental', 16, 1);
+		END
 END

@@ -3,6 +3,7 @@ using DAL.Repositories;
 using ProjetLocation.API.Models.Good;
 using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Utils.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -81,7 +82,14 @@ namespace ProjetLocation.API.Services
 
         public void Delete(int userId)
         {
-            _userRepository.Delete(userId);
+            try
+            {
+                _userRepository.Delete(userId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }
