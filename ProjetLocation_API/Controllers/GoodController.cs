@@ -15,7 +15,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class GoodController : ControllerBase
     {
-        private GoodService _goodService;
+        private readonly GoodService _goodService;
 
         public GoodController(GoodService goodService)
         {

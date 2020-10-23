@@ -15,7 +15,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class RentalController : ControllerBase
     {
-        private RentalService _rentalService;
+        private readonly RentalService _rentalService;
 
         public RentalController(RentalService rentalService)
         {

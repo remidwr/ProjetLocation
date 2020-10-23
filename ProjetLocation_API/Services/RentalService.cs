@@ -10,8 +10,8 @@ namespace ProjetLocation.API.Services
 {
     public class RentalService
     {
-        private RentalRepository _rentalRepository;
-        private GoodRepository _goodRepository;
+        private readonly RentalRepository _rentalRepository;
+        private readonly GoodRepository _goodRepository;
 
         public RentalService(RentalRepository rentalRepository, GoodRepository goodRepository)
         {

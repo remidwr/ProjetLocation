@@ -11,8 +11,8 @@ namespace ProjetLocation.API.Services
 {
     public class UserService
     {
-        private UserRepository _userRepository;
-        private GoodRepository _goodRepository;
+        private readonly UserRepository _userRepository;
+        private readonly GoodRepository _goodRepository;
 
         public UserService(UserRepository userRepository, GoodRepository goodRepository)
         {

@@ -7,8 +7,8 @@ namespace Tools.Database
 {
     public class Connection
     {
-        private string _connectionString;
-        private DbProviderFactory _providerFactory;
+        private readonly string _connectionString;
+        private readonly DbProviderFactory _providerFactory;
 
         public Connection(DbProviderFactory providerFactory, ConnectionInfo connectionInfo)
         {

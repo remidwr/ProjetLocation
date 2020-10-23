@@ -9,8 +9,8 @@ namespace ProjetLocation.API.Services
 {
     public class RoleService
     {
-        private IRoleRepository _roleRepository;
-        private UserRepository _userRepository;
+        private readonly IRoleRepository _roleRepository;
+        private readonly UserRepository _userRepository;
 
         public RoleService(RoleRepository roleRepository, UserRepository userRepository)
         {

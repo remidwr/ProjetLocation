@@ -12,7 +12,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private AuthService _authService;
+        private readonly AuthService _authService;
 
         public AuthController(AuthService authService)
         {

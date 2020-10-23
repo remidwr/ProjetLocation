@@ -13,7 +13,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class CategoryController : ControllerBase
     {
-        private CategoryRepository _categoryRepository;
+        private readonly CategoryRepository _categoryRepository;
 
         public CategoryController(CategoryRepository categoryRepository)
         {

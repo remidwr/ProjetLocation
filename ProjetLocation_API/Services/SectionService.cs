@@ -10,7 +10,7 @@ namespace ProjetLocation.API.Services
 {
     public class SectionService
     {
-        private SectionRepository _sectionRepository;
+        private readonly SectionRepository _sectionRepository;
 
         public SectionService(SectionRepository sectionRepository)
         {

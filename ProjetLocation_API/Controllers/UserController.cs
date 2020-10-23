@@ -14,7 +14,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        UserService _userService;
+        private readonly UserService _userService;
 
         public UserController(UserService userService)
         {

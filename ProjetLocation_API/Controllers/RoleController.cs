@@ -12,7 +12,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class RoleController : ControllerBase
     {
-        private RoleService _roleService;
+        private readonly RoleService _roleService;
 
         public RoleController(RoleService roleService)
         {

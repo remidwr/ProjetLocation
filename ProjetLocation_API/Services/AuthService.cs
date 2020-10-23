@@ -16,9 +16,9 @@ namespace ProjetLocation.API.Services
 {
     public class AuthService
     {
-        private IAuthRepository _authRepository;
+        private readonly IAuthRepository _authRepository;
         private readonly AppSettings _appSettings;
-        KeyGenerator _keyGenerator;
+        private readonly KeyGenerator _keyGenerator;
         //Decrypting decrypting = new Decrypting();
 
         public AuthService(AuthRepository authRepository, IOptions<AppSettings> appSettings, KeyGenerator keyGenerator)

@@ -10,7 +10,7 @@ namespace ProjetLocation.API.Services
 {
     public class GoodService
     {
-        GoodRepository _goodRepository;
+        private readonly GoodRepository _goodRepository;
 
         public GoodService(GoodRepository goodRepository)
         {

@@ -15,7 +15,7 @@ namespace ProjetLocation.API.Controllers
     [ApiController]
     public class SectionController : ControllerBase
     {
-        private SectionService _sectionService;
+        private readonly SectionService _sectionService;
 
         public SectionController(SectionService sectionService)
         {
