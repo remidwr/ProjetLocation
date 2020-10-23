@@ -1,18 +1,18 @@
-using System.Data.Common;
-using System.Data.SqlClient;
+using DAL.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DB = Tools.Database;
-using Tools.Security.RSA;
-using DAL.Repositories;
-using ProjetLocation.API.Helpers;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using ProjetLocation.API.Helpers;
 using ProjetLocation.API.Services;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Text;
+using Tools.Security.RSA;
+using DB = Tools.Database;
 
 namespace ProjetLocation_API
 {

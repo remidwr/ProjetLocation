@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Net;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Services;
+using System;
+using System.Net;
 
 namespace ProjetLocation.API.Controllers
 {

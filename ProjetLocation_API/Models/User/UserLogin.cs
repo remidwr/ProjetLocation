@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace ProjetLocation.API.Models.User
+﻿namespace ProjetLocation.API.Models.User
 {
     public class UserLogin
     {

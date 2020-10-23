@@ -1,5 +1,5 @@
-﻿using ProjetLocation.API.Models.Rental;
-using DAL.Models;
+﻿using DAL.Models;
+using ProjetLocation.API.Models.Rental;
 
 namespace ProjetLocation.API.Utils.Extensions
 {

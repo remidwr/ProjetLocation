@@ -1,5 +1,4 @@
-﻿using DAL.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace ProjetLocation.API.Models.Good
 {

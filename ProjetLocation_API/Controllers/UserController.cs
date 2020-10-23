@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using ProjetLocation.API.Models.User;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+using ProjetLocation.API.Models.User;
 using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Services;
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace ProjetLocation.API.Controllers

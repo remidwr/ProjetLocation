@@ -1,5 +1,5 @@
-﻿using ProjetLocation.API.Models.User;
-using DAL.Models;
+﻿using DAL.Models;
+using ProjetLocation.API.Models.User;
 
 namespace ProjetLocation.API.Utils.Extensions
 {

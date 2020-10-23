@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using DAL.Models;
-using Microsoft.AspNetCore.Mvc;
-using ProjetLocation.API.Models.User.RoleName;
+﻿using DAL.Models;
 using Microsoft.AspNetCore.Authorization;
-using System.Net;
+using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Models.Rental;
+using ProjetLocation.API.Models.User.RoleName;
 using ProjetLocation.API.Services;
+using System;
+using System.Collections.Generic;
+using System.Net;
 
 namespace ProjetLocation.API.Controllers
 {
