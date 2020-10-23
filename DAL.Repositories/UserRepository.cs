@@ -88,6 +88,24 @@ namespace DAL.Repositories
             _connection.ExecuteNonQuery(command);
         }
 
+        public void UpdateRole(int userId, User user)
+        {
+            Command command = new Command("CSP_UpdateUserRole", true);
+            command.AddParameter("UserId", userId);
+            command.AddParameter("RoleId", user.RoleId);
+
+            _connection.ExecuteNonQuery(command);
+        }
+
+        public void UpdateBanned(int userId, User user)
+        {
+            Command command = new Command("CSP_UpdateUserBanned", true);
+            command.AddParameter("UserId", userId);
+            command.AddParameter("IsBanned", user.IsBanned);
+
+            _connection.ExecuteNonQuery(command);
+        }
+
         public void Delete(int userId)
         {
             Command command = new Command("CSP_DeleteUser", true);

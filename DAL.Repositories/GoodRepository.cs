@@ -20,14 +20,14 @@ namespace DAL.Repositories
 
         public IEnumerable<Good> GetAll()
         {
-            Command command = new Command("SELECT * FROM Good");
+            Command command = new Command("SELECT * FROM Good WHERE IsActive = 1");
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good());
         }
 
         public Good GetById(int goodId)
         {
-            Command command = new Command("SELECT * FROM Good WHERE Good_Id = @GoodId");
+            Command command = new Command("SELECT * FROM Good WHERE Good_Id = @GoodId WHERE IsActive = 1");
             command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();
@@ -35,7 +35,7 @@ namespace DAL.Repositories
 
         public User GetUserByGoodId(int goodId)
         {
-            Command command = new Command("SELECT * FROM Good G JOIN Users U ON G.[User_Id] = U.[User_Id] WHERE G.Good_Id = @GoodId");
+            Command command = new Command("SELECT * FROM Good G JOIN Users U ON G.[User_Id] = U.[User_Id] WHERE G.Good_Id = @GoodId AND G.IsActive = 1");
             command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_User()).SingleOrDefault();
@@ -43,7 +43,7 @@ namespace DAL.Repositories
 
         public Section GetSectionByGoodId(int goodId)
         {
-            Command command = new Command("SELECT * FROM Good G JOIN Section S ON G.Section_Id = S.Section_Id WHERE G.Good_Id = @GoodId");
+            Command command = new Command("SELECT * FROM Good G JOIN Section S ON G.Section_Id = S.Section_Id WHERE G.Good_Id = @GoodId AND G.IsActive = 1");
             command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Section()).SingleOrDefault();
@@ -51,7 +51,7 @@ namespace DAL.Repositories
 
         public Category GetCategoryByGoodId(int goodId)
         {
-            Command command = new Command("SELECT * FROM Good G JOIN Category C ON G.Category_Id = C.Category_Id WHERE G.Good_Id = @GoodId");
+            Command command = new Command("SELECT * FROM Good G JOIN Category C ON G.Category_Id = C.Category_Id WHERE G.Good_Id = @GoodId AND G.IsActive = 1");
             command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Category()).SingleOrDefault();

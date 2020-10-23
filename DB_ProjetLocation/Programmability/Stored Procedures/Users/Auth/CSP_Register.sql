@@ -11,6 +11,9 @@ BEGIN
             UPDATE Users
             SET IsActive = 1
             WHERE [User_Id] = (SELECT [User_Id] FROM Users WHERE Email = @Email);
+            UPDATE Good
+            SET IsActive = 1
+            WHERE [User_Id] = (SELECT [User_id] FROM Users WHERE Email = @Email);
         END
     ELSE IF EXISTS(SELECT Email FROM Users WHERE Email = @Email AND IsActive = 0 AND IsBanned = 1)
         BEGIN

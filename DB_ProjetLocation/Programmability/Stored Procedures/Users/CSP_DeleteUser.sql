@@ -2,7 +2,7 @@
 	@UserId INT
 AS
 BEGIN
-	IF NOT EXISTS(SELECT Rental_Id FROM Rental WHERE (Tenant_Id = @UserId OR Owner_Id = @UserId) AND RentedTo > GETDATE())
+	IF NOT EXISTS(SELECT Rental_Id FROM Rental WHERE (Owner_Id = @UserId OR Tenant_Id = @UserId) AND RentedTo > GETDATE())
 		BEGIN
 			DELETE FROM Users
 			WHERE [User_Id] = @UserId;

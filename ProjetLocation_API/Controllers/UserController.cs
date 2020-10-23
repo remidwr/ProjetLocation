@@ -68,6 +68,22 @@ namespace ProjetLocation.API.Controllers
             return Ok();
         }
 
+        [HttpPut("{id}/role")]
+        public IActionResult PutRole(int id, [FromBody] UserSimple user)
+        {
+            _userService.PutRole(id, user);
+
+            return Ok();
+        }
+
+        [HttpPut("{id}/ban")]
+        public IActionResult PutUserBanned(int id, [FromBody] UserData user)
+        {
+            _userService.PutUserBanned(id, user);
+
+            return Ok();
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

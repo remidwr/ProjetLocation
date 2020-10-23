@@ -80,6 +80,16 @@ namespace ProjetLocation.API.Services
             _userRepository.UpdatePassword(userId, user.APIUserPasswdToDAL());
         }
 
+        public void PutRole(int userId, UserSimple user)
+        {
+            _userRepository.UpdateRole(userId, user.APIUserSimpleToDAL());
+        }
+
+        public void PutUserBanned(int userId, UserData user)
+        {
+            _userRepository.UpdateBanned(userId, user.APIUserDataToDAL());
+        }
+
         public void Delete(int userId)
         {
             try
