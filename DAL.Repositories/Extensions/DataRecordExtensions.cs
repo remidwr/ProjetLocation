@@ -55,7 +55,8 @@ namespace DAL.Repositories.Extensions
                 Picture = (string)record["Picture"],
                 UserId = (int)record["User_Id"],
                 SectionId = (int)record["Section_Id"],
-                CategoryId = (int)record["Category_Id"]
+                CategoryId = (int)record["Category_Id"],
+                IsActive = (bool)record["IsActive"]
             };
         }
 

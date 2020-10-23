@@ -3,8 +3,10 @@ using DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetLocation.API.Models.User.RoleName;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 
 namespace ProjetLocation.API.Controllers
 {
@@ -47,7 +49,16 @@ namespace ProjetLocation.API.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Category category)
         {
-            _categoryRepository.Insert(category);
+            try
+            {
+                _categoryRepository.Insert(category);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("Unable to insert category"))
+                    return Problem(detail: "Cette catégorie existe déjà dans cette section.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
 
             return Ok();
         }
@@ -56,7 +67,16 @@ namespace ProjetLocation.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Category category)
         {
-            _categoryRepository.Update(id, category);
+            try
+            {
+                _categoryRepository.Update(id, category);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("Unable to update category"))
+                    return Problem(detail: "Cette catégorie existe déjà dans cette section.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
 
             return Ok();
         }
@@ -65,7 +85,16 @@ namespace ProjetLocation.API.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _categoryRepository.Delete(id);
+            try
+            {
+                _categoryRepository.Delete(id);
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("Unable to delete category"))
+                    return Problem(detail: "Cette catégorie est rattachée à un bien existant.",
+                                   statusCode: (int)HttpStatusCode.PreconditionFailed);
+            }
 
             return Ok();
         }

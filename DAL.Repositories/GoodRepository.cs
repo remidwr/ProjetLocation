@@ -27,7 +27,7 @@ namespace DAL.Repositories
 
         public Good GetById(int goodId)
         {
-            Command command = new Command("SELECT * FROM Good WHERE Good_Id = @GoodId WHERE IsActive = 1");
+            Command command = new Command("SELECT * FROM Good WHERE Good_Id = @GoodId AND IsActive = 1");
             command.AddParameter("GoodId", goodId);
 
             return _connection.ExecuteReader(command, dr => dr.ToDAL_Good()).SingleOrDefault();

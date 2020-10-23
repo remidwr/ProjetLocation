@@ -16,5 +16,6 @@
         public int UserId { get; set; }
         public int SectionId { get; set; }
         public int CategoryId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

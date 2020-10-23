@@ -77,7 +77,14 @@ namespace DAL.Repositories
             Command command = new Command("CSP_DeleteSection", true);
             command.AddParameter("SectionId", sectionId);
 
-            _connection.ExecuteNonQuery(command);
+            try
+            {
+                _connection.ExecuteNonQuery(command);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

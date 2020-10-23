@@ -19,7 +19,7 @@ namespace ProjetLocation.API.Services
 
         public IEnumerable<GoodWithUser> GetAll()
         {
-            IEnumerable<GoodWithUser> goods = _goodRepository.GetAll().Select(x => x.DALGoodWithUserToAPI());
+            List<GoodWithUser> goods = _goodRepository.GetAll().Select(x => x.DALGoodWithUserToAPI()).ToList();
 
             if (!(goods is null))
             {

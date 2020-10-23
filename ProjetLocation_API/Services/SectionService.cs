@@ -70,7 +70,14 @@ namespace ProjetLocation.API.Services
 
         public void Delete(int sectionId)
         {
-            _sectionRepository.Delete(sectionId);
+            try
+            {
+                _sectionRepository.Delete(sectionId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
     }
 }

@@ -28,16 +28,10 @@ CREATE INDEX [IX_Good_UserId] ON [dbo].[Good] ([User_Id])
 
 GO
 
-CREATE TRIGGER [dbo].[Trigger_Good_Delete]
+CREATE TRIGGER [dbo].[Trigger_Good]
     ON [dbo].[Good]
-    INSTEAD OF DELETE
+    FOR DELETE, INSERT, UPDATE
     AS
     BEGIN
-        DECLARE @GoodId INT;
-
-        SET @GoodId = (SELECT [Good_Id] FROM deleted);
-
-        UPDATE Good
-        SET [IsActive] = 0
-        WHERE [Good_Id] = @GoodId AND IsActive = 1;
+        SET NoCount ON
     END
